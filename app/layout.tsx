@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Suspense } from "react";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import Navbar from "@/components/shared/Navbar";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -9,8 +11,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Catálogo Online",
+  description: "Plataforma de catálogo online para vendedores y productos",
 };
 
 const geistSans = Geist({
@@ -33,6 +35,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Suspense>
+            <Navbar />
+          </Suspense>
           {children}
         </ThemeProvider>
       </body>
