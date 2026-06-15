@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,7 @@ import {
 import { getActiveProductsForCatalog } from "@/lib/products";
 import { ArrowLeft, Package2, Store } from "lucide-react";
 
-export default async function CatalogPage({
+async function CatalogContent({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -130,5 +131,52 @@ export default async function CatalogPage({
         )}
       </section>
     </main>
+  );
+}
+
+function CatalogSkeleton() {
+  return (
+    <main className="min-h-screen bg-background">
+      <section className="border-b bg-muted/20">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10">
+          <div className="h-9 w-32 rounded bg-muted" />
+          <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+            <div className="flex flex-col gap-4">
+              <div className="h-6 w-28 rounded bg-muted" />
+              <div className="h-14 w-80 max-w-full rounded bg-muted" />
+              <div className="h-5 w-full max-w-3xl rounded bg-muted" />
+              <div className="h-5 w-3/4 max-w-2xl rounded bg-muted" />
+            </div>
+            <div className="rounded-xl border bg-card p-6">
+              <div className="h-7 w-40 rounded bg-muted" />
+              <div className="mt-4 h-4 w-56 rounded bg-muted" />
+              <div className="mt-6 h-12 w-full rounded bg-muted" />
+              <div className="mt-3 h-12 w-full rounded bg-muted" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <div className="mb-8 h-8 w-40 rounded bg-muted" />
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="h-80 rounded-xl border bg-card" />
+          <div className="h-80 rounded-xl border bg-card" />
+          <div className="h-80 rounded-xl border bg-card" />
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default function CatalogPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  return (
+    <Suspense fallback={<CatalogSkeleton />}>
+      <CatalogContent params={params} />
+    </Suspense>
   );
 }
