@@ -98,6 +98,30 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
 
 > Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
 
+## Roles with Supabase
+
+This project now includes a roles migration at `supabase/migrations/20260614113000_add_user_roles.sql`.
+
+After running that SQL in your Supabase project:
+
+1. Every new authenticated user gets a row in `public.profiles`.
+2. The default role is `user`.
+3. You can promote users manually:
+
+   ```sql
+   update public.profiles
+   set role = 'admin'
+   where email = 'admin@example.com';
+   ```
+
+   ```sql
+   update public.profiles
+   set role = 'seller'
+   where email = 'seller@example.com';
+   ```
+
+In the app you can read the current role with `getCurrentUserProfile()` from `lib/auth.ts`, or protect server routes/components with `requireRole('admin')` and `requireRole(['admin', 'seller'])`.
+
 ## Feedback and issues
 
 Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
