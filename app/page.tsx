@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { getCurrentUserProfile } from "@/lib/auth";
 import { getLatestActiveBusinessCatalogs } from "@/lib/business-catalogs";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -287,19 +287,7 @@ export default function Home() {
         <SellerSection />
       </Suspense>
 
-      {/* Footer */}
-      <footer className="w-full border-t py-8">
-        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Store className="size-4" />
-            <span className="font-medium">Catálogo Online</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Powered by Supabase</span>
-            <ThemeSwitcher />
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

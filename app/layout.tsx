@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, DM_Serif_Display } from "next/font/google";
 import { Suspense } from "react";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
@@ -21,6 +21,13 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const dmSerif = DM_Serif_Display({
+  weight: "400",
+  variable: "--font-dm-serif",
+  display: "swap",
+  subsets: ["latin"],
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+        <body className={`${geistSans.className} ${dmSerif.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
