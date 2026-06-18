@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export type BusinessCatalog = {
   id: string;
@@ -13,7 +14,7 @@ export type BusinessCatalog = {
 };
 
 export async function getLatestActiveBusinessCatalogs(limit = 6) {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("business_catalogs")
     .select(
@@ -31,7 +32,7 @@ export async function getLatestActiveBusinessCatalogs(limit = 6) {
 }
 
 export async function getActiveBusinessCatalogById(id: string) {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("business_catalogs")
     .select(

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export type BusinessCatalogProduct = {
   id: string;
@@ -34,7 +35,7 @@ export async function getProductsForCatalogs(catalogIds: string[]) {
 }
 
 export async function getActiveProductsForCatalog(catalogId: string) {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("business_catalog_products")
     .select(

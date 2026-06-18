@@ -6,6 +6,7 @@ export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
+  const pathname = request.nextUrl.pathname;
 
   // If the env vars are not set, skip proxy check. You can remove this
   // once you setup the project.
@@ -46,13 +47,12 @@ export async function updateSession(request: NextRequest) {
   // with the Supabase client, your users may be randomly logged out.
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
+  const isPublicPath =
+    pathname === "/" ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/catalog");
 
-  if (
-    request.nextUrl.pathname !== "/" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
+  if (!isPublicPath && !user) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
