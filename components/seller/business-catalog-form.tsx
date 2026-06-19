@@ -184,22 +184,6 @@ export function BusinessCatalogForm() {
         </div>
       </div>
 
-      <div className="rounded-lg border p-3">
-        <p className="text-sm font-medium">Automatic optimization</p>
-        <p className="text-xs text-muted-foreground">
-          Selected images are converted to `webp` before upload to reduce size
-          while keeping strong visual quality.
-        </p>
-      </div>
-
-      <div className="rounded-lg border p-3">
-        <p className="text-sm font-medium">Active by default</p>
-        <p className="text-xs text-muted-foreground">
-          New catalogs are created with `is_active = true`. You will be able to
-          change that later when we add editing.
-        </p>
-      </div>
-
       {error && <p className="text-sm text-red-500">{error}</p>}
 
       <div>

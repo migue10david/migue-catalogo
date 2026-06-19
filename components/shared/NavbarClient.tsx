@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { AuthProfile } from "@/lib/auth";
 import { NavLink } from "./NavLink";
@@ -28,7 +28,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Store, LogOut, LayoutDashboard, ShoppingBag, Compass, BookOpen } from "lucide-react";
+import { Menu, Store, LogOut, LayoutDashboard, ShoppingBag, Compass, BookOpen, PanelLeft } from "lucide-react";
 
 interface NavbarClientProps {
   user: AuthProfile | null;
@@ -49,6 +49,7 @@ const publicLinks = [
 export function NavbarClient({ user, hasEnvVars }: NavbarClientProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -58,16 +59,18 @@ export function NavbarClient({ user, hasEnvVars }: NavbarClientProps) {
   };
 
   return (
-    <nav className="w-full border-b border-border/40 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="w-full max-w-6xl mx-auto flex justify-between items-center h-16 px-4 sm:px-6">
-        {/* Left: Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-bold text-lg tracking-tight hover:opacity-80 transition-opacity"
-        >
-          <Store className="size-5 text-primary" />
-          <span>Catálogo Online</span>
-        </Link>
+    <nav className={`w-full border-b border-border/40 bg-background/80 backdrop-blur-sm sticky top-0 ${pathname.startsWith("/seller") ? "z-0" : "z-50"}`}>
+      <div className="w-full max-w-6xl mx-auto flex justify-between items-center h-14 px-4 sm:px-6">
+        {/* Left: Sidebar trigger + Logo */}
+        <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-bold text-lg tracking-tight hover:opacity-80 transition-opacity"
+          >
+            <Store className="size-5 text-primary" />
+            <span className="hidden sm:inline">Catálogo Online</span>
+          </Link>
+        </div>
 
         {/* Desktop: Nav links */}
         <div className="hidden md:flex items-center gap-1">

@@ -198,21 +198,6 @@ export function BusinessProductForm({
         </div>
       </div>
 
-      <div className="rounded-lg border p-3">
-        <p className="text-sm font-medium">Automatic optimization</p>
-        <p className="text-xs text-muted-foreground">
-          Product images are converted to `webp` before upload to reduce size
-          while preserving strong visual quality.
-        </p>
-      </div>
-
-      <div className="rounded-lg border p-3">
-        <p className="text-sm font-medium">Active by default</p>
-        <p className="text-xs text-muted-foreground">
-          New products are created with `is_active = true`.
-        </p>
-      </div>
-
       {error && <p className="text-sm text-red-500">{error}</p>}
 
       <div>
