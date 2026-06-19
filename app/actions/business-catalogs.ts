@@ -50,6 +50,37 @@ async function uploadCatalogMedia(
   };
 }
 
+function getStoragePathFromPublicUrl(publicUrl: string | null) {
+  if (!publicUrl) {
+    return null;
+  }
+
+  const marker = `/storage/v1/object/public/${BUSINESS_CATALOG_MEDIA_BUCKET}/`;
+  const index = publicUrl.indexOf(marker);
+
+  if (index === -1) {
+    return null;
+  }
+
+  return decodeURIComponent(publicUrl.slice(index + marker.length));
+}
+
+async function getOwnedCatalog(catalogId: string, ownerId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("business_catalogs")
+    .select("id, owner_id, logo_url, cover_url")
+    .eq("id", catalogId)
+    .eq("owner_id", ownerId)
+    .maybeSingle();
+
+  if (error || !data) {
+    throw new Error("Catalog not found");
+  }
+
+  return data;
+}
+
 export async function createBusinessCatalog(formData: FormData) {
   const profile = await requireRole("seller");
   const supabase = await createClient();
@@ -98,4 +129,122 @@ export async function createBusinessCatalog(formData: FormData) {
   }
 
   revalidatePath("/seller");
+  revalidatePath("/seller/catalogs");
+}
+
+export async function updateBusinessCatalog(formData: FormData) {
+  const profile = await requireRole("seller");
+  const supabase = await createClient();
+
+  const catalogId = String(formData.get("catalog_id") ?? "").trim();
+  const name = String(formData.get("name") ?? "").trim();
+  const description = String(formData.get("description") ?? "").trim();
+  const logoFile = formData.get("logo_file");
+  const coverFile = formData.get("cover_file");
+
+  if (!catalogId) {
+    throw new Error("Catalog id is required");
+  }
+
+  if (!name) {
+    throw new Error("Name is required");
+  }
+
+  const currentCatalog = await getOwnedCatalog(catalogId, profile.id);
+
+  const uploadedLogo = await uploadCatalogMedia(
+    logoFile instanceof File ? logoFile : null,
+    profile.id,
+    "logo",
+  );
+  const uploadedCover = await uploadCatalogMedia(
+    coverFile instanceof File ? coverFile : null,
+    profile.id,
+    "cover",
+  );
+
+  const { error } = await supabase
+    .from("business_catalogs")
+    .update({
+      name,
+      description: description || null,
+      logo_url: uploadedLogo?.publicUrl ?? currentCatalog.logo_url,
+      cover_url: uploadedCover?.publicUrl ?? currentCatalog.cover_url,
+    })
+    .eq("id", catalogId)
+    .eq("owner_id", profile.id);
+
+  if (error) {
+    const uploadedPaths = [uploadedLogo?.path, uploadedCover?.path].filter(
+      Boolean,
+    ) as string[];
+
+    if (uploadedPaths.length > 0) {
+      await supabase.storage
+        .from(BUSINESS_CATALOG_MEDIA_BUCKET)
+        .remove(uploadedPaths);
+    }
+
+    throw new Error(error.message);
+  }
+
+  const oldPathsToDelete = [
+    uploadedLogo ? getStoragePathFromPublicUrl(currentCatalog.logo_url) : null,
+    uploadedCover
+      ? getStoragePathFromPublicUrl(currentCatalog.cover_url)
+      : null,
+  ].filter(Boolean) as string[];
+
+  if (oldPathsToDelete.length > 0) {
+    await supabase.storage
+      .from(BUSINESS_CATALOG_MEDIA_BUCKET)
+      .remove(oldPathsToDelete);
+  }
+
+  revalidatePath("/seller");
+  revalidatePath("/seller/catalogs");
+}
+
+export async function deleteBusinessCatalog(formData: FormData) {
+  const profile = await requireRole("seller");
+  const supabase = await createClient();
+
+  const catalogId = String(formData.get("catalog_id") ?? "").trim();
+
+  if (!catalogId) {
+    throw new Error("Catalog id is required");
+  }
+
+  const currentCatalog = await getOwnedCatalog(catalogId, profile.id);
+  const { data: products } = await supabase
+    .from("business_catalog_products")
+    .select("image_url")
+    .eq("business_catalog_id", catalogId);
+
+  const { error } = await supabase
+    .from("business_catalogs")
+    .delete()
+    .eq("id", catalogId)
+    .eq("owner_id", profile.id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const storagePaths = [
+    getStoragePathFromPublicUrl(currentCatalog.logo_url),
+    getStoragePathFromPublicUrl(currentCatalog.cover_url),
+    ...(products ?? []).map((product) =>
+      getStoragePathFromPublicUrl(product.image_url),
+    ),
+  ].filter(Boolean) as string[];
+
+  if (storagePaths.length > 0) {
+    await supabase.storage
+      .from(BUSINESS_CATALOG_MEDIA_BUCKET)
+      .remove(storagePaths);
+  }
+
+  revalidatePath("/seller");
+  revalidatePath("/seller/catalogs");
 }
