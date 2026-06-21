@@ -20,6 +20,9 @@ import {
 import { useRef, useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import type { BusinessCatalog } from "@/lib/business-catalogs";
+import type { BusinessCategory } from "@/lib/business-categories";
+import type { Province } from "@/lib/provinces";
+import { cn } from "@/lib/utils";
 
 const LOGO_MAX_SIZE = 800;
 const COVER_MAX_WIDTH = 1600;
@@ -100,6 +103,8 @@ async function convertImageToWebp(
 type DialogCatalogFormProps = {
   catalog?: BusinessCatalog;
   mode?: "create" | "edit";
+  businessCategories: BusinessCategory[];
+  provinces: Province[];
   triggerLabel?: string;
   triggerClassName?: string;
 };
@@ -107,6 +112,8 @@ type DialogCatalogFormProps = {
 const DialogCatalogForm = ({
   catalog,
   mode = "create",
+  businessCategories,
+  provinces,
   triggerLabel,
   triggerClassName,
 }: DialogCatalogFormProps) => {
@@ -183,8 +190,8 @@ const DialogCatalogForm = ({
           </DialogTitle>
           <DialogDescription>
             {mode === "edit"
-              ? "Actualiza la información principal de este catálogo."
-              : "Agrega un nuevo negocio con su nombre, descripción y medios principales."}
+              ? "Actualiza la información principal, ubicación y redes de este catálogo."
+              : "Agrega un nuevo negocio con ubicación, contacto y sus medios principales."}
           </DialogDescription>
         </DialogHeader>
         <form
@@ -196,7 +203,7 @@ const DialogCatalogForm = ({
             <input type="hidden" name="catalog_id" value={catalog.id} />
           )}
           <div className="grid gap-2">
-            <Label htmlFor="catalog-name">Name</Label>
+            <Label htmlFor="catalog-name">Nombre</Label>
             <Input
               id="catalog-name"
               name="name"
@@ -208,15 +215,133 @@ const DialogCatalogForm = ({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="catalog-description">Description</Label>
+            <Label htmlFor="catalog-description">Descripción</Label>
             <Textarea
               id="catalog-description"
               name="description"
-              placeholder="Short description of the business and what it sells."
+              placeholder="Describe qué vende tu negocio y qué lo hace especial."
               defaultValue={catalog?.description ?? ""}
-              rows={5}
+              rows={4}
               disabled={isPending}
             />
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-category">Categoría</Label>
+              <select
+                id="catalog-category"
+                name="business_category_id"
+                defaultValue={catalog?.business_category_id?.toString() ?? ""}
+                required
+                disabled={isPending}
+                className={cn(
+                  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  "disabled:cursor-not-allowed disabled:opacity-50",
+                )}
+              >
+                <option value="" disabled>
+                  Selecciona una categoría
+                </option>
+                {businessCategories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-province">Provincia</Label>
+              <select
+                id="catalog-province"
+                name="province_id"
+                defaultValue={catalog?.province_id?.toString() ?? ""}
+                required
+                disabled={isPending}
+                className={cn(
+                  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  "disabled:cursor-not-allowed disabled:opacity-50",
+                )}
+              >
+                <option value="" disabled>
+                  Selecciona una provincia
+                </option>
+                {provinces.map((province) => (
+                  <option key={province.id} value={province.id}>
+                    {province.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-phone">Teléfono</Label>
+              <Input
+                id="catalog-phone"
+                name="phone"
+                type="tel"
+                placeholder="+53 5555 5555"
+                defaultValue={catalog?.phone ?? ""}
+                disabled={isPending}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-address">Dirección</Label>
+              <Textarea
+                id="catalog-address"
+                name="address"
+                placeholder="Calle, número, entre calles o referencia del local."
+                defaultValue={catalog?.address ?? ""}
+                rows={3}
+                disabled={isPending}
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-whatsapp-url">WhatsApp</Label>
+              <Input
+                id="catalog-whatsapp-url"
+                name="whatsapp_url"
+                type="url"
+                placeholder="https://wa.me/5355555555"
+                defaultValue={catalog?.whatsapp_url ?? ""}
+                disabled={isPending}
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-facebook-url">Facebook</Label>
+              <Input
+                id="catalog-facebook-url"
+                name="facebook_url"
+                type="url"
+                placeholder="https://facebook.com/tunegocio"
+                defaultValue={catalog?.facebook_url ?? ""}
+                disabled={isPending}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="catalog-instagram-url">Instagram</Label>
+              <Input
+                id="catalog-instagram-url"
+                name="instagram_url"
+                type="url"
+                placeholder="https://instagram.com/tunegocio"
+                defaultValue={catalog?.instagram_url ?? ""}
+                disabled={isPending}
+              />
+            </div>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
@@ -247,15 +372,15 @@ const DialogCatalogForm = ({
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline">
-                Cancel
+                Cancelar
               </Button>
             </DialogClose>
             <Button type="submit" disabled={isPending}>
               {isPending
-                ? "Optimizing and uploading..."
+                ? "Procesando y subiendo..."
                 : mode === "edit"
-                  ? "Save changes"
-                  : "Create catalog"}
+                  ? "Guardar cambios"
+                  : "Crear catálogo"}
             </Button>
           </DialogFooter>
         </form>

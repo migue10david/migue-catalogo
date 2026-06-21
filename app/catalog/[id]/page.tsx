@@ -13,7 +13,12 @@ import {
 } from "@/lib/products";
 import {
   ArrowLeft,
+  Facebook,
+  Instagram,
+  MapPin,
+  MessageCircle,
   Package2,
+  Phone,
   Store,
   ArrowUpRight,
 } from "lucide-react";
@@ -25,6 +30,22 @@ function CatalogHero({
   catalog: BusinessCatalog;
   productCount: number;
 }) {
+  const links = [
+    catalog.facebook_url
+      ? { href: catalog.facebook_url, label: "Facebook", icon: Facebook }
+      : null,
+    catalog.instagram_url
+      ? { href: catalog.instagram_url, label: "Instagram", icon: Instagram }
+      : null,
+    catalog.whatsapp_url
+      ? { href: catalog.whatsapp_url, label: "WhatsApp", icon: MessageCircle }
+      : null,
+  ].filter(Boolean) as Array<{
+    href: string;
+    label: string;
+    icon: typeof Facebook;
+  }>;
+
   return (
     <section className="relative w-full overflow-hidden">
       <div className="absolute inset-0">
@@ -85,6 +106,55 @@ function CatalogHero({
                   {catalog.description}
                 </p>
               )}
+
+              <div className="mt-6 flex flex-col gap-3 text-sm text-muted-foreground sm:text-base">
+                <div className="flex flex-wrap items-center gap-4">
+                  {catalog.business_category?.name && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1.5 backdrop-blur-sm">
+                      <span>{catalog.business_category.name}</span>
+                    </div>
+                  )}
+                  {catalog.province?.name && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1.5 backdrop-blur-sm">
+                      <MapPin className="size-4" />
+                      <span>{catalog.province.name}</span>
+                    </div>
+                  )}
+                  {catalog.phone && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1.5 backdrop-blur-sm">
+                      <Phone className="size-4" />
+                      <span>{catalog.phone}</span>
+                    </div>
+                  )}
+                </div>
+
+                {catalog.address && (
+                  <p className="max-w-2xl text-muted-foreground">
+                    {catalog.address}
+                  </p>
+                )}
+
+                {links.length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {links.map((link) => {
+                      const Icon = link.icon;
+
+                      return (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/75 px-3 py-2 text-sm text-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-background"
+                        >
+                          <Icon className="size-4" />
+                          {link.label}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

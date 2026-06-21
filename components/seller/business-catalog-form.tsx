@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import type { BusinessCategory } from "@/lib/business-categories";
+import type { Province } from "@/lib/provinces";
+import { cn } from "@/lib/utils";
 
 const LOGO_MAX_SIZE = 800;
 const COVER_MAX_WIDTH = 1600;
@@ -84,7 +87,13 @@ async function convertImageToWebp(
   return new File([blob], `${baseName}.webp`, { type: "image/webp" });
 }
 
-export function BusinessCatalogForm() {
+export function BusinessCatalogForm({
+  businessCategories,
+  provinces,
+}: {
+  businessCategories: BusinessCategory[];
+  provinces: Province[];
+}) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -158,6 +167,56 @@ export function BusinessCatalogForm() {
           rows={5}
           disabled={isPending}
         />
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor="catalog-category">Category</Label>
+          <select
+            id="catalog-category"
+            name="business_category_id"
+            required
+            disabled={isPending}
+            className={cn(
+              "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              "disabled:cursor-not-allowed disabled:opacity-50",
+            )}
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            {businessCategories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor="catalog-province">Province</Label>
+          <select
+            id="catalog-province"
+            name="province_id"
+            required
+            disabled={isPending}
+            className={cn(
+              "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              "disabled:cursor-not-allowed disabled:opacity-50",
+            )}
+          >
+            <option value="" disabled>
+              Select a province
+            </option>
+            {provinces.map((province) => (
+              <option key={province.id} value={province.id}>
+                {province.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">

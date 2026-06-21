@@ -4,46 +4,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { requireRole } from "@/lib/auth";
 import { getBusinessCatalogsForOwner } from "@/lib/business-catalogs";
-import { Boxes, Store, Trash2 } from "lucide-react";
+import { getBusinessCategories } from "@/lib/business-categories";
+import { getProvinces } from "@/lib/provinces";
+import {
+  Boxes,
+  MapPin,
+  Phone,
+  Store,
+  Trash2,
+} from "lucide-react";
 import DialogCatalogForm from "@/components/seller/dialog-catalog-form";
 import { deleteBusinessCatalog } from "@/app/actions/business-catalogs";
+import CatalogLinks from "@/components/seller/catalog-links";
+import { getCoverGradient, getAccentBorder } from "@/lib/functions/catalog-functions";
+import CatalogsSkeleton from "@/components/seller/catalog-skeleton";
 
-function getCoverGradient(name: string) {
-  const gradients = [
-    "from-amber-500/20 via-orange-400/15 to-rose-400/20",
-    "from-emerald-500/20 via-teal-400/15 to-cyan-400/20",
-    "from-violet-500/20 via-purple-400/15 to-fuchsia-400/20",
-    "from-sky-500/20 via-blue-400/15 to-indigo-400/20",
-    "from-rose-500/20 via-pink-400/15 to-red-400/20",
-    "from-lime-500/20 via-green-400/15 to-emerald-400/20",
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return gradients[Math.abs(hash) % gradients.length];
-}
-
-function getAccentBorder(name: string) {
-  const accents = [
-    "border-l-amber-400",
-    "border-l-emerald-400",
-    "border-l-violet-400",
-    "border-l-sky-400",
-    "border-l-rose-400",
-    "border-l-lime-400",
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return accents[Math.abs(hash) % accents.length];
-}
 
 function LogoMark({ catalog }: { catalog: { logo_url: string | null; name: string } }) {
   return (
     <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-muted/30">
       {catalog.logo_url ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img src={catalog.logo_url} alt="" className="size-full object-cover" />
       ) : (
         <Store className="size-5 text-muted-foreground/40" />
@@ -54,6 +35,8 @@ function LogoMark({ catalog }: { catalog: { logo_url: string | null; name: strin
 
 async function CatalogsContent() {
   const profile = await requireRole(["admin", "seller"]);
+  const businessCategories = await getBusinessCategories();
+  const provinces = await getProvinces();
   const catalogs =
     profile.role === "seller"
       ? await getBusinessCatalogsForOwner(profile.id)
@@ -90,7 +73,11 @@ async function CatalogsContent() {
           </p>
         </div>
         <div className="shrink-0">
-          <DialogCatalogForm triggerLabel="Crear catálogo" />
+          <DialogCatalogForm
+            businessCategories={businessCategories}
+            provinces={provinces}
+            triggerLabel="Crear catálogo"
+          />
         </div>
       </section>
 
@@ -117,6 +104,7 @@ async function CatalogsContent() {
               <div className="hidden md:flex">
                 <div className="relative w-56 shrink-0 overflow-hidden">
                   {catalog.cover_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={catalog.cover_url}
                       alt=""
@@ -161,22 +149,56 @@ async function CatalogsContent() {
                         {catalog.description}
                       </p>
                     )}
+
+                    <div className="mt-3">
+                      <Badge variant="outline" className="bg-background/60">
+                        {catalog.business_category?.name ?? "Sin categoría"}
+                      </Badge>
+                    </div>
+
+                    <div className="mt-4 grid gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <MapPin className="mt-0.5 size-4 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-foreground/80">
+                            {catalog.province?.name ?? "Provincia sin asignar"}
+                          </p>
+                          <p className="line-clamp-2">
+                            {catalog.address ?? "Sin dirección registrada"}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <Phone className="size-4 shrink-0" />
+                        <span>{catalog.phone ?? "Sin teléfono registrado"}</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground/60">
-                      Creado{" "}
-                      {new Date(catalog.created_at).toLocaleDateString("es-ES", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </span>
+                  <div className="mt-4 flex flex-col gap-3">
+                    <CatalogLinks
+                      facebookUrl={catalog.facebook_url}
+                      instagramUrl={catalog.instagram_url}
+                      whatsappUrl={catalog.whatsapp_url}
+                    />
 
-                    <div className="flex items-center gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-xs text-muted-foreground/60">
+                        Creado{" "}
+                        {new Date(catalog.created_at).toLocaleDateString("es-ES", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
+
+                      <div className="flex items-center gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                       <DialogCatalogForm
                         mode="edit"
                         catalog={catalog}
+                        businessCategories={businessCategories}
+                        provinces={provinces}
                         triggerLabel="Editar"
                         triggerClassName="h-8 px-3 text-xs"
                       />
@@ -195,6 +217,7 @@ async function CatalogsContent() {
                           Eliminar
                         </Button>
                       </form>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -225,6 +248,26 @@ async function CatalogsContent() {
                         {catalog.description}
                       </p>
                     )}
+
+                    <div className="mt-2">
+                      <Badge variant="outline" className="bg-background/60 text-[10px]">
+                        {catalog.business_category?.name ?? "Sin categoría"}
+                      </Badge>
+                    </div>
+
+                    <div className="mt-2 grid gap-1 text-[11px] text-muted-foreground">
+                      <div className="flex items-start gap-1.5">
+                        <MapPin className="mt-0.5 size-3 shrink-0" />
+                        <span className="line-clamp-2">
+                          {catalog.province?.name ?? "Provincia pendiente"}
+                          {catalog.address ? ` · ${catalog.address}` : ""}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Phone className="size-3 shrink-0" />
+                        <span>{catalog.phone ?? "Sin teléfono"}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -240,6 +283,8 @@ async function CatalogsContent() {
                     <DialogCatalogForm
                       mode="edit"
                       catalog={catalog}
+                      businessCategories={businessCategories}
+                      provinces={provinces}
                       triggerLabel="Editar"
                       triggerClassName="h-7 px-2.5 text-[11px]"
                     />
@@ -269,71 +314,7 @@ async function CatalogsContent() {
   );
 }
 
-function CatalogsSkeleton() {
-  return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <div className="h-10 w-52 rounded-xl bg-muted/50" />
-          <div className="mt-2 h-4 w-40 rounded-lg bg-muted/30" />
-        </div>
-        <div className="h-10 w-36 rounded-xl bg-muted/50" />
-      </div>
 
-      <div className="flex flex-col gap-4">
-        {/* Desktop skeleton */}
-        {[1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="hidden overflow-hidden rounded-2xl border border-border/50 bg-card md:flex"
-          >
-            <div className="w-56 shrink-0 animate-pulse bg-muted/30" />
-            <div className="flex flex-1 flex-col justify-between p-5 pl-7">
-              <div>
-                <div className="flex items-start justify-between">
-                  <div className="h-5 w-40 rounded-lg bg-muted/40" />
-                  <div className="h-5 w-14 rounded-full bg-muted/30" />
-                </div>
-                <div className="mt-2 h-4 w-full rounded bg-muted/20" />
-                <div className="mt-1 h-4 w-3/4 rounded bg-muted/20" />
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div className="h-3 w-24 rounded bg-muted/20" />
-                <div className="h-7 w-20 rounded-lg bg-muted/20" />
-              </div>
-            </div>
-          </div>
-        ))}
-        {/* Mobile skeleton */}
-        {[1, 2, 3].map((i) => (
-          <div
-            key={`m-${i}`}
-            className="overflow-hidden rounded-2xl border border-l-4 border-l-muted/30 border-border/50 bg-card p-4 md:hidden"
-          >
-            <div className="flex items-start gap-3">
-              <div className="size-11 shrink-0 animate-pulse rounded-xl bg-muted/30" />
-              <div className="flex-1">
-                <div className="flex items-start justify-between">
-                  <div className="h-4 w-32 rounded bg-muted/40" />
-                  <div className="h-4 w-12 rounded-full bg-muted/30" />
-                </div>
-                <div className="mt-2 h-3 w-full rounded bg-muted/20" />
-                <div className="mt-1 h-3 w-2/3 rounded bg-muted/20" />
-              </div>
-            </div>
-            <div className="mt-3 flex items-center justify-between border-t border-border/30 pt-2.5">
-              <div className="h-3 w-20 rounded bg-muted/20" />
-              <div className="flex gap-1.5">
-                <div className="h-7 w-14 rounded-lg bg-muted/20" />
-                <div className="size-7 rounded-lg bg-muted/20" />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default function SellerCatalogsPage() {
   return (
