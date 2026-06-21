@@ -29,6 +29,7 @@ const COVER_MAX_WIDTH = 1600;
 const COVER_MAX_HEIGHT = 900;
 const WEBP_QUALITY = 0.86;
 
+
 function loadImage(file: File) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
