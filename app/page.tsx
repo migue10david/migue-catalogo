@@ -14,6 +14,7 @@ import {
   CheckCircle2,
   Sparkles,
   Package2,
+  MapPin,
 } from "lucide-react";
 
 const features = [
@@ -217,6 +218,20 @@ async function LatestCatalogsSection() {
                     {catalog.description ||
                       "Entra al catálogo para ver los productos publicados por este negocio."}
                   </p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {catalog.business_category?.name && (
+                      <div className="inline-flex items-center rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+                        {catalog.business_category.name}
+                      </div>
+                    )}
+                    {catalog.province?.name && (
+                      <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+                        <MapPin className="size-3.5" />
+                        {catalog.province.name}
+                      </div>
+                    )}
+                  </div>
 
                   <div className="mt-5 flex items-center justify-between text-sm font-medium">
                     <span>Ver catálogo</span>

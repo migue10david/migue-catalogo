@@ -7,6 +7,43 @@ import { createClient } from "@/lib/supabase/server";
 
 const BUSINESS_CATALOG_MEDIA_BUCKET = "business-catalog-media";
 
+function getOptionalText(formData: FormData, key: string) {
+  const value = String(formData.get(key) ?? "").trim();
+  return value || null;
+}
+
+function getRequiredProvinceId(formData: FormData) {
+  const value = String(formData.get("province_id") ?? "").trim();
+
+  if (!value) {
+    throw new Error("Province is required");
+  }
+
+  const provinceId = Number.parseInt(value, 10);
+
+  if (!Number.isInteger(provinceId) || provinceId <= 0) {
+    throw new Error("Province is invalid");
+  }
+
+  return provinceId;
+}
+
+function getRequiredBusinessCategoryId(formData: FormData) {
+  const value = String(formData.get("business_category_id") ?? "").trim();
+
+  if (!value) {
+    throw new Error("Business category is required");
+  }
+
+  const businessCategoryId = Number.parseInt(value, 10);
+
+  if (!Number.isInteger(businessCategoryId) || businessCategoryId <= 0) {
+    throw new Error("Business category is invalid");
+  }
+
+  return businessCategoryId;
+}
+
 function sanitizeFileName(fileName: string) {
   return fileName
     .toLowerCase()
@@ -86,7 +123,14 @@ export async function createBusinessCatalog(formData: FormData) {
   const supabase = await createClient();
 
   const name = String(formData.get("name") ?? "").trim();
-  const description = String(formData.get("description") ?? "").trim();
+  const description = getOptionalText(formData, "description");
+  const address = getOptionalText(formData, "address");
+  const phone = getOptionalText(formData, "phone");
+  const facebookUrl = getOptionalText(formData, "facebook_url");
+  const instagramUrl = getOptionalText(formData, "instagram_url");
+  const whatsappUrl = getOptionalText(formData, "whatsapp_url");
+  const provinceId = getRequiredProvinceId(formData);
+  const businessCategoryId = getRequiredBusinessCategoryId(formData);
   const logoFile = formData.get("logo_file");
   const coverFile = formData.get("cover_file");
 
@@ -108,7 +152,14 @@ export async function createBusinessCatalog(formData: FormData) {
   const { error } = await supabase.from("business_catalogs").insert({
     owner_id: profile.id,
     name,
-    description: description || null,
+    description,
+    address,
+    phone,
+    facebook_url: facebookUrl,
+    instagram_url: instagramUrl,
+    whatsapp_url: whatsappUrl,
+    province_id: provinceId,
+    business_category_id: businessCategoryId,
     logo_url: uploadedLogo?.publicUrl ?? null,
     cover_url: uploadedCover?.publicUrl ?? null,
     is_active: true,
@@ -130,6 +181,7 @@ export async function createBusinessCatalog(formData: FormData) {
 
   revalidatePath("/seller");
   revalidatePath("/seller/catalogs");
+  revalidatePath("/");
 }
 
 export async function updateBusinessCatalog(formData: FormData) {
@@ -138,7 +190,14 @@ export async function updateBusinessCatalog(formData: FormData) {
 
   const catalogId = String(formData.get("catalog_id") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
-  const description = String(formData.get("description") ?? "").trim();
+  const description = getOptionalText(formData, "description");
+  const address = getOptionalText(formData, "address");
+  const phone = getOptionalText(formData, "phone");
+  const facebookUrl = getOptionalText(formData, "facebook_url");
+  const instagramUrl = getOptionalText(formData, "instagram_url");
+  const whatsappUrl = getOptionalText(formData, "whatsapp_url");
+  const provinceId = getRequiredProvinceId(formData);
+  const businessCategoryId = getRequiredBusinessCategoryId(formData);
   const logoFile = formData.get("logo_file");
   const coverFile = formData.get("cover_file");
 
@@ -167,7 +226,14 @@ export async function updateBusinessCatalog(formData: FormData) {
     .from("business_catalogs")
     .update({
       name,
-      description: description || null,
+      description,
+      address,
+      phone,
+      facebook_url: facebookUrl,
+      instagram_url: instagramUrl,
+      whatsapp_url: whatsappUrl,
+      province_id: provinceId,
+      business_category_id: businessCategoryId,
       logo_url: uploadedLogo?.publicUrl ?? currentCatalog.logo_url,
       cover_url: uploadedCover?.publicUrl ?? currentCatalog.cover_url,
     })
@@ -203,6 +269,8 @@ export async function updateBusinessCatalog(formData: FormData) {
 
   revalidatePath("/seller");
   revalidatePath("/seller/catalogs");
+  revalidatePath("/");
+  revalidatePath(`/catalog/${catalogId}`);
 }
 
 export async function deleteBusinessCatalog(formData: FormData) {
@@ -247,4 +315,6 @@ export async function deleteBusinessCatalog(formData: FormData) {
 
   revalidatePath("/seller");
   revalidatePath("/seller/catalogs");
+  revalidatePath("/");
+  revalidatePath(`/catalog/${catalogId}`);
 }
