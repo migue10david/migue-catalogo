@@ -10,9 +10,12 @@ import {
 } from "@/components/ui/card";
 import { requireRole } from "@/lib/auth";
 import { getBusinessCatalogsForOwner } from "@/lib/business-catalogs";
+import { BusinessProductCategoryForm } from "@/components/seller/business-product-category-form";
 import { BusinessProductForm } from "@/components/seller/business-product-form";
+import { getProductCategoriesForCatalogs } from "@/lib/product-categories";
 import { getProductsForCatalogs } from "@/lib/products";
 import {
+  FolderTree,
   Package,
   Tag,
   WalletCards,
@@ -31,8 +34,20 @@ async function ProductsContent() {
     profile.role === "seller"
       ? await getProductsForCatalogs(catalogs.map((catalog) => catalog.id))
       : [];
+  const productCategories =
+    profile.role === "seller"
+      ? await getProductCategoriesForCatalogs(catalogs.map((catalog) => catalog.id))
+      : [];
   const catalogsById = new Map(
     catalogs.map((catalog) => [catalog.id, catalog]),
+  );
+  const categoriesByCatalogId = new Map(
+    catalogs.map((catalog) => [
+      catalog.id,
+      productCategories.filter(
+        (category) => category.business_catalog_id === catalog.id,
+      ),
+    ]),
   );
   const activeProducts = products.filter(
     (product) => product.is_active,
@@ -124,9 +139,86 @@ async function ProductsContent() {
       </section>
 
       {/* Main Content */}
-      <section className="grid gap-6 xl:grid-cols-[1fr_1.2fr]">
-        {/* Create Form */}
-        <Card className="border-border/50 shadow-sm">
+      <section className="grid gap-6 xl:grid-cols-[0.95fr_1.2fr]">
+        <div className="flex flex-col gap-6">
+          <Card className="border-border/50 shadow-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
+                  <FolderTree className="size-4 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-base">Categorías</CardTitle>
+                  <CardDescription className="text-xs">
+                    Crea secciones por catálogo antes de agregar productos.
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              {catalogs.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-border/60 bg-muted/10 p-8 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Primero crea un catálogo para poder organizar sus categorías.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <BusinessProductCategoryForm
+                    catalogs={catalogs.map((catalog) => ({
+                      id: catalog.id,
+                      name: catalog.name,
+                      is_active: catalog.is_active,
+                    }))}
+                  />
+
+                  <div className="space-y-3">
+                    {catalogs.map((catalog) => {
+                      const catalogCategories =
+                        categoriesByCatalogId.get(catalog.id) ?? [];
+
+                      return (
+                        <div
+                          key={catalog.id}
+                          className="rounded-2xl border border-border/50 bg-muted/10 p-4"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <div>
+                              <p className="font-medium">{catalog.name}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {catalogCategories.length} categor
+                                {catalogCategories.length === 1 ? "ía" : "ías"}
+                              </p>
+                            </div>
+                            <Badge variant="outline">
+                              {catalog.is_active ? "Activo" : "Inactivo"}
+                            </Badge>
+                          </div>
+
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {catalogCategories.length === 0 ? (
+                              <span className="text-xs text-muted-foreground">
+                                Sin categorías aún
+                              </span>
+                            ) : (
+                              catalogCategories.map((category) => (
+                                <Badge key={category.id} variant="secondary">
+                                  {category.name}
+                                </Badge>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Create Form */}
+          <Card className="border-border/50 shadow-sm">
           <CardHeader className="pb-4">
             <div className="flex items-center gap-3">
               <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
@@ -158,10 +250,17 @@ async function ProductsContent() {
                   name: catalog.name,
                   is_active: catalog.is_active,
                 }))}
+                categories={productCategories.map((category) => ({
+                  id: category.id,
+                  business_catalog_id: category.business_catalog_id,
+                  name: category.name,
+                  is_active: category.is_active,
+                }))}
               />
             )}
           </CardContent>
-        </Card>
+          </Card>
+        </div>
 
         {/* Product List */}
         <Card className="border-border/50 shadow-sm">
@@ -219,6 +318,10 @@ async function ProductsContent() {
                             Catálogo:{" "}
                             {catalogsById.get(product.business_catalog_id)
                               ?.name ?? "Desconocido"}
+                          </p>
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            Categoría:{" "}
+                            {product.product_category?.name ?? "Sin categoría"}
                           </p>
                         </div>
                       </div>

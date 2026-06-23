@@ -271,6 +271,34 @@ function EmptyState() {
   );
 }
 
+function groupProductsByCategory(products: BusinessCatalogProduct[]) {
+  const groups = new Map<
+    string,
+    {
+      categoryName: string;
+      products: BusinessCatalogProduct[];
+    }
+  >();
+
+  for (const product of products) {
+    const key = product.product_category?.id ?? "uncategorized";
+    const categoryName = product.product_category?.name ?? "General";
+    const group = groups.get(key);
+
+    if (group) {
+      group.products.push(product);
+      continue;
+    }
+
+    groups.set(key, {
+      categoryName,
+      products: [product],
+    });
+  }
+
+  return Array.from(groups.values());
+}
+
 async function CatalogContent({
   params,
 }: {
@@ -284,6 +312,7 @@ async function CatalogContent({
   }
 
   const products = await getActiveProductsForCatalog(catalog.id);
+  const productGroups = groupProductsByCategory(products);
 
   return (
     <main className="min-h-screen">
@@ -308,13 +337,36 @@ async function CatalogContent({
         {products.length === 0 ? (
           <EmptyState />
         ) : (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 auto-rows-auto">
-            {products.map((product, index) => (
-              <div
-                key={product.id}
-                className={`animate-fade-up stagger-${Math.min(index + 4, 8)}`}
-              >
-                <ProductCard product={product} index={index} />
+          <div className="space-y-10">
+            {productGroups.map((group, groupIndex) => (
+              <div key={group.categoryName} className="space-y-5">
+                <div
+                  className={`flex items-center justify-between gap-3 animate-fade-up stagger-${Math.min(groupIndex + 4, 8)}`}
+                >
+                  <div>
+                    <h3 className="font-serif-display text-xl tracking-tight sm:text-2xl">
+                      {group.categoryName}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {group.products.length} producto
+                      {group.products.length !== 1 ? "s" : ""}
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="hidden sm:inline-flex">
+                    Categoría
+                  </Badge>
+                </div>
+
+                <div className="grid auto-rows-auto gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.products.map((product, index) => (
+                    <div
+                      key={product.id}
+                      className={`animate-fade-up stagger-${Math.min(index + groupIndex + 4, 8)}`}
+                    >
+                      <ProductCard product={product} index={index} />
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
