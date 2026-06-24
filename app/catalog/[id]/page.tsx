@@ -9,8 +9,8 @@ import {
 } from "@/lib/business-catalogs";
 import {
   getActiveProductsForCatalog,
-  type BusinessCatalogProduct,
 } from "@/lib/products";
+import { CatalogProductGrid } from "@/components/catalog/catalog-product-grid";
 import {
   ArrowLeft,
   Facebook,
@@ -20,7 +20,6 @@ import {
   Package2,
   Phone,
   Store,
-  ArrowUpRight,
 } from "lucide-react";
 
 function CatalogHero({
@@ -182,123 +181,6 @@ function CatalogHero({
   );
 }
 
-function ProductCard({
-  product,
-  index,
-}: {
-  product: BusinessCatalogProduct;
-  index: number;
-}) {
-  const isFeatured = index % 5 === 0;
-
-  return (
-    <article
-      className={`group relative overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/[0.04] ${
-        isFeatured ? "sm:col-span-2 sm:row-span-2" : ""
-      }`}
-    >
-      <div
-        className={`relative overflow-hidden border-b border-border/50 bg-muted/20 ${
-          isFeatured ? "aspect-[4/3] sm:aspect-[16/10]" : "aspect-[4/3]"
-        }`}
-      >
-        {product.image_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.08),transparent_60%)]">
-            <Package2 className="size-10 text-muted-foreground/20" />
-          </div>
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-        <div className="absolute bottom-4 right-4 flex size-10 items-center justify-center rounded-full border border-border/60 bg-background/80 opacity-0 shadow-lg backdrop-blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
-          <ArrowUpRight className="size-4 text-foreground" />
-        </div>
-      </div>
-
-      <div className={`flex flex-col gap-3 ${isFeatured ? "p-6 sm:p-8" : "p-5"}`}>
-        <div className="flex items-start justify-between gap-3">
-          <h3
-            className={`font-serif-display tracking-tight ${
-              isFeatured ? "text-2xl sm:text-3xl" : "text-xl"
-            }`}
-          >
-            {product.name}
-          </h3>
-          <span
-            className={`shrink-0 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-medium tabular-nums text-primary ${
-              isFeatured ? "text-base" : "text-sm"
-            }`}
-          >
-            ${Number(product.price).toFixed(2)}
-          </span>
-        </div>
-
-        {product.description && (
-          <p
-            className={`text-muted-foreground leading-relaxed ${
-              isFeatured ? "text-sm sm:text-base" : "text-sm"
-            } ${isFeatured ? "" : "line-clamp-2"}`}
-          >
-            {product.description}
-          </p>
-        )}
-      </div>
-    </article>
-  );
-}
-
-function EmptyState() {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-border/60 bg-muted/10 px-6 py-24 text-center">
-      <div className="mb-6 flex size-16 items-center justify-center rounded-2xl bg-muted/50">
-        <Package2 className="size-8 text-muted-foreground/30" />
-      </div>
-      <h3 className="font-serif-display text-2xl tracking-tight">
-        Sin productos aún
-      </h3>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-        Este catálogo no tiene productos públicos disponibles por el momento.
-        Vuelve pronto para ver las novedades.
-      </p>
-    </div>
-  );
-}
-
-function groupProductsByCategory(products: BusinessCatalogProduct[]) {
-  const groups = new Map<
-    string,
-    {
-      categoryName: string;
-      products: BusinessCatalogProduct[];
-    }
-  >();
-
-  for (const product of products) {
-    const key = product.product_category?.id ?? "uncategorized";
-    const categoryName = product.product_category?.name ?? "General";
-    const group = groups.get(key);
-
-    if (group) {
-      group.products.push(product);
-      continue;
-    }
-
-    groups.set(key, {
-      categoryName,
-      products: [product],
-    });
-  }
-
-  return Array.from(groups.values());
-}
-
 async function CatalogContent({
   params,
 }: {
@@ -312,7 +194,6 @@ async function CatalogContent({
   }
 
   const products = await getActiveProductsForCatalog(catalog.id);
-  const productGroups = groupProductsByCategory(products);
 
   return (
     <main className="min-h-screen">
@@ -334,43 +215,7 @@ async function CatalogContent({
           </div>
         </div>
 
-        {products.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <div className="space-y-10">
-            {productGroups.map((group, groupIndex) => (
-              <div key={group.categoryName} className="space-y-5">
-                <div
-                  className={`flex items-center justify-between gap-3 animate-fade-up stagger-${Math.min(groupIndex + 4, 8)}`}
-                >
-                  <div>
-                    <h3 className="font-serif-display text-xl tracking-tight sm:text-2xl">
-                      {group.categoryName}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {group.products.length} producto
-                      {group.products.length !== 1 ? "s" : ""}
-                    </p>
-                  </div>
-                  <Badge variant="outline" className="hidden sm:inline-flex">
-                    Categoría
-                  </Badge>
-                </div>
-
-                <div className="grid auto-rows-auto gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {group.products.map((product, index) => (
-                    <div
-                      key={product.id}
-                      className={`animate-fade-up stagger-${Math.min(index + groupIndex + 4, 8)}`}
-                    >
-                      <ProductCard product={product} index={index} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <CatalogProductGrid products={products} />
       </section>
     </main>
   );

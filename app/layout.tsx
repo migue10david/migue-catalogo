@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -46,6 +47,7 @@ export default function RootLayout({
             <Navbar />
           </Suspense>
           {children}
+              <Footer />
         </ThemeProvider>
       </body>
     </html>

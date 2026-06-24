@@ -47,19 +47,6 @@ const sellerItems = [
   }
 ];
 
-const navItems = [
-  {
-    title: "Dashboard",
-    href: "/protected",
-    icon: PanelTop,
-  },
-  {
-    title: "Marketplace",
-    href: "/",
-    icon: ShoppingBag,
-  },
-];
-
 export function SellerSidebar() {
   const pathname = usePathname();
 
