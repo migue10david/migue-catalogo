@@ -12,7 +12,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Catálogo Online",
+  title: "Catalogly",
   description: "Plataforma de catálogo online para vendedores y productos",
 };
 

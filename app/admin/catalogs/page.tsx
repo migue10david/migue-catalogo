@@ -1,35 +1,35 @@
 import { Suspense } from "react";
 
 import { requireRole } from "@/lib/auth";
-import { getAllProfiles } from "@/lib/admin";
-import { UsersTable } from "@/components/admin/users-table";
+import { getAllCatalogsWithOwner } from "@/lib/admin";
+import { CatalogsTable } from "@/components/admin/catalogs-table";
 
-async function AdminUsersContent() {
+async function AdminCatalogsContent() {
   await requireRole("admin");
-  const users = await getAllProfiles();
+  const catalogs = await getAllCatalogsWithOwner();
 
   return (
     <div className="flex flex-col gap-8">
       <div>
         <h1 className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-          Usuarios
+          Catálogos
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Gestiona todos los usuarios de la plataforma.
+          Todos los catálogos creados en la plataforma.
         </p>
       </div>
 
-      <UsersTable users={users} />
+      <CatalogsTable catalogs={catalogs} />
     </div>
   );
 }
 
-function AdminUsersSkeleton() {
+function AdminCatalogsSkeleton() {
   return (
     <div className="flex flex-col gap-8">
       <div>
         <div className="h-10 w-48 rounded-xl bg-muted/50" />
-        <div className="mt-2 h-4 w-64 rounded-lg bg-muted/30" />
+        <div className="mt-2 h-4 w-72 rounded-lg bg-muted/30" />
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
         {[1, 2, 3].map((i) => (
@@ -42,10 +42,10 @@ function AdminUsersSkeleton() {
   );
 }
 
-export default function AdminPage() {
+export default function AdminCatalogsPage() {
   return (
-    <Suspense fallback={<AdminUsersSkeleton />}>
-      <AdminUsersContent />
+    <Suspense fallback={<AdminCatalogsSkeleton />}>
+      <AdminCatalogsContent />
     </Suspense>
   );
 }

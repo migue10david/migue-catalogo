@@ -59,7 +59,7 @@ export function NavbarClient({ user, hasEnvVars }: NavbarClientProps) {
   };
 
   return (
-    <nav className={`w-full border-b border-border/40 bg-background/80 backdrop-blur-sm sticky top-0 ${pathname.startsWith("/seller") ? "z-0" : "z-50"}`}>
+    <nav className={`w-full border-b border-border/40 bg-background/80 backdrop-blur-sm sticky top-0 ${(pathname.startsWith("/seller") || pathname.startsWith("/admin")) ? "z-0" : "z-50"}`}>
       <div className="w-full max-w-6xl mx-auto flex justify-between items-center h-14 px-4 sm:px-6">
         {/* Left: Sidebar trigger + Logo */}
         <div className="flex items-center gap-2">
@@ -67,8 +67,8 @@ export function NavbarClient({ user, hasEnvVars }: NavbarClientProps) {
             href="/"
             className="flex items-center gap-2 font-bold text-lg tracking-tight hover:opacity-80 transition-opacity"
           >
-            <Store className="size-5 text-primary" />
-            <span className="hidden sm:inline">Catálogo Online</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo1.png" alt="Catalogly" className="h-20 md:h-24 w-auto object-contain" />
           </Link>
         </div>
 

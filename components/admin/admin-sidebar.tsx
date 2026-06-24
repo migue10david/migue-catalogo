@@ -4,10 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutGrid,
-  Package,
-  PanelTop,
-  Store,
-  ShoppingBag,
+  Users,
+  ClipboardList,
   ShieldCheck,
 } from "lucide-react";
 
@@ -26,35 +24,35 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 
-const sellerItems = [
+const adminItems = [
+  {
+    title: "Usuarios",
+    href: "/admin",
+    icon: Users,
+    hint: "Gestión de usuarios",
+  },
   {
     title: "Catálogos",
-    href: "/seller/catalogs",
+    href: "/admin/catalogs",
     icon: LayoutGrid,
-    hint: "Negocios",
+    hint: "Todos los catálogos",
   },
   {
-    title: "Productos",
-    href: "/seller/products",
-    icon: Package,
-    hint: "Inventario",
+    title: "Solicitudes",
+    href: "/admin/requests",
+    icon: ClipboardList,
+    hint: "Pendientes",
   },
-  {
-    title: "Categorias",
-    href: "/seller/categories",
-    icon: ShieldCheck,
-    hint: "Categorias",
-  }
 ];
 
-export function SellerSidebar() {
+export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader>
         <Link
-          href="/seller/catalogs"
+          href="/admin"
           className="group flex items-center gap-2.5 rounded-xl bg-primary/5 px-3 py-2.5 transition-all duration-200 hover:bg-primary/10"
         >
           <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow-md">
@@ -63,17 +61,17 @@ export function SellerSidebar() {
           </div>
           <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
             <p className="text-sm font-semibold leading-tight tracking-tight">
-              Seller Studio
+              Admin Panel
             </p>
             <p className="text-[11px] leading-tight text-muted-foreground">
-              Gestión de catálogos
+              Administración general
             </p>
           </div>
           <Badge
             variant="secondary"
-            className="hidden border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-600 dark:text-emerald-400 group-data-[collapsible=icon]:hidden"
+            className="hidden border-primary/20 bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary group-data-[collapsible=icon]:hidden"
           >
-            Live
+            Admin
           </Badge>
         </Link>
       </SidebarHeader>
@@ -84,8 +82,12 @@ export function SellerSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {sellerItems.map((item) => {
-                const isActive = pathname === item.href;
+              {adminItems.map((item) => {
+                const isActive =
+                  item.href === "/admin"
+                    ? pathname === "/admin"
+                    : pathname.startsWith(item.href);
+
                 return (
                   <SidebarMenuItem key={item.href}>
                     <SidebarMenuButton
@@ -99,7 +101,9 @@ export function SellerSidebar() {
                       }`}
                     >
                       <Link href={item.href}>
-                        <item.icon className={`size-5 ${isActive ? "text-primary" : ""}`} />
+                        <item.icon
+                          className={`size-5 ${isActive ? "text-primary" : ""}`}
+                        />
                         <div className="flex min-w-0 flex-1 items-center justify-between group-data-[collapsible=icon]:hidden">
                           <div className="flex min-w-0 flex-col">
                             <span className="truncate text-[15px] leading-tight">
@@ -127,7 +131,7 @@ export function SellerSidebar() {
 
       <SidebarFooter className="group-data-[collapsible=icon]:hidden">
         <div className="rounded-lg border border-border/40 bg-muted/15 px-3 py-2 text-[11px] leading-relaxed text-muted-foreground/70">
-          Mantén catálogos e inventario separados.
+          Gestiona usuarios y catálogos de la plataforma.
         </div>
       </SidebarFooter>
 
