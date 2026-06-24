@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
+import { useEffect } from "react";
 
 import { createBusinessCatalogProduct } from "@/app/actions/products";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,13 @@ const WEBP_QUALITY = 0.86;
 
 type CatalogOption = {
   id: string;
+  name: string;
+  is_active: boolean;
+};
+
+type ProductCategoryOption = {
+  id: string;
+  business_catalog_id: string;
   name: string;
   is_active: boolean;
 };
@@ -85,12 +93,32 @@ async function convertImageToWebp(file: File) {
 
 export function BusinessProductForm({
   catalogs,
+  categories,
 }: {
   catalogs: CatalogOption[];
+  categories: ProductCategoryOption[];
 }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [selectedCatalogId, setSelectedCatalogId] = useState(
+    catalogs[0]?.id ?? "",
+  );
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
+  const availableCategories = categories.filter(
+    (category) =>
+      category.business_catalog_id === selectedCatalogId && category.is_active,
+  );
+
+  useEffect(() => {
+    const nextCategoryId = availableCategories[0]?.id ?? "";
+    setSelectedCategoryId((current) =>
+      availableCategories.some((category) => category.id === current)
+        ? current
+        : nextCategoryId,
+    );
+  }, [availableCategories, categories, selectedCatalogId]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -110,6 +138,8 @@ export function BusinessProductForm({
           try {
             await createBusinessCatalogProduct(formData);
             formRef.current?.reset();
+            setSelectedCatalogId(catalogs[0]?.id ?? "");
+            setSelectedCategoryId("");
           } catch (submitError) {
             setError(
               submitError instanceof Error
@@ -138,7 +168,8 @@ export function BusinessProductForm({
           required
           disabled={isPending}
           className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-          defaultValue={catalogs[0]?.id ?? ""}
+          value={selectedCatalogId}
+          onChange={(event) => setSelectedCatalogId(event.target.value)}
         >
           {catalogs.map((catalog) => (
             <option key={catalog.id} value={catalog.id}>
@@ -146,6 +177,29 @@ export function BusinessProductForm({
               {catalog.is_active ? "" : " (inactive)"}
             </option>
           ))}
+        </select>
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="product-category">Categoría</Label>
+        <select
+          id="product-category"
+          name="product_category_id"
+          required
+          disabled={isPending || availableCategories.length === 0}
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+          value={selectedCategoryId}
+          onChange={(event) => setSelectedCategoryId(event.target.value)}
+        >
+          {availableCategories.length === 0 ? (
+            <option value="">Primero crea una categoría para este catálogo</option>
+          ) : (
+            availableCategories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))
+          )}
         </select>
       </div>
 
@@ -201,7 +255,10 @@ export function BusinessProductForm({
       {error && <p className="text-sm text-red-500">{error}</p>}
 
       <div>
-        <Button type="submit" disabled={isPending}>
+        <Button
+          type="submit"
+          disabled={isPending || availableCategories.length === 0}
+        >
           {isPending ? "Creating product..." : "Add product"}
         </Button>
       </div>

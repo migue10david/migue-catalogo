@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, Package } from "lucide-react";
+import { LayoutGrid, Package, ShieldCheck } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,11 @@ const items = [
     href: "/seller/products",
     icon: Package,
   },
+    {
+    label: "Categorias",
+    href: "/seller/categories",
+    icon: ShieldCheck,
+  }
 ];
 
 export function SellerTopNav() {

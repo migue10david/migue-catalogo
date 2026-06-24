@@ -15,6 +15,9 @@ import {
   Sparkles,
   Package2,
   MapPin,
+  BadgeCheck,
+  PanelRightOpen,
+  ScanSearch,
 } from "lucide-react";
 
 const features = [
@@ -82,50 +85,178 @@ async function SellerSection() {
 
   return (
     <section className="w-full border-t">
-      <div className="max-w-5xl mx-auto px-4 py-20">
-        <div className="rounded-xl border bg-card p-8 sm:p-12 flex flex-col md:flex-row items-center gap-8">
-          <div className="flex-1 flex flex-col gap-4">
-            <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center">
-              <ShoppingBag className="size-6 text-primary" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold">
-              ¿Quieres ser vendedor?
-            </h2>
-            <p className="text-muted-foreground">
-              Crea tu propio catálogo y llega a miles de clientes. Gestiona tus
-              productos y recibe pedidos directamente.
-            </p>
-            <ul className="flex flex-col gap-2 mt-2">
-              {sellerBenefits.map((benefit) => (
-                <li
-                  key={benefit}
-                  className="flex items-center gap-2 text-sm"
+      <div className="mx-auto max-w-6xl px-4 py-20">
+        <div className="relative overflow-hidden rounded-[2rem] border border-border/60 bg-card">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.16),transparent_34%),radial-gradient(circle_at_85%_18%,hsl(var(--primary)/0.09),transparent_28%),linear-gradient(135deg,hsl(var(--background)),hsl(var(--muted)/0.55))]" />
+          <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-[linear-gradient(135deg,transparent,rgba(255,255,255,0.08),transparent)] lg:block" />
+          <div className="relative grid gap-10 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.2fr)_380px] lg:p-12">
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge
+                  variant="secondary"
+                  className="rounded-full border-primary/15 bg-primary/8 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-primary"
                 >
-                  <CheckCircle2 className="size-4 text-primary shrink-0" />
-                  {benefit}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4">
-              {user ? (
-                <Button asChild size="lg">
-                  <Link href="/protected">
-                    Solicitar acceso de vendedor
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-              ) : (
-                <Button asChild size="lg">
-                  <Link href="/auth/sign-up">
-                    Crear cuenta y empezar
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-              )}
+                  Programa Seller
+                </Badge>
+                <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs text-muted-foreground backdrop-blur-sm">
+                  <Sparkles className="size-3.5 text-primary" />
+                  Solicitud y aprobación por admin
+                </div>
+              </div>
+
+              <div className="max-w-2xl">
+                <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-primary/15 bg-primary/10 shadow-sm shadow-primary/10">
+                  <ShoppingBag className="size-7 text-primary" />
+                </div>
+                <h2 className="max-w-xl font-serif-display text-3xl tracking-tight sm:text-4xl lg:text-5xl">
+                  Convierte tu negocio en un catálogo que sí se ve profesional
+                </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
+                  Publica tus productos, organiza tus negocios y deja que los
+                  clientes descubran todo desde una vitrina digital clara,
+                  rápida y fácil de compartir.
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-border/60 bg-background/70 p-4 backdrop-blur-sm">
+                  <PanelRightOpen className="size-5 text-primary" />
+                  <p className="mt-3 text-sm font-medium">Panel dedicado</p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    Gestiona catálogos y productos desde un solo espacio.
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-border/60 bg-background/70 p-4 backdrop-blur-sm">
+                  <ScanSearch className="size-5 text-primary" />
+                  <p className="mt-3 text-sm font-medium">Mayor alcance</p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    Haz que más personas encuentren tu negocio y tus productos.
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-border/60 bg-background/70 p-4 backdrop-blur-sm">
+                  <BadgeCheck className="size-5 text-primary" />
+                  <p className="mt-3 text-sm font-medium">Control total</p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    Decide qué mostrar, cómo presentarlo y cuándo actualizarlo.
+                  </p>
+                </div>
+              </div>
+
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {sellerBenefits.map((benefit) => (
+                  <li
+                    key={benefit}
+                    className="flex items-start gap-3 rounded-2xl border border-border/50 bg-background/55 px-4 py-3 text-sm backdrop-blur-sm"
+                  >
+                    <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/12">
+                      <CheckCircle2 className="size-4 text-primary" />
+                    </span>
+                    <span className="leading-6">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
+                {user ? (
+                  <Button asChild size="lg" className="rounded-full px-6">
+                    <Link href="/protected">
+                      Solicitar acceso de vendedor
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button asChild size="lg" className="rounded-full px-6">
+                    <Link href="/auth/sign-up">
+                      Crear cuenta y empezar
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                )}
+
+                <p className="text-xs leading-6 text-muted-foreground sm:max-w-xs">
+                  El acceso seller se habilita después de la revisión del
+                  administrador.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="hidden md:flex size-48 rounded-xl bg-muted items-center justify-center">
-            <Store className="size-16 text-muted-foreground/30" />
+
+            <div className="relative">
+              <div className="absolute -inset-4 rounded-[2rem] bg-primary/8 blur-2xl" />
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-border/70 bg-background/85 p-5 shadow-xl shadow-black/5 backdrop-blur-md">
+                <div className="flex items-center justify-between border-b border-border/50 pb-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
+                      Seller preview
+                    </p>
+                    <p className="mt-1 font-serif-display text-2xl tracking-tight">
+                      Tu escaparate
+                    </p>
+                  </div>
+                  <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10">
+                    <Store className="size-6 text-primary" />
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-4">
+                  <div className="rounded-2xl border border-border/60 bg-muted/30 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-medium">Catálogo principal</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Muestra tu negocio con identidad propia y enlaces de
+                          contacto.
+                        </p>
+                      </div>
+                      <div className="rounded-full border border-border/60 bg-background px-2.5 py-1 text-[11px] font-medium">
+                        Activo
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-2xl border border-border/60 bg-background p-4">
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                        Productos
+                      </p>
+                      <p className="mt-2 font-serif-display text-3xl tracking-tight">
+                        24
+                      </p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        visibles para clientes
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-border/60 bg-background p-4">
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                        Negocios
+                      </p>
+                      <p className="mt-2 font-serif-display text-3xl tracking-tight">
+                        03
+                      </p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        organizados por catálogo
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.5rem] border border-dashed border-primary/25 bg-primary/6 p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-10 items-center justify-center rounded-xl bg-primary/12">
+                        <Sparkles className="size-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">
+                          Empieza con una sola solicitud
+                        </p>
+                        <p className="text-xs leading-5 text-muted-foreground">
+                          Cuando te aprueben, podrás crear catálogos y luego
+                          agregar todos tus productos.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -301,8 +432,6 @@ export default function Home() {
       <Suspense>
         <SellerSection />
       </Suspense>
-
-      <Footer />
     </main>
   );
 }

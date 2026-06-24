@@ -8,6 +8,7 @@ import {
   PanelTop,
   Store,
   ShoppingBag,
+  ShieldCheck,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +18,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -39,19 +39,12 @@ const sellerItems = [
     icon: Package,
     hint: "Inventario",
   },
-];
-
-const navItems = [
   {
-    title: "Dashboard",
-    href: "/protected",
-    icon: PanelTop,
-  },
-  {
-    title: "Marketplace",
-    href: "/",
-    icon: ShoppingBag,
-  },
+    title: "Categorias",
+    href: "/seller/categories",
+    icon: ShieldCheck,
+    hint: "Categorias",
+  }
 ];
 
 export function SellerSidebar() {
