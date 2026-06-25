@@ -36,6 +36,9 @@ async function ProductsContent() {
   const activeProducts = products.filter(
     (product) => product.is_active,
   ).length;
+  const usedProducts = products.length;
+  const productLimit = profile.product_limit;
+  const remainingProductSlots = Math.max(productLimit - usedProducts, 0);
 
   if (profile.role !== "seller") {
     return (
@@ -122,6 +125,63 @@ async function ProductsContent() {
         </Card>
       </section>
 
+      <section className="grid gap-4 sm:grid-cols-3">
+        <Card className="border-border/50 shadow-sm">
+          <CardHeader className="pb-2 p-5 sm:p-6">
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Cupo total
+            </CardDescription>
+            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
+              {productLimit}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
+            <p className="text-xs text-muted-foreground">
+              Máximo de productos permitidos por el administrador.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/50 shadow-sm">
+          <CardHeader className="pb-2 p-5 sm:p-6">
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Usados
+            </CardDescription>
+            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
+              {usedProducts}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
+            <p className="text-xs text-muted-foreground">
+              Productos que ya ocupan espacio en tu cupo.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/50 shadow-sm">
+          <CardHeader className="pb-2 p-5 sm:p-6">
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Disponibles
+            </CardDescription>
+            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
+              {remainingProductSlots}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
+            <p className="text-xs text-muted-foreground">
+              Espacios libres para crear nuevos productos.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {remainingProductSlots <= 0 && (
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
+          Has alcanzado tu límite de productos. Contacta al administrador para
+          ampliar tu cupo antes de crear nuevos artículos.
+        </div>
+      )}
+
       {/* Products Table */}
       <section>
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -148,6 +208,9 @@ async function ProductsContent() {
                   name: c.name,
                   is_active: c.is_active,
                 }))}
+                productLimit={productLimit}
+                usedProducts={usedProducts}
+                remainingProductSlots={remainingProductSlots}
               />
             ) : null}
           </div>

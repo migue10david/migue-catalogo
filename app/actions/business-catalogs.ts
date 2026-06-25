@@ -28,6 +28,44 @@ function getRequiredProvinceId(formData: FormData) {
   return provinceId;
 }
 
+async function ensureCatalogLimitAvailable(ownerId: string) {
+  const supabase = await createClient();
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("catalog_limit")
+    .eq("id", ownerId)
+    .maybeSingle();
+
+  if (profileError || !profile) {
+    throw new Error("Profile not found");
+  }
+
+  const { count: catalogCount, error: countError } = await supabase
+    .from("business_catalogs")
+    .select("id", { count: "exact", head: true })
+    .eq("owner_id", ownerId);
+
+  if (countError) {
+    throw new Error("Could not verify catalog limit");
+  }
+
+  const usedCatalogs = catalogCount ?? 0;
+  const catalogLimit = profile.catalog_limit ?? 0;
+
+  if (usedCatalogs >= catalogLimit) {
+    throw new Error(
+      "Has alcanzado tu límite de catálogos. Contacta al administrador para ampliar tu cupo.",
+    );
+  }
+
+  return {
+    catalogLimit,
+    usedCatalogs,
+    remainingCatalogSlots: Math.max(catalogLimit - usedCatalogs, 0),
+  };
+}
+
 function getRequiredBusinessCategoryId(formData: FormData) {
   const value = String(formData.get("business_category_id") ?? "").trim();
 
@@ -137,6 +175,8 @@ export async function createBusinessCatalog(formData: FormData) {
   if (!name) {
     throw new Error("Name is required");
   }
+
+  await ensureCatalogLimitAvailable(profile.id);
 
   const uploadedLogo = await uploadCatalogMedia(
     logoFile instanceof File ? logoFile : null,

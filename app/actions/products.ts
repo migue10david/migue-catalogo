@@ -72,6 +72,55 @@ async function getOwnedCatalog(businessCatalogId: string, ownerId: string) {
   return data;
 }
 
+async function ensureProductLimitAvailable(ownerId: string) {
+  const supabase = await createClient();
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("product_limit")
+    .eq("id", ownerId)
+    .maybeSingle();
+
+  if (profileError || !profile) {
+    throw new Error("Profile not found");
+  }
+
+  const { data: catalogs, error: catalogsError } = await supabase
+    .from("business_catalogs")
+    .select("id")
+    .eq("owner_id", ownerId);
+
+  if (catalogsError) {
+    throw new Error("Could not verify product limit");
+  }
+
+  const catalogIds = (catalogs ?? []).map((catalog) => catalog.id);
+
+  const { count: productCount, error: countError } = await supabase
+    .from("business_catalog_products")
+    .select("id", { count: "exact", head: true })
+    .in("business_catalog_id", catalogIds.length > 0 ? catalogIds : ["__none__"]);
+
+  if (countError) {
+    throw new Error("Could not verify product limit");
+  }
+
+  const usedProducts = productCount ?? 0;
+  const productLimit = profile.product_limit ?? 0;
+
+  if (usedProducts >= productLimit) {
+    throw new Error(
+      "Has alcanzado tu límite de productos. Contacta al administrador para ampliar tu cupo.",
+    );
+  }
+
+  return {
+    productLimit,
+    usedProducts,
+    remainingProductSlots: Math.max(productLimit - usedProducts, 0),
+  };
+}
+
 async function ensureOwnedProductCategory(
   productCategoryId: string,
   businessCatalogId: string,
@@ -130,6 +179,7 @@ export async function createBusinessCatalogProduct(formData: FormData) {
     businessCatalogId,
     profile.id,
   );
+  await ensureProductLimitAvailable(profile.id);
 
   const uploadedImage = await uploadProductImage(
     imageFile instanceof File ? imageFile : null,
