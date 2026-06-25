@@ -106,6 +106,9 @@ type DialogCatalogFormProps = {
   mode?: "create" | "edit";
   businessCategories: BusinessCategory[];
   provinces: Province[];
+  catalogLimit?: number;
+  usedCatalogs?: number;
+  remainingCatalogSlots?: number;
   triggerLabel?: string;
   triggerClassName?: string;
 };
@@ -115,6 +118,9 @@ const DialogCatalogForm = ({
   mode = "create",
   businessCategories,
   provinces,
+  catalogLimit = 0,
+  usedCatalogs = 0,
+  remainingCatalogSlots = 0,
   triggerLabel,
   triggerClassName,
 }: DialogCatalogFormProps) => {
@@ -126,6 +132,7 @@ const DialogCatalogForm = ({
     mode === "edit" ? updateBusinessCatalog : createBusinessCatalog;
   const buttonLabel =
     triggerLabel ?? (mode === "edit" ? "Editar" : "Crear catálogo");
+  const isCreateDisabled = mode === "create" && remainingCatalogSlots <= 0;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -180,6 +187,7 @@ const DialogCatalogForm = ({
         <Button
           variant={mode === "edit" ? "outline" : "default"}
           className={triggerClassName}
+          disabled={isCreateDisabled}
         >
           {buttonLabel}
         </Button>
@@ -205,6 +213,40 @@ const DialogCatalogForm = ({
           )}
           <div className="flex-1 overflow-y-auto px-5 py-4 sm:px-6">
             <div className="flex flex-col gap-5 pb-1">
+              {mode === "create" && (
+                <>
+                  <div className="rounded-xl border border-border/50 bg-muted/10 p-4">
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                          Usados
+                        </p>
+                        <p className="mt-1 text-sm font-semibold">{usedCatalogs}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                          Cupo
+                        </p>
+                        <p className="mt-1 text-sm font-semibold">{catalogLimit}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                          Disponibles
+                        </p>
+                        <p className="mt-1 text-sm font-semibold">{remainingCatalogSlots}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {remainingCatalogSlots <= 0 && (
+                    <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-300">
+                      Has alcanzado tu límite de catálogos. Contacta al administrador
+                      para ampliar tu cupo.
+                    </p>
+                  )}
+                </>
+              )}
+
               <div className="grid gap-2">
                 <Label htmlFor="catalog-name">Nombre</Label>
                 <Input
@@ -380,7 +422,7 @@ const DialogCatalogForm = ({
                 Cancelar
               </Button>
             </DialogClose>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending || isCreateDisabled}>
               {isPending
                 ? "Procesando y subiendo..."
                 : mode === "edit"

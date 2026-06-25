@@ -42,6 +42,9 @@ async function CatalogsContent() {
       ? await getBusinessCatalogsForOwner(profile.id)
       : [];
   const activeCatalogs = catalogs.filter((catalog) => catalog.is_active).length;
+  const usedCatalogs = catalogs.length;
+  const catalogLimit = profile.catalog_limit;
+  const remainingCatalogSlots = Math.max(catalogLimit - usedCatalogs, 0);
 
   if (profile.role !== "seller") {
     return (
@@ -71,15 +74,28 @@ async function CatalogsContent() {
             {catalogs.length} catálogo{catalogs.length !== 1 ? "s" : ""} en
             total · {activeCatalogs} activo{activeCatalogs !== 1 ? "s" : ""}
           </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Cupo: {catalogLimit} · Disponibles: {remainingCatalogSlots}
+          </p>
         </div>
         <div className="shrink-0">
           <DialogCatalogForm
             businessCategories={businessCategories}
             provinces={provinces}
+            catalogLimit={catalogLimit}
+            usedCatalogs={usedCatalogs}
+            remainingCatalogSlots={remainingCatalogSlots}
             triggerLabel="Crear catálogo"
           />
         </div>
       </section>
+
+      {remainingCatalogSlots <= 0 && (
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
+          Has alcanzado tu límite de catálogos. Contacta al administrador para
+          ampliar tu cupo antes de crear uno nuevo.
+        </div>
+      )}
 
       <section className="flex flex-col gap-3 sm:gap-4">
         {catalogs.length === 0 ? (
@@ -199,6 +215,9 @@ async function CatalogsContent() {
                         catalog={catalog}
                         businessCategories={businessCategories}
                         provinces={provinces}
+                        catalogLimit={catalogLimit}
+                        usedCatalogs={usedCatalogs}
+                        remainingCatalogSlots={remainingCatalogSlots}
                         triggerLabel="Editar"
                         triggerClassName="h-8 px-3 text-xs"
                       />
@@ -285,6 +304,9 @@ async function CatalogsContent() {
                       catalog={catalog}
                       businessCategories={businessCategories}
                       provinces={provinces}
+                      catalogLimit={catalogLimit}
+                      usedCatalogs={usedCatalogs}
+                      remainingCatalogSlots={remainingCatalogSlots}
                       triggerLabel="Editar"
                       triggerClassName="h-7 px-2.5 text-[11px]"
                     />

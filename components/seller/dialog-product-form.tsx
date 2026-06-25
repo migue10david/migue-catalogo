@@ -98,11 +98,17 @@ async function convertImageToWebp(file: File) {
 type DialogProductFormProps = {
   catalogs: CatalogOption[];
   categories: ProductCategoryOption[];
+  productLimit: number;
+  usedProducts: number;
+  remainingProductSlots: number;
 };
 
 export function DialogProductForm({
   catalogs,
   categories,
+  productLimit,
+  usedProducts,
+  remainingProductSlots,
 }: DialogProductFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
@@ -169,7 +175,7 @@ export function DialogProductForm({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Agregar producto</Button>
+        <Button disabled={remainingProductSlots <= 0}>Agregar producto</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
@@ -183,6 +189,36 @@ export function DialogProductForm({
           onSubmit={handleSubmit}
           className="flex flex-col gap-5"
         >
+          <div className="rounded-xl border border-border/50 bg-muted/10 p-4">
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                  Usados
+                </p>
+                <p className="mt-1 text-sm font-semibold">{usedProducts}</p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                  Cupo
+                </p>
+                <p className="mt-1 text-sm font-semibold">{productLimit}</p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                  Disponibles
+                </p>
+                <p className="mt-1 text-sm font-semibold">{remainingProductSlots}</p>
+              </div>
+            </div>
+          </div>
+
+          {remainingProductSlots <= 0 && (
+            <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-300">
+              Has alcanzado tu límite de productos. Contacta al administrador
+              para ampliar tu cupo.
+            </p>
+          )}
+
           <div className="grid gap-2">
             <Label htmlFor="product-catalog">Catálogo</Label>
             <select
@@ -286,7 +322,11 @@ export function DialogProductForm({
             </DialogClose>
             <Button
               type="submit"
-              disabled={isPending || availableCategories.length === 0}
+              disabled={
+                isPending ||
+                availableCategories.length === 0 ||
+                remainingProductSlots <= 0
+              }
             >
               {isPending ? "Creando..." : "Crear producto"}
             </Button>

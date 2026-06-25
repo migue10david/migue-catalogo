@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useFormStatus } from "react-dom";
+import { toggleBusinessCatalogStatus } from "@/app/actions/admin";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,6 +39,16 @@ function formatDate(dateString: string) {
     month: "short",
     year: "numeric",
   });
+}
+
+function StatusToggleButton({ isActive }: { isActive: boolean }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" size="sm" variant="outline" disabled={pending}>
+      {pending ? "Guardando..." : isActive ? "Desactivar" : "Activar"}
+    </Button>
+  );
 }
 
 export function CatalogsTable({ catalogs }: CatalogsTableProps) {
@@ -194,6 +207,9 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
                 Productos
               </TableHead>
               <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+                Acción
+              </TableHead>
+              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
                 Creado
               </TableHead>
             </TableRow>
@@ -230,6 +246,17 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
                 </TableCell>
                 <TableCell className="text-center">
                   <span className="tabular-nums">{catalog.product_count}</span>
+                </TableCell>
+                <TableCell>
+                  <form action={toggleBusinessCatalogStatus}>
+                    <input type="hidden" name="catalogId" value={catalog.id} />
+                    <input
+                      type="hidden"
+                      name="nextState"
+                      value={String(!catalog.is_active)}
+                    />
+                    <StatusToggleButton isActive={catalog.is_active} />
+                  </form>
                 </TableCell>
                 <TableCell className="text-sm text-muted-foreground">
                   {formatDate(catalog.created_at)}
@@ -284,6 +311,17 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
                 <span>
                   {catalog.product_count} producto{catalog.product_count !== 1 ? "s" : ""}
                 </span>
+              </div>
+              <div className="mt-3">
+                <form action={toggleBusinessCatalogStatus}>
+                  <input type="hidden" name="catalogId" value={catalog.id} />
+                  <input
+                    type="hidden"
+                    name="nextState"
+                    value={String(!catalog.is_active)}
+                  />
+                  <StatusToggleButton isActive={catalog.is_active} />
+                </form>
               </div>
               <p className="mt-2 text-xs text-muted-foreground/60">
                 {formatDate(catalog.created_at)}

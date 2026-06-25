@@ -8,6 +8,8 @@ export type AuthProfile = {
   id: string;
   email: string | null;
   role: AppRole;
+  product_limit: number;
+  catalog_limit: number;
   isRoleConfigured: boolean;
 };
 
@@ -24,7 +26,7 @@ export async function getCurrentUserProfile(): Promise<AuthProfile | null> {
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("id, email, role")
+    .select("id, email, role, product_limit, catalog_limit")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -33,6 +35,8 @@ export async function getCurrentUserProfile(): Promise<AuthProfile | null> {
       id: user.id,
       email: user.email ?? null,
       role: "user",
+      product_limit: 0,
+      catalog_limit: 0,
       isRoleConfigured: false,
     };
   }
@@ -41,6 +45,8 @@ export async function getCurrentUserProfile(): Promise<AuthProfile | null> {
     id: profile.id,
     email: profile.email,
     role: profile.role,
+    product_limit: profile.product_limit ?? 0,
+    catalog_limit: profile.catalog_limit ?? 0,
     isRoleConfigured: true,
   };
 }

@@ -7,6 +7,11 @@ export type AdminUserProfile = {
   role: string;
   created_at: string;
   catalog_count: number;
+  catalog_limit: number;
+  remaining_catalog_slots: number;
+  product_limit: number;
+  product_count: number;
+  remaining_product_slots: number;
 };
 
 export type AdminBusinessCatalog = {
@@ -30,7 +35,7 @@ export async function getAllProfiles(): Promise<AdminUserProfile[]> {
 
   const { data: profiles, error } = await supabase
     .from("profiles")
-    .select("id, email, role, created_at")
+    .select("id, email, role, created_at, product_limit, catalog_limit")
     .order("created_at", { ascending: false });
 
   if (error || !profiles) {
@@ -41,7 +46,7 @@ export async function getAllProfiles(): Promise<AdminUserProfile[]> {
 
   const { data: catalogs } = await supabase
     .from("business_catalogs")
-    .select("owner_id")
+    .select("id, owner_id")
     .in("owner_id", profileIds.length > 0 ? profileIds : ["__none__"]);
 
   const catalogCounts = new Map<string, number>();
@@ -52,12 +57,44 @@ export async function getAllProfiles(): Promise<AdminUserProfile[]> {
     );
   }
 
+  const catalogOwnerById = new Map(
+    (catalogs ?? []).map((catalog) => [catalog.id, catalog.owner_id]),
+  );
+  const catalogIds = (catalogs ?? []).map((catalog) => catalog.id);
+
+  const { data: products } = await supabase
+    .from("business_catalog_products")
+    .select("business_catalog_id")
+    .in("business_catalog_id", catalogIds.length > 0 ? catalogIds : ["__none__"]);
+
+  const productCounts = new Map<string, number>();
+  for (const product of products ?? []) {
+    const ownerId = catalogOwnerById.get(product.business_catalog_id);
+    if (!ownerId) continue;
+
+    productCounts.set(
+      ownerId,
+      (productCounts.get(ownerId) ?? 0) + 1,
+    );
+  }
+
   return profiles.map((profile) => ({
     id: profile.id,
     email: profile.email,
     role: profile.role,
     created_at: profile.created_at,
     catalog_count: catalogCounts.get(profile.id) ?? 0,
+    catalog_limit: profile.catalog_limit ?? 0,
+    remaining_catalog_slots: Math.max(
+      (profile.catalog_limit ?? 0) - (catalogCounts.get(profile.id) ?? 0),
+      0,
+    ),
+    product_limit: profile.product_limit ?? 0,
+    product_count: productCounts.get(profile.id) ?? 0,
+    remaining_product_slots: Math.max(
+      (profile.product_limit ?? 0) - (productCounts.get(profile.id) ?? 0),
+      0,
+    ),
   }));
 }
 

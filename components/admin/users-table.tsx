@@ -1,8 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Badge } from "@/components/ui/badge";
+import {
+  increaseUserCatalogLimit,
+  increaseUserProductLimit,
+} from "@/app/actions/admin";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -52,6 +58,68 @@ const roleConfig: Record<string, { label: string; className: string }> = {
     className: "border-border/60 bg-muted/50 text-muted-foreground",
   },
 };
+
+function ProductLimitSubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" size="sm" variant="outline" disabled={pending}>
+      {pending ? "Sumando..." : "Sumar"}
+    </Button>
+  );
+}
+
+function ProductLimitControls({ user }: { user: AdminUserProfile }) {
+  if (user.role !== "seller") {
+    return <span className="text-xs text-muted-foreground">—</span>;
+  }
+
+  return (
+    <form action={increaseUserProductLimit} className="flex items-center gap-2">
+      <input type="hidden" name="userId" value={user.id} />
+      <Input
+        name="incrementBy"
+        type="number"
+        min="1"
+        step="1"
+        defaultValue="1"
+        className="h-8 w-16 text-center"
+      />
+      <ProductLimitSubmitButton />
+    </form>
+  );
+}
+
+function CatalogLimitSubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" size="sm" variant="outline" disabled={pending}>
+      {pending ? "Sumando..." : "Sumar"}
+    </Button>
+  );
+}
+
+function CatalogLimitControls({ user }: { user: AdminUserProfile }) {
+  if (user.role !== "seller") {
+    return <span className="text-xs text-muted-foreground">—</span>;
+  }
+
+  return (
+    <form action={increaseUserCatalogLimit} className="flex items-center gap-2">
+      <input type="hidden" name="userId" value={user.id} />
+      <Input
+        name="incrementBy"
+        type="number"
+        min="1"
+        step="1"
+        defaultValue="1"
+        className="h-8 w-16 text-center"
+      />
+      <CatalogLimitSubmitButton />
+    </form>
+  );
+}
 
 export function UsersTable({ users }: UsersTableProps) {
   const [search, setSearch] = useState("");
@@ -144,7 +212,7 @@ export function UsersTable({ users }: UsersTableProps) {
           </CardHeader>
           <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
             <p className="text-xs text-muted-foreground">
-              Vendedores con catálogos activos.
+              Vendedores con cupos administrables.
             </p>
           </CardContent>
         </Card>
@@ -197,6 +265,27 @@ export function UsersTable({ users }: UsersTableProps) {
               <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
                 Catálogos
               </TableHead>
+              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+                Cupo catálogos
+              </TableHead>
+              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+                Libres catálogos
+              </TableHead>
+              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+                Ajustar catálogos
+              </TableHead>
+              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+                Productos
+              </TableHead>
+              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+                Cupo
+              </TableHead>
+              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+                Disponibles
+              </TableHead>
+              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+                Ajustar cupo
+              </TableHead>
               <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
                 Registrado
               </TableHead>
@@ -224,6 +313,27 @@ export function UsersTable({ users }: UsersTableProps) {
                   </TableCell>
                   <TableCell className="text-center">
                     <span className="tabular-nums">{user.catalog_count}</span>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <span className="tabular-nums">{user.role === "seller" ? user.catalog_limit : "—"}</span>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <span className="tabular-nums">{user.role === "seller" ? user.remaining_catalog_slots : "—"}</span>
+                  </TableCell>
+                  <TableCell>
+                    <CatalogLimitControls user={user} />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <span className="tabular-nums">{user.role === "seller" ? user.product_count : "—"}</span>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <span className="tabular-nums">{user.role === "seller" ? user.product_limit : "—"}</span>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <span className="tabular-nums">{user.role === "seller" ? user.remaining_product_slots : "—"}</span>
+                  </TableCell>
+                  <TableCell>
+                    <ProductLimitControls user={user} />
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {formatDate(user.created_at)}
@@ -270,6 +380,64 @@ export function UsersTable({ users }: UsersTableProps) {
                     </div>
                   </div>
                 </div>
+                <div className="mt-3 grid grid-cols-3 gap-2 rounded-xl border border-border/40 bg-muted/10 p-3">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Catálogos
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {user.role === "seller" ? user.catalog_count : "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Cupo cat.
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {user.role === "seller" ? user.catalog_limit : "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Libres cat.
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {user.role === "seller" ? user.remaining_catalog_slots : "—"}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-2 grid grid-cols-3 gap-2 rounded-xl border border-border/40 bg-muted/10 p-3">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Productos
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {user.role === "seller" ? user.product_count : "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Cupo
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {user.role === "seller" ? user.product_limit : "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Libres
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {user.role === "seller" ? user.remaining_product_slots : "—"}
+                    </p>
+                  </div>
+                </div>
+                {user.role === "seller" && (
+                  <div className="mt-3 flex flex-col gap-2">
+                    <CatalogLimitControls user={user} />
+                    <ProductLimitControls user={user} />
+                  </div>
+                )}
                 <p className="mt-2 text-xs text-muted-foreground/60">
                   {formatDate(user.created_at)}
                 </p>
