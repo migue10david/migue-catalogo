@@ -23,83 +23,11 @@ import type { BusinessCatalog } from "@/lib/business-catalogs";
 import type { BusinessCategory } from "@/lib/business-categories";
 import type { Province } from "@/lib/provinces";
 import { cn } from "@/lib/utils";
+import { convertImageToWebp } from "@/lib/functions/catalog-functions";
 
 const LOGO_MAX_SIZE = 800;
 const COVER_MAX_WIDTH = 1600;
 const COVER_MAX_HEIGHT = 900;
-const WEBP_QUALITY = 0.86;
-
-
-function loadImage(file: File) {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const image = new Image();
-    const objectUrl = URL.createObjectURL(file);
-
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve(image);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("Could not read the selected image"));
-    };
-
-    image.src = objectUrl;
-  });
-}
-
-function getResizedDimensions(
-  width: number,
-  height: number,
-  maxWidth: number,
-  maxHeight: number,
-) {
-  const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
-
-  return {
-    width: Math.max(1, Math.round(width * ratio)),
-    height: Math.max(1, Math.round(height * ratio)),
-  };
-}
-
-async function convertImageToWebp(
-  file: File,
-  options: {
-    maxWidth: number;
-    maxHeight: number;
-  },
-) {
-  const image = await loadImage(file);
-  const { width, height } = getResizedDimensions(
-    image.naturalWidth || image.width,
-    image.naturalHeight || image.height,
-    options.maxWidth,
-    options.maxHeight,
-  );
-
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-
-  const context = canvas.getContext("2d");
-  if (!context) {
-    throw new Error("Your browser could not process the selected image");
-  }
-
-  context.drawImage(image, 0, 0, width, height);
-
-  const blob = await new Promise<Blob | null>((resolve) => {
-    canvas.toBlob(resolve, "image/webp", WEBP_QUALITY);
-  });
-
-  if (!blob) {
-    throw new Error("Could not compress the selected image");
-  }
-
-  const baseName = file.name.replace(/\.[^.]+$/, "") || "image";
-  return new File([blob], `${baseName}.webp`, { type: "image/webp" });
-}
 
 type DialogCatalogFormProps = {
   catalog?: BusinessCatalog;
@@ -133,11 +61,9 @@ const DialogCatalogForm = ({
   const buttonLabel =
     triggerLabel ?? (mode === "edit" ? "Editar" : "Crear catálogo");
   const isCreateDisabled = mode === "create" && remainingCatalogSlots <= 0;
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
-
     const htmlForm = event.currentTarget;
     const formData = new FormData(htmlForm);
     const logoFile = formData.get("logo_file");

@@ -29,3 +29,76 @@ export function getAccentBorder(name: string) {
   }
   return accents[Math.abs(hash) % accents.length];
 }
+
+const WEBP_QUALITY = 0.86;
+
+export function loadImage(file: File) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(image);
+    };
+
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Could not read the selected image"));
+    };
+
+    image.src = objectUrl;
+  });
+}
+
+export function getResizedDimensions(
+  width: number,
+  height: number,
+  maxWidth: number,
+  maxHeight: number,
+) {
+  const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
+
+  return {
+    width: Math.max(1, Math.round(width * ratio)),
+    height: Math.max(1, Math.round(height * ratio)),
+  };
+}
+
+export async function convertImageToWebp(
+  file: File,
+  options: {
+    maxWidth: number;
+    maxHeight: number;
+  },
+) {
+  const image = await loadImage(file);
+  const { width, height } = getResizedDimensions(
+    image.naturalWidth || image.width,
+    image.naturalHeight || image.height,
+    options.maxWidth,
+    options.maxHeight,
+  );
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    throw new Error("Your browser could not process the selected image");
+  }
+
+  context.drawImage(image, 0, 0, width, height);
+
+  const blob = await new Promise<Blob | null>((resolve) => {
+    canvas.toBlob(resolve, "image/webp", WEBP_QUALITY);
+  });
+
+  if (!blob) {
+    throw new Error("Could not compress the selected image");
+  }
+
+  const baseName = file.name.replace(/\.[^.]+$/, "") || "image";
+  return new File([blob], `${baseName}.webp`, { type: "image/webp" });
+}
