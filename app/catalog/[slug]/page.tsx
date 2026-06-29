@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import {
   getActiveBusinessCatalogById,
+  getActiveBusinessCatalogBySlug,
   type BusinessCatalog,
 } from "@/lib/business-catalogs";
 import {
@@ -181,13 +182,27 @@ function CatalogHero({
   );
 }
 
+function isUuidLike(value: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    value,
+  );
+}
+
 async function CatalogContent({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
-  const catalog = await getActiveBusinessCatalogById(id);
+  const { slug } = await params;
+  const catalog = await getActiveBusinessCatalogBySlug(slug);
+
+  if (!catalog && isUuidLike(slug)) {
+    const legacyCatalog = await getActiveBusinessCatalogById(slug);
+
+    if (legacyCatalog) {
+      redirect(`/catalog/${legacyCatalog.slug}`);
+    }
+  }
 
   if (!catalog) {
     notFound();
@@ -278,7 +293,7 @@ function CatalogSkeleton() {
 export default function CatalogPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
   return (
     <Suspense fallback={<CatalogSkeleton />}>

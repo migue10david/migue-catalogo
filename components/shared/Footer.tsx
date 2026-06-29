@@ -5,7 +5,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 const currentYear = new Date().getFullYear();
 
 const platformLinks = [
-  { label: "Explorar catálogos", href: "/" },
+  { label: "Explorar catálogos", href: "/explore" },
   { label: "Ser vendedor", href: "/auth/sign-up" },
   { label: "Crear cuenta", href: "/auth/sign-up" },
 ];
