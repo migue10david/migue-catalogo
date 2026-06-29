@@ -17,13 +17,16 @@ import {
   createBusinessCatalog,
   updateBusinessCatalog,
 } from "@/app/actions/business-catalogs";
-import { useRef, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import type { BusinessCatalog } from "@/lib/business-catalogs";
 import type { BusinessCategory } from "@/lib/business-categories";
 import type { Province } from "@/lib/provinces";
 import { cn } from "@/lib/utils";
 import { convertImageToWebp } from "@/lib/functions/catalog-functions";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CatalogFormData, catalogSchema } from "@/lib/schemas/zod-schemas";
 
 const LOGO_MAX_SIZE = 800;
 const COVER_MAX_WIDTH = 1600;
@@ -52,34 +55,59 @@ const DialogCatalogForm = ({
   triggerLabel,
   triggerClassName,
 }: DialogCatalogFormProps) => {
-  const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+
+  const { register, handleSubmit, control, reset, formState: { errors } } =
+    useForm<CatalogFormData>({
+      resolver: zodResolver(catalogSchema),
+      defaultValues: {
+        name: catalog?.name ?? "",
+        description: catalog?.description ?? "",
+        business_category_id: catalog?.business_category_id?.toString() ?? "",
+        province_id: catalog?.province_id?.toString() ?? "",
+        phone: catalog?.phone ?? "",
+        address: catalog?.address ?? "",
+        whatsapp_url: catalog?.whatsapp_url ?? "",
+        facebook_url: catalog?.facebook_url ?? "",
+        instagram_url: catalog?.instagram_url ?? "",
+        catalog_id: catalog?.id ?? "",
+      },
+    });
+
   const submitAction =
     mode === "edit" ? updateBusinessCatalog : createBusinessCatalog;
   const buttonLabel =
     triggerLabel ?? (mode === "edit" ? "Editar" : "Crear catálogo");
   const isCreateDisabled = mode === "create" && remainingCatalogSlots <= 0;
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+
+  const onSubmit = async (data: CatalogFormData) => {
     setError(null);
-    const htmlForm = event.currentTarget;
-    const formData = new FormData(htmlForm);
-    const logoFile = formData.get("logo_file");
-    const coverFile = formData.get("cover_file");
+    const formData = new FormData();
+
+    formData.set("name", data.name);
+    if (data.description) formData.set("description", data.description);
+    formData.set("business_category_id", data.business_category_id);
+    formData.set("province_id", data.province_id);
+    if (data.phone) formData.set("phone", data.phone);
+    if (data.address) formData.set("address", data.address);
+    if (data.whatsapp_url) formData.set("whatsapp_url", data.whatsapp_url);
+    if (data.facebook_url) formData.set("facebook_url", data.facebook_url);
+    if (data.instagram_url) formData.set("instagram_url", data.instagram_url);
+    if (data.catalog_id) formData.set("catalog_id", data.catalog_id);
 
     try {
-      if (logoFile instanceof File && logoFile.size > 0) {
-        const optimizedLogo = await convertImageToWebp(logoFile, {
+      if (data.logo_file && data.logo_file.size > 0) {
+        const optimizedLogo = await convertImageToWebp(data.logo_file, {
           maxWidth: LOGO_MAX_SIZE,
           maxHeight: LOGO_MAX_SIZE,
         });
         formData.set("logo_file", optimizedLogo);
       }
 
-      if (coverFile instanceof File && coverFile.size > 0) {
-        const optimizedCover = await convertImageToWebp(coverFile, {
+      if (data.cover_file && data.cover_file.size > 0) {
+        const optimizedCover = await convertImageToWebp(data.cover_file, {
           maxWidth: COVER_MAX_WIDTH,
           maxHeight: COVER_MAX_HEIGHT,
         });
@@ -89,13 +117,13 @@ const DialogCatalogForm = ({
       startTransition(async () => {
         try {
           await submitAction(formData);
-          formRef.current?.reset();
+          reset();
           setOpen(false);
         } catch (submitError) {
           setError(
             submitError instanceof Error
               ? submitError.message
-              : "An unexpected error occurred",
+              : "Ocurrió un error inesperado",
           );
         }
       });
@@ -103,10 +131,11 @@ const DialogCatalogForm = ({
       setError(
         compressionError instanceof Error
           ? compressionError.message
-          : "Could not process the selected images",
+          : "No se pudieron procesar las imágenes seleccionadas",
       );
     }
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -130,13 +159,9 @@ const DialogCatalogForm = ({
           </DialogDescription>
         </DialogHeader>
         <form
-          ref={formRef}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex max-h-[calc(92dvh-5.5rem)] flex-col"
         >
-          {mode === "edit" && catalog && (
-            <input type="hidden" name="catalog_id" value={catalog.id} />
-          )}
           <div className="flex-1 overflow-y-auto px-5 py-4 sm:px-6">
             <div className="flex flex-col gap-5 pb-1">
               {mode === "create" && (
@@ -177,75 +202,93 @@ const DialogCatalogForm = ({
                 <Label htmlFor="catalog-name">Nombre</Label>
                 <Input
                   id="catalog-name"
-                  name="name"
                   placeholder="Migue Tech Store"
-                  defaultValue={catalog?.name ?? ""}
-                  required
                   disabled={isPending}
+                  {...register("name")}
                 />
+                {errors.name && (
+                  <p className="text-xs text-destructive">{errors.name.message}</p>
+                )}
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="catalog-description">Descripción</Label>
                 <Textarea
                   id="catalog-description"
-                  name="description"
                   placeholder="Describe qué vende tu negocio y qué lo hace especial."
-                  defaultValue={catalog?.description ?? ""}
                   rows={4}
                   disabled={isPending}
+                  {...register("description")}
                 />
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="grid gap-2">
                   <Label htmlFor="catalog-category">Categoría</Label>
-                  <select
-                    id="catalog-category"
+                  <Controller
                     name="business_category_id"
-                    defaultValue={catalog?.business_category_id?.toString() ?? ""}
-                    required
-                    disabled={isPending}
-                    className={cn(
-                      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      "disabled:cursor-not-allowed disabled:opacity-50",
+                    control={control}
+                    render={({ field }) => (
+                      <select
+                        id="catalog-category"
+                        disabled={isPending}
+                        className={cn(
+                          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                          "disabled:cursor-not-allowed disabled:opacity-50",
+                        )}
+                        {...field}
+                      >
+                        <option value="" disabled>
+                          Selecciona una categoría
+                        </option>
+                        {businessCategories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
                     )}
-                  >
-                    <option value="" disabled>
-                      Selecciona una categoría
-                    </option>
-                    {businessCategories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
+                  />
+                  {errors.business_category_id && (
+                    <p className="text-xs text-destructive">
+                      {errors.business_category_id.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid gap-2">
                   <Label htmlFor="catalog-province">Provincia</Label>
-                  <select
-                    id="catalog-province"
+                  <Controller
                     name="province_id"
-                    defaultValue={catalog?.province_id?.toString() ?? ""}
-                    required
-                    disabled={isPending}
-                    className={cn(
-                      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      "disabled:cursor-not-allowed disabled:opacity-50",
+                    control={control}
+                    render={({ field }) => (
+                      <select
+                        id="catalog-province"
+                        disabled={isPending}
+                        className={cn(
+                          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                          "disabled:cursor-not-allowed disabled:opacity-50",
+                        )}
+                        {...field}
+                      >
+                        <option value="" disabled>
+                          Selecciona una provincia
+                        </option>
+                        {provinces.map((province) => (
+                          <option key={province.id} value={province.id}>
+                            {province.name}
+                          </option>
+                        ))}
+                      </select>
                     )}
-                  >
-                    <option value="" disabled>
-                      Selecciona una provincia
-                    </option>
-                    {provinces.map((province) => (
-                      <option key={province.id} value={province.id}>
-                        {province.name}
-                      </option>
-                    ))}
-                  </select>
+                  />
+                  {errors.province_id && (
+                    <p className="text-xs text-destructive">
+                      {errors.province_id.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -254,11 +297,10 @@ const DialogCatalogForm = ({
                   <Label htmlFor="catalog-phone">Teléfono</Label>
                   <Input
                     id="catalog-phone"
-                    name="phone"
                     type="tel"
                     placeholder="+53 5555 5555"
-                    defaultValue={catalog?.phone ?? ""}
                     disabled={isPending}
+                    {...register("phone")}
                   />
                 </div>
 
@@ -266,11 +308,10 @@ const DialogCatalogForm = ({
                   <Label htmlFor="catalog-address">Dirección</Label>
                   <Textarea
                     id="catalog-address"
-                    name="address"
                     placeholder="Calle, número, entre calles o referencia del local."
-                    defaultValue={catalog?.address ?? ""}
                     rows={3}
                     disabled={isPending}
+                    {...register("address")}
                   />
                 </div>
               </div>
@@ -280,12 +321,16 @@ const DialogCatalogForm = ({
                   <Label htmlFor="catalog-whatsapp-url">WhatsApp</Label>
                   <Input
                     id="catalog-whatsapp-url"
-                    name="whatsapp_url"
                     type="url"
                     placeholder="https://wa.me/5355555555"
-                    defaultValue={catalog?.whatsapp_url ?? ""}
                     disabled={isPending}
+                    {...register("whatsapp_url")}
                   />
+                  {errors.whatsapp_url && (
+                    <p className="text-xs text-destructive">
+                      {errors.whatsapp_url.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -294,47 +339,69 @@ const DialogCatalogForm = ({
                   <Label htmlFor="catalog-facebook-url">Facebook</Label>
                   <Input
                     id="catalog-facebook-url"
-                    name="facebook_url"
                     type="url"
                     placeholder="https://facebook.com/tunegocio"
-                    defaultValue={catalog?.facebook_url ?? ""}
                     disabled={isPending}
+                    {...register("facebook_url")}
                   />
+                  {errors.facebook_url && (
+                    <p className="text-xs text-destructive">
+                      {errors.facebook_url.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid gap-2">
                   <Label htmlFor="catalog-instagram-url">Instagram</Label>
                   <Input
                     id="catalog-instagram-url"
-                    name="instagram_url"
                     type="url"
                     placeholder="https://instagram.com/tunegocio"
-                    defaultValue={catalog?.instagram_url ?? ""}
                     disabled={isPending}
+                    {...register("instagram_url")}
                   />
+                  {errors.instagram_url && (
+                    <p className="text-xs text-destructive">
+                      {errors.instagram_url.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
                 <div className="grid gap-2">
                   <Label htmlFor="catalog-logo-file">Logo</Label>
-                  <Input
-                    id="catalog-logo-file"
+                  <Controller
                     name="logo_file"
-                    type="file"
-                    accept="image/*"
-                    disabled={isPending}
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        id="catalog-logo-file"
+                        type="file"
+                        accept="image/*"
+                        disabled={isPending}
+                        onChange={(e) => field.onChange(e.target.files?.[0] ?? undefined)}
+                        ref={undefined}
+                      />
+                    )}
                   />
                 </div>
 
                 <div className="grid gap-2">
                   <Label htmlFor="catalog-cover-file">Cover</Label>
-                  <Input
-                    id="catalog-cover-file"
+                  <Controller
                     name="cover_file"
-                    type="file"
-                    accept="image/*"
-                    disabled={isPending}
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        id="catalog-cover-file"
+                        type="file"
+                        accept="image/*"
+                        disabled={isPending}
+                        onChange={(e) => field.onChange(e.target.files?.[0] ?? undefined)}
+                        ref={undefined}
+                      />
+                    )}
                   />
                 </div>
               </div>

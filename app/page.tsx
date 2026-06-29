@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { getCurrentUserProfile } from "@/lib/auth";
 import { getLatestActiveBusinessCatalogs } from "@/lib/business-catalogs";
+import { cn } from "@/lib/utils";
 import Footer from "@/components/shared/Footer";
+import { CatalogCard } from "@/components/catalog/catalog-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -13,11 +15,10 @@ import {
   ArrowRight,
   CheckCircle2,
   Sparkles,
-  Package2,
-  MapPin,
   BadgeCheck,
   PanelRightOpen,
   ScanSearch,
+  LayoutGrid,
 } from "lucide-react";
 
 const features = [
@@ -25,19 +26,22 @@ const features = [
     icon: Store,
     title: "Crea tu catálogo",
     description:
-      "Organiza tus productos con imágenes, precios y descripciones de forma sencilla.",
+      "Organiza tus productos con imágenes, precios y descripciones. Tu negocio online en minutos, listo para compartir.",
+    gradient: "from-primary/[0.04] to-transparent",
   },
   {
     icon: Search,
     title: "Descubre productos",
     description:
-      "Explora catálogos de vendedores cercanos y encuentra lo que necesitas.",
+      "Explora catálogos de vendedores cercanos, filtra por categoría o provincia y encuentra exactamente lo que necesitas.",
+    gradient: "from-primary/[0.03] via-primary/[0.01] to-transparent",
   },
   {
     icon: Shield,
     title: "Plataforma segura",
     description:
-      "Tus datos están protegidos con autenticación y roles de acceso.",
+      "Tus datos están protegidos con autenticación robusta y roles de acceso. Solo tú controlas tu información.",
+    gradient: "from-primary/[0.05] to-transparent",
   },
 ];
 
@@ -296,80 +300,11 @@ async function LatestCatalogsSection() {
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {catalogs.map((catalog, index) => (
-              <Link
+              <CatalogCard
                 key={catalog.id}
-                href={`/catalog/${catalog.id}`}
-                className="group relative overflow-hidden rounded-3xl border bg-card transition-transform duration-300 hover:-translate-y-1"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/[0.06]" />
-                <div className="relative h-44 border-b bg-muted/20">
-                  {catalog.cover_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={catalog.cover_url}
-                      alt={catalog.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.12),transparent_55%)]">
-                      <Store className="size-10 text-foreground/30" />
-                    </div>
-                  )}
-                  <div className="absolute left-4 top-4 rounded-full border bg-background/90 px-3 py-1 text-xs font-medium backdrop-blur">
-                    New #{String(index + 1).padStart(2, "0")}
-                  </div>
-                </div>
-
-                <div className="relative p-5">
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="flex size-12 items-center justify-center overflow-hidden rounded-2xl border bg-background">
-                      {catalog.logo_url ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={catalog.logo_url}
-                          alt={`${catalog.name} logo`}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <Store className="size-5 text-foreground/40" />
-                      )}
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="truncate text-lg font-semibold">
-                        {catalog.name}
-                      </h3>
-                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                        <Package2 className="size-3.5" />
-                        Catálogo público activo
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="line-clamp-3 text-sm text-muted-foreground">
-                    {catalog.description ||
-                      "Entra al catálogo para ver los productos publicados por este negocio."}
-                  </p>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {catalog.business_category?.name && (
-                      <div className="inline-flex items-center rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
-                        {catalog.business_category.name}
-                      </div>
-                    )}
-                    {catalog.province?.name && (
-                      <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
-                        <MapPin className="size-3.5" />
-                        {catalog.province.name}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="mt-5 flex items-center justify-between text-sm font-medium">
-                    <span>Ver catálogo</span>
-                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
+                catalog={catalog}
+                badge={`New #${String(index + 1).padStart(2, "0")}`}
+              />
             ))}
           </div>
         )}
@@ -400,24 +335,42 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="w-full border-t bg-muted/40">
-        <div className="max-w-5xl mx-auto px-4 py-20">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12">
-            Todo lo que necesitas
-          </h2>
-          <div className="grid sm:grid-cols-3 gap-8">
-            {features.map((feature) => (
+      <section className="relative w-full overflow-hidden border-t">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.03),transparent_70%)]" />
+        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-24">
+          <div className="text-center animate-fade-up">
+            <h2 className="font-serif-display text-3xl tracking-tight sm:text-4xl">
+              Todo lo que necesitas
+            </h2>
+            <p className="mt-4 text-muted-foreground sm:text-lg">
+              Herramientas pensadas para que vendas más y administres mejor tu negocio.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-3">
+            {features.map((feature, index) => (
               <div
                 key={feature.title}
-                className="flex flex-col items-center text-center gap-3"
+                className={cn(
+                  "group relative overflow-hidden rounded-2xl border border-border/50 bg-background/70 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border/80 hover:shadow-lg hover:shadow-black/5",
+                  `animate-fade-up stagger-${index + 1}`,
+                )}
               >
-                <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <feature.icon className="size-6 text-primary" />
+                <div
+                  className={cn(
+                    "absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                    feature.gradient,
+                  )}
+                />
+                <div className="relative">
+                  <div className="mb-5 flex size-12 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 shadow-sm shadow-primary/5 transition-colors duration-300 group-hover:bg-primary/10 group-hover:border-primary/15">
+                    <feature.icon className="size-6 text-primary transition-transform duration-300 group-hover:scale-110" />
+                  </div>
+                  <h3 className="font-semibold text-lg">{feature.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="font-semibold text-lg">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {feature.description}
-                </p>
               </div>
             ))}
           </div>

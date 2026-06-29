@@ -7,6 +7,43 @@ import { createClient } from "@/lib/supabase/server";
 
 const BUSINESS_CATALOG_MEDIA_BUCKET = "business-catalog-media";
 
+function slugifyCatalogName(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-");
+}
+
+async function generateCatalogSlug(name: string) {
+  const supabase = await createClient();
+  const baseSlug = slugifyCatalogName(name) || `catalog-${Date.now()}`;
+  let slug = baseSlug;
+  let counter = 1;
+
+  while (true) {
+    const { data } = await supabase
+      .from("business_catalogs")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (!data) return slug;
+
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+}
+
+function isUniqueSlugViolation(error: { code?: string; message?: string }) {
+  return (
+    error.code === "23505" &&
+    (error.message?.includes("business_catalogs_slug_unique") ?? false)
+  );
+}
+
 function getOptionalText(formData: FormData, key: string) {
   const value = String(formData.get(key) ?? "").trim();
   return value || null;
@@ -144,7 +181,7 @@ async function getOwnedCatalog(catalogId: string, ownerId: string) {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("business_catalogs")
-    .select("id, owner_id, logo_url, cover_url")
+    .select("id, owner_id, slug, logo_url, cover_url")
     .eq("id", catalogId)
     .eq("owner_id", ownerId)
     .maybeSingle();
@@ -189,39 +226,56 @@ export async function createBusinessCatalog(formData: FormData) {
     "cover",
   );
 
-  const { error } = await supabase.from("business_catalogs").insert({
-    owner_id: profile.id,
-    name,
-    description,
-    address,
-    phone,
-    facebook_url: facebookUrl,
-    instagram_url: instagramUrl,
-    whatsapp_url: whatsappUrl,
-    province_id: provinceId,
-    business_category_id: businessCategoryId,
-    logo_url: uploadedLogo?.publicUrl ?? null,
-    cover_url: uploadedCover?.publicUrl ?? null,
-    is_active: true,
-  });
+  let lastError: Error | null = null;
 
-  if (error) {
-    const uploadedPaths = [uploadedLogo?.path, uploadedCover?.path].filter(
-      Boolean,
-    ) as string[];
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const slug = await generateCatalogSlug(name);
+    const { error } = await supabase.from("business_catalogs").insert({
+      owner_id: profile.id,
+      name,
+      slug,
+      description,
+      address,
+      phone,
+      facebook_url: facebookUrl,
+      instagram_url: instagramUrl,
+      whatsapp_url: whatsappUrl,
+      province_id: provinceId,
+      business_category_id: businessCategoryId,
+      logo_url: uploadedLogo?.publicUrl ?? null,
+      cover_url: uploadedCover?.publicUrl ?? null,
+      is_active: true,
+    });
 
-    if (uploadedPaths.length > 0) {
-      await supabase.storage
-        .from(BUSINESS_CATALOG_MEDIA_BUCKET)
-        .remove(uploadedPaths);
+    if (!error) {
+      revalidatePath("/seller");
+      revalidatePath("/seller/catalogs");
+      revalidatePath("/");
+      return;
     }
 
-    throw new Error(error.message);
+    if (isUniqueSlugViolation(error)) {
+      lastError = new Error(
+        "El slug del catálogo colisionó durante la creación. Reintentando...",
+      );
+      continue;
+    }
+
+    lastError = new Error(error.message);
+    break;
   }
 
-  revalidatePath("/seller");
-  revalidatePath("/seller/catalogs");
-  revalidatePath("/");
+  const uploadedPaths = [uploadedLogo?.path, uploadedCover?.path].filter(
+    Boolean,
+  ) as string[];
+
+  if (uploadedPaths.length > 0) {
+    await supabase.storage
+      .from(BUSINESS_CATALOG_MEDIA_BUCKET)
+      .remove(uploadedPaths);
+  }
+
+  throw lastError ?? new Error("No se pudo crear el catálogo");
 }
 
 export async function updateBusinessCatalog(formData: FormData) {
@@ -310,7 +364,7 @@ export async function updateBusinessCatalog(formData: FormData) {
   revalidatePath("/seller");
   revalidatePath("/seller/catalogs");
   revalidatePath("/");
-  revalidatePath(`/catalog/${catalogId}`);
+  revalidatePath(`/catalog/${currentCatalog.slug}`);
 }
 
 export async function deleteBusinessCatalog(formData: FormData) {
@@ -356,5 +410,5 @@ export async function deleteBusinessCatalog(formData: FormData) {
   revalidatePath("/seller");
   revalidatePath("/seller/catalogs");
   revalidatePath("/");
-  revalidatePath(`/catalog/${catalogId}`);
+  revalidatePath(`/catalog/${currentCatalog.slug}`);
 }

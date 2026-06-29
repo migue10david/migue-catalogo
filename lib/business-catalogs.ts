@@ -7,6 +7,7 @@ export type BusinessCatalog = {
   id: string;
   owner_id: string;
   name: string;
+  slug: string;
   description: string | null;
   address: string | null;
   phone: string | null;
@@ -36,6 +37,7 @@ const BUSINESS_CATALOG_SELECT = `
   id,
   owner_id,
   name,
+  slug,
   description,
   address,
   phone,
@@ -84,6 +86,22 @@ export async function getLatestActiveBusinessCatalogs(limit = 6) {
   return ((data ?? []) as RawBusinessCatalog[]).map(normalizeBusinessCatalog);
 }
 
+export async function getActiveBusinessCatalogBySlug(slug: string) {
+  const supabase = createPublicClient();
+  const { data, error } = await supabase
+    .from("business_catalogs")
+    .select(BUSINESS_CATALOG_SELECT)
+    .eq("slug", slug)
+    .eq("is_active", true)
+    .maybeSingle();
+
+  if (error) {
+    return null;
+  }
+
+  return data ? normalizeBusinessCatalog(data as RawBusinessCatalog) : null;
+}
+
 export async function getActiveBusinessCatalogById(id: string) {
   const supabase = createPublicClient();
   const { data, error } = await supabase
@@ -98,6 +116,82 @@ export async function getActiveBusinessCatalogById(id: string) {
   }
 
   return data ? normalizeBusinessCatalog(data as RawBusinessCatalog) : null;
+}
+
+export type PublicCatalogFilters = {
+  search?: string;
+  provinceId?: number;
+  businessCategoryId?: number;
+  page?: number;
+  pageSize?: number;
+};
+
+export type PublicCatalogsResult = {
+  catalogs: BusinessCatalog[];
+  totalCount: number;
+};
+
+export async function getPublicCatalogs(filters: PublicCatalogFilters = {}) {
+  const supabase = createPublicClient();
+  const {
+    search,
+    provinceId,
+    businessCategoryId,
+    page = 1,
+    pageSize = 12,
+  } = filters;
+
+  let matchingCatalogIds: string[] = [];
+
+  if (search) {
+    const { data: matchingProducts } = await supabase
+      .from("business_catalog_products")
+      .select("business_catalog_id")
+      .ilike("name", `%${search}%`);
+
+    matchingCatalogIds = [
+      ...new Set(matchingProducts?.map((p) => p.business_catalog_id) ?? []),
+    ];
+  }
+
+  let query = supabase
+    .from("business_catalogs")
+    .select(BUSINESS_CATALOG_SELECT, { count: "exact" })
+    .eq("is_active", true);
+
+  if (search) {
+    const conditions = [`name.ilike.%${search}%`];
+    if (matchingCatalogIds.length > 0) {
+      conditions.push(`id.in.(${matchingCatalogIds.join(",")})`);
+    }
+    query = query.or(conditions.join(","));
+  }
+
+  if (provinceId) {
+    query = query.eq("province_id", provinceId);
+  }
+
+  if (businessCategoryId) {
+    query = query.eq("business_category_id", businessCategoryId);
+  }
+
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  const { data, error, count } = await query
+    .order("created_at", { ascending: false })
+    .range(from, to);
+
+  if (error) {
+    return { catalogs: [], totalCount: 0 };
+  }
+
+  return {
+    catalogs: ((data ?? []) as RawBusinessCatalog[]).map(
+      normalizeBusinessCatalog,
+    ),
+    totalCount: count ?? 0,
+  };
 }
 
 export async function getBusinessCatalogs() {

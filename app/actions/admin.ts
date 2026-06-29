@@ -116,8 +116,16 @@ export async function toggleBusinessCatalogStatus(formData: FormData) {
     throw new Error(error.message);
   }
 
+  const { data: catalog } = await supabase
+    .from("business_catalogs")
+    .select("slug")
+    .eq("id", catalogId)
+    .maybeSingle();
+
   revalidatePath("/admin");
   revalidatePath("/admin/catalogs");
   revalidatePath("/");
-  revalidatePath(`/catalog/${catalogId}`);
+  if (catalog?.slug) {
+    revalidatePath(`/catalog/${catalog.slug}`);
+  }
 }
