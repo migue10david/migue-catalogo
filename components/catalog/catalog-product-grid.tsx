@@ -2,8 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package2, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Package2, ArrowUpRight, ShoppingCart, Check } from "lucide-react";
 import type { BusinessCatalogProduct } from "@/lib/products";
+import type { BusinessCatalog } from "@/lib/business-catalogs";
+import type { AuthProfile } from "@/lib/auth";
+import { useCartStore } from "@/lib/store/cart";
+import { cn } from "@/lib/utils";
 
 type ProductCategory = {
   id: string;
@@ -12,9 +17,37 @@ type ProductCategory = {
 
 type CatalogProductGridProps = {
   products: BusinessCatalogProduct[];
+  catalog: Pick<BusinessCatalog, "id" | "slug" | "name" | "whatsapp_url" | "owner_id">;
+  user: AuthProfile | null;
 };
 
-function ProductCard({ product }: { product: BusinessCatalogProduct }) {
+function ProductCard({
+  product,
+  catalog,
+  isOwner,
+}: {
+  product: BusinessCatalogProduct;
+  catalog: Pick<BusinessCatalog, "id" | "slug" | "name" | "whatsapp_url" | "owner_id">;
+  isOwner: boolean;
+}) {
+  const addItem = useCartStore((state) => state.addItem);
+  const items = useCartStore((state) => state.items);
+  const inCart = items.some((i) => i.productId === product.id);
+  const quantity = items.find((i) => i.productId === product.id)?.quantity ?? 0;
+
+  const handleAdd = () => {
+    addItem({
+      productId: product.id,
+      catalogId: catalog.id,
+      catalogSlug: catalog.slug,
+      catalogName: catalog.name,
+      whatsappUrl: catalog.whatsapp_url,
+      name: product.name,
+      price: product.price,
+      image_url: product.image_url,
+    });
+  };
+
   return (
     <article className="group relative overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/[0.04]">
       <div className="relative overflow-hidden border-b border-border/50 bg-muted/20 aspect-[4/3]">
@@ -53,6 +86,34 @@ function ProductCard({ product }: { product: BusinessCatalogProduct }) {
             {product.description}
           </p>
         )}
+
+        {!isOwner && (
+          <div className="pt-1">
+            {inCart ? (
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleAdd}
+                  className="rounded-full"
+                >
+                  <Check className="size-3.5" />
+                  En carrito ({quantity})
+                </Button>
+              </div>
+            ) : (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleAdd}
+                className="rounded-full"
+              >
+                <ShoppingCart className="size-3.5" />
+                Agregar
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </article>
   );
@@ -74,8 +135,13 @@ function EmptyState() {
   );
 }
 
-export function CatalogProductGrid({ products }: CatalogProductGridProps) {
+export function CatalogProductGrid({
+  products,
+  catalog,
+  user,
+}: CatalogProductGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const isOwner = user?.id === catalog.owner_id;
 
   const categories = useMemo(() => {
     const map = new Map<string, ProductCategory>();
@@ -138,7 +204,11 @@ export function CatalogProductGrid({ products }: CatalogProductGridProps) {
               key={product.id}
               className={`animate-fade-up stagger-${Math.min(index + 1, 8)}`}
             >
-              <ProductCard product={product} />
+              <ProductCard
+                product={product}
+                catalog={catalog}
+                isOwner={isOwner}
+              />
             </div>
           ))}
         </div>
