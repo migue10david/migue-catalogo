@@ -29,6 +29,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu, Store, LogOut, LayoutDashboard, ShoppingBag, Compass, BookOpen, PanelLeft } from "lucide-react";
+import { CartIndicator } from "@/components/cart/cart-indicator";
 
 interface NavbarClientProps {
   user: AuthProfile | null;
@@ -95,6 +96,7 @@ export function NavbarClient({ user, hasEnvVars }: NavbarClientProps) {
 
         {/* Desktop: Right side */}
         <div className="hidden md:flex items-center gap-2">
+          <CartIndicator />
           <ThemeSwitcher />
 
           {!hasEnvVars ? (
@@ -165,6 +167,7 @@ export function NavbarClient({ user, hasEnvVars }: NavbarClientProps) {
 
         {/* Mobile: Hamburger + Sheet */}
         <div className="flex md:hidden items-center gap-2">
+          <CartIndicator />
           <ThemeSwitcher />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>

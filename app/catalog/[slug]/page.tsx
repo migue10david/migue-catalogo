@@ -11,6 +11,7 @@ import {
 import {
   getActiveProductsForCatalog,
 } from "@/lib/products";
+import { getCurrentUserProfile } from "@/lib/auth";
 import { CatalogProductGrid } from "@/components/catalog/catalog-product-grid";
 import {
   ArrowLeft,
@@ -209,6 +210,7 @@ async function CatalogContent({
   }
 
   const products = await getActiveProductsForCatalog(catalog.id);
+  const user = await getCurrentUserProfile();
 
   return (
     <main className="min-h-screen">
@@ -230,7 +232,11 @@ async function CatalogContent({
           </div>
         </div>
 
-        <CatalogProductGrid products={products} />
+        <CatalogProductGrid
+          products={products}
+          catalog={catalog}
+          user={user}
+        />
       </section>
     </main>
   );
