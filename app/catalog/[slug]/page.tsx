@@ -76,7 +76,7 @@ function CatalogHero({
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <div className="flex flex-col gap-6 animate-fade-up">
             <div className="flex items-center gap-4">
-              <div className="flex size-16 items-center justify-center overflow-hidden rounded-2xl border border-border/60 bg-background/80 shadow-lg backdrop-blur-sm sm:size-20">
+              <div className="flex size-24 items-center justify-center overflow-hidden rounded-2xl border border-border/60 bg-background/80 shadow-lg backdrop-blur-sm">
                 {catalog.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -87,14 +87,6 @@ function CatalogHero({
                 ) : (
                   <Store className="size-8 text-muted-foreground/40 sm:size-10" />
                 )}
-              </div>
-              <div>
-                <Badge
-                  variant="secondary"
-                  className="mb-2 w-fit border-primary/20 bg-primary/5 text-primary"
-                >
-                  Catálogo público
-                </Badge>
               </div>
             </div>
 
@@ -159,7 +151,7 @@ function CatalogHero({
             </div>
           </div>
 
-          <div className="flex items-center gap-6 animate-fade-up stagger-2">
+          {/* <div className="flex items-center gap-6 animate-fade-up stagger-2">
             <div className="flex flex-col items-center gap-1 rounded-2xl border border-border/60 bg-background/80 px-6 py-4 shadow-sm backdrop-blur-sm">
               <span className="font-serif-display text-3xl tracking-tight">
                 {productCount}
@@ -176,7 +168,7 @@ function CatalogHero({
                 Activo
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

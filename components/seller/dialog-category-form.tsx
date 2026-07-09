@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { BusinessCatalogProductCategory } from "@/lib/product-categories";
+import {toast} from "sonner";
 
 type CatalogOption = {
   id: string;
@@ -64,6 +65,7 @@ export function DialogCategoryForm({
     startTransition(async () => {
       try {
         await submitAction(formData);
+        toast.success("Categoría creada exitosamente");
         formRef.current?.reset();
         setOpen(false);
       } catch (submitError) {
@@ -72,6 +74,7 @@ export function DialogCategoryForm({
             ? submitError.message
             : "Ocurrió un error inesperado",
         );
+        toast.error("Ocurrió un error inesperado");
       }
     });
   };
