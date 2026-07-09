@@ -50,7 +50,9 @@ export async function updateSession(request: NextRequest) {
   const isPublicPath =
     pathname === "/" ||
     pathname.startsWith("/auth") ||
-    pathname.startsWith("/catalog");
+    pathname.startsWith("/catalog") ||
+    pathname.startsWith("/explore") ||
+    pathname.startsWith("/cart");
 
   if (!isPublicPath && !user) {
     // no user, potentially respond by redirecting the user to the login page

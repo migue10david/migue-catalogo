@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { getResizedDimensions, loadImage } from "@/lib/functions/catalog-functions";
 
 const PRODUCT_IMAGE_MAX_WIDTH = 1400;
 const PRODUCT_IMAGE_MAX_HEIGHT = 1400;
@@ -26,38 +27,6 @@ type ProductCategoryOption = {
   is_active: boolean;
 };
 
-function loadImage(file: File) {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const image = new Image();
-    const objectUrl = URL.createObjectURL(file);
-
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve(image);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("Could not read the selected product image"));
-    };
-
-    image.src = objectUrl;
-  });
-}
-
-function getResizedDimensions(
-  width: number,
-  height: number,
-  maxWidth: number,
-  maxHeight: number,
-) {
-  const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
-
-  return {
-    width: Math.max(1, Math.round(width * ratio)),
-    height: Math.max(1, Math.round(height * ratio)),
-  };
-}
 
 async function convertImageToWebp(file: File) {
   const image = await loadImage(file);

@@ -27,10 +27,21 @@ import { convertImageToWebp } from "@/lib/functions/catalog-functions";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CatalogFormData, catalogSchema } from "@/lib/schemas/zod-schemas";
+import {toast} from "sonner";
 
 const LOGO_MAX_SIZE = 800;
 const COVER_MAX_WIDTH = 1600;
 const COVER_MAX_HEIGHT = 900;
+
+function objectToFormData(obj: Record<string, unknown>): FormData {
+  const formData = new FormData();
+  Object.entries(obj).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      formData.set(key, String(value));
+    }
+  });
+  return formData;
+}
 
 type DialogCatalogFormProps = {
   catalog?: BusinessCatalog;
@@ -84,30 +95,20 @@ const DialogCatalogForm = ({
 
   const onSubmit = async (data: CatalogFormData) => {
     setError(null);
-    const formData = new FormData();
-
-    formData.set("name", data.name);
-    if (data.description) formData.set("description", data.description);
-    formData.set("business_category_id", data.business_category_id);
-    formData.set("province_id", data.province_id);
-    if (data.phone) formData.set("phone", data.phone);
-    if (data.address) formData.set("address", data.address);
-    if (data.whatsapp_url) formData.set("whatsapp_url", data.whatsapp_url);
-    if (data.facebook_url) formData.set("facebook_url", data.facebook_url);
-    if (data.instagram_url) formData.set("instagram_url", data.instagram_url);
-    if (data.catalog_id) formData.set("catalog_id", data.catalog_id);
+    const { logo_file, cover_file, ...fields } = data;
+    const formData = objectToFormData(fields);
 
     try {
-      if (data.logo_file && data.logo_file.size > 0) {
-        const optimizedLogo = await convertImageToWebp(data.logo_file, {
+      if (logo_file?.size) {
+        const optimizedLogo = await convertImageToWebp(logo_file, {
           maxWidth: LOGO_MAX_SIZE,
           maxHeight: LOGO_MAX_SIZE,
         });
         formData.set("logo_file", optimizedLogo);
       }
 
-      if (data.cover_file && data.cover_file.size > 0) {
-        const optimizedCover = await convertImageToWebp(data.cover_file, {
+      if (cover_file?.size) {
+        const optimizedCover = await convertImageToWebp(cover_file, {
           maxWidth: COVER_MAX_WIDTH,
           maxHeight: COVER_MAX_HEIGHT,
         });
@@ -117,6 +118,7 @@ const DialogCatalogForm = ({
       startTransition(async () => {
         try {
           await submitAction(formData);
+          toast.success("Catálogo creado exitosamente");
           reset();
           setOpen(false);
         } catch (submitError) {
@@ -125,6 +127,7 @@ const DialogCatalogForm = ({
               ? submitError.message
               : "Ocurrió un error inesperado",
           );
+          toast.error("Ocurrió un error inesperado");
         }
       });
     } catch (compressionError) {

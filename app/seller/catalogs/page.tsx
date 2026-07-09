@@ -6,21 +6,22 @@ import { requireRole } from "@/lib/auth";
 import { getBusinessCatalogsForOwner } from "@/lib/business-catalogs";
 import { getBusinessCategories } from "@/lib/business-categories";
 import { getProvinces } from "@/lib/provinces";
-import {
-  Boxes,
-  MapPin,
-  Phone,
-  Store,
-  Trash2,
-} from "lucide-react";
+import { Boxes, MapPin, Phone, Store, Trash2 } from "lucide-react";
 import DialogCatalogForm from "@/components/seller/dialog-catalog-form";
 import { deleteBusinessCatalog } from "@/app/actions/business-catalogs";
 import CatalogLinks from "@/components/seller/catalog-links";
-import { getCoverGradient, getAccentBorder } from "@/lib/functions/catalog-functions";
+import {
+  getCoverGradient,
+  getAccentBorder,
+} from "@/lib/functions/catalog-functions";
 import CatalogsSkeleton from "@/components/seller/catalog-skeleton";
+import { DialogConfirmDelete } from "@/components/seller/dialog-confirm-delete";
 
-
-function LogoMark({ catalog }: { catalog: { logo_url: string | null; name: string } }) {
+function LogoMark({
+  catalog,
+}: {
+  catalog: { logo_url: string | null; name: string };
+}) {
   return (
     <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-muted/30">
       {catalog.logo_url ? (
@@ -138,9 +139,7 @@ async function CatalogsContent() {
                       />
                     </div>
                   )}
-                  <div className="absolute -bottom-5 left-4">
-
-                  </div>
+                  <div className="absolute -bottom-5 left-4"></div>
                 </div>
 
                 <div className="flex min-w-0 flex-1 flex-col justify-between p-5 pl-7">
@@ -187,7 +186,9 @@ async function CatalogsContent() {
 
                       <div className="flex items-center gap-2">
                         <Phone className="size-4 shrink-0" />
-                        <span>{catalog.phone ?? "Sin teléfono registrado"}</span>
+                        <span>
+                          {catalog.phone ?? "Sin teléfono registrado"}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -202,48 +203,51 @@ async function CatalogsContent() {
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-xs text-muted-foreground/60">
                         Creado{" "}
-                        {new Date(catalog.created_at).toLocaleDateString("es-ES", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
+                        {new Date(catalog.created_at).toLocaleDateString(
+                          "es-ES",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          },
+                        )}
                       </span>
 
                       <div className="flex items-center gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                      <DialogCatalogForm
-                        mode="edit"
-                        catalog={catalog}
-                        businessCategories={businessCategories}
-                        provinces={provinces}
-                        catalogLimit={catalogLimit}
-                        usedCatalogs={usedCatalogs}
-                        remainingCatalogSlots={remainingCatalogSlots}
-                        triggerLabel="Editar"
-                        triggerClassName="h-8 px-3 text-xs"
-                      />
-                      <form action={deleteBusinessCatalog}>
-                        <input
-                          type="hidden"
-                          name="catalog_id"
-                          value={catalog.id}
+                        <DialogCatalogForm
+                          mode="edit"
+                          catalog={catalog}
+                          businessCategories={businessCategories}
+                          provinces={provinces}
+                          catalogLimit={catalogLimit}
+                          usedCatalogs={usedCatalogs}
+                          remainingCatalogSlots={remainingCatalogSlots}
+                          triggerLabel="Editar"
+                          triggerClassName="h-8 px-3 text-xs"
                         />
-                        <Button
-                          type="submit"
-                          variant="destructive"
-                          className="h-8 px-3 text-xs"
-                        >
-                          <Trash2 className="size-3.5" />
-                          Eliminar
-                        </Button>
-                      </form>
-                    </div>
+                        <DialogConfirmDelete
+                          onConfirm={deleteBusinessCatalog}
+                          formData={{ catalog_id: catalog.id }}
+                          trigger={
+                            <Button
+                              variant="destructive"
+                              className="h-8 px-3 text-xs"
+                            >
+                              <Trash2 className="size-3.5" />
+                              Eliminar
+                            </Button>
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Mobile: compact card with accent border */}
-              <div className={`flex flex-col gap-3 border-l-4 ${getAccentBorder(catalog.name)} p-4 md:hidden`}>
+              <div
+                className={`flex flex-col gap-3 border-l-4 ${getAccentBorder(catalog.name)} p-4 md:hidden`}
+              >
                 <div className="flex items-start gap-3">
                   <LogoMark catalog={catalog} />
                   <div className="min-w-0 flex-1">
@@ -269,7 +273,10 @@ async function CatalogsContent() {
                     )}
 
                     <div className="mt-2">
-                      <Badge variant="outline" className="bg-background/60 text-[10px]">
+                      <Badge
+                        variant="outline"
+                        className="bg-background/60 text-[10px]"
+                      >
                         {catalog.business_category?.name ?? "Sin categoría"}
                       </Badge>
                     </div>
@@ -310,21 +317,19 @@ async function CatalogsContent() {
                       triggerLabel="Editar"
                       triggerClassName="h-7 px-2.5 text-[11px]"
                     />
-                    <form action={deleteBusinessCatalog}>
-                      <input
-                        type="hidden"
-                        name="catalog_id"
-                        value={catalog.id}
-                      />
-                      <Button
-                        type="submit"
-                        variant="destructive"
-                        size="icon"
-                        className="size-7"
-                      >
-                        <Trash2 className="size-3" />
-                      </Button>
-                    </form>
+                    <DialogConfirmDelete
+                      onConfirm={deleteBusinessCatalog}
+                      formData={{ catalog_id: catalog.id }}
+                      trigger={
+                        <Button
+                          variant="destructive"
+                          className="h-8 px-3 text-xs"
+                        >
+                          <Trash2 className="size-3.5" />
+                          Eliminar
+                        </Button>
+                      }
+                    />
                   </div>
                 </div>
               </div>
@@ -335,8 +340,6 @@ async function CatalogsContent() {
     </div>
   );
 }
-
-
 
 export default function SellerCatalogsPage() {
   return (
