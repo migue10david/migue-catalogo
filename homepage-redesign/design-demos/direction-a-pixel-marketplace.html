@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Online — Marketplace Pixel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pixel-border: 4px solid #000;
+  --shadow-hard: 4px 4px 0 #000;
+  --level-hero-bg: #4CAF50;
+  --level-hero-accent: #5DADE2;
+  --level-features-bg: #2C2A4A;
+  --level-features-accent: #7C5CBF;
+  --level-catalogs-bg: #1ABC9C;
+  --level-catalogs-accent: #16A085;
+  --level-seller-bg: #E8743B;
+  --level-seller-accent: #D35400;
+  --level-footer-bg: #1a1a2e;
+  --pixel-white: #F5F5F0;
+  --pixel-black: #0A0A0A;
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--pixel-black);
+  color: var(--pixel-white);
+  image-rendering: pixelated;
+}
+
+/* ===== PIXEL DECORATIONS ===== */
+.pixel-corners {
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+.pixel-border {
+  border: var(--pixel-border);
+  box-shadow: var(--shadow-hard);
+}
+
+.btn-pixel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: var(--pixel-border);
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  background: var(--pixel-white);
+  color: var(--pixel-black);
+  letter-spacing: 0.5px;
+}
+.btn-pixel:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+.btn-pixel:active { transform: translate(4px, 4px); box-shadow: none; }
+.btn-pixel-outline {
+  background: transparent;
+  color: var(--pixel-white);
+  border-color: var(--pixel-white);
+  box-shadow: 4px 4px 0 var(--pixel-white);
+}
+.btn-pixel-outline:hover { box-shadow: 2px 2px 0 var(--pixel-white); }
+
+.level-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  border: var(--pixel-border);
+  background: var(--pixel-white);
+  color: var(--pixel-black);
+  text-transform: uppercase;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--pixel-black);
+  border-bottom: var(--pixel-border);
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--pixel-white);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.nav-brand span { color: #39FF14; }
+.nav-links { display: flex; gap: 16px; align-items: center; }
+.nav-links a {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--pixel-white);
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.nav-links a:hover { border-color: var(--pixel-white); }
+.nav-actions { display: flex; gap: 8px; }
+.nav-actions .btn-pixel { padding: 8px 16px; font-size: 8px; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 24px 60px;
+  background: var(--level-hero-bg);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 4px,
+    rgba(0,0,0,0.05) 4px,
+    rgba(0,0,0,0.05) 8px
+  );
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--level-hero-accent) 0, var(--level-hero-accent) 16px,
+    transparent 16px, transparent 32px
+  );
+}
+.hero-content { position: relative; z-index: 1; max-width: 720px; }
+.hero h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(20px, 4vw, 40px);
+  line-height: 1.5;
+  color: var(--pixel-white);
+  margin-top: 24px;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+}
+.hero h1 .highlight {
+  display: block;
+  color: #FFD500;
+  margin-top: 8px;
+}
+.hero p {
+  font-family: 'VT323', monospace;
+  font-size: clamp(20px, 2.5vw, 28px);
+  color: rgba(255,255,255,0.9);
+  margin-top: 16px;
+  line-height: 1.4;
+}
+.hero-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; justify-content: center; }
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 48px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,0.7);
+}
+.hero-stats strong {
+  display: block;
+  font-size: 20px;
+  color: var(--pixel-white);
+  margin-bottom: 4px;
+}
+.pixel-clouds {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+  opacity: 0.3;
+}
+.pixel-cloud {
+  width: 80px; height: 24px;
+  background: var(--pixel-white);
+  border: 3px solid rgba(0,0,0,0.2);
+  border-radius: 0;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.section-header h2 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(16px, 2.5vw, 24px);
+  line-height: 1.6;
+  margin-top: 16px;
+}
+.section-header p {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  margin-top: 12px;
+  opacity: 0.85;
+}
+
+/* ===== FEATURES ===== */
+.features {
+  background: var(--level-features-bg);
+  border-top: var(--pixel-border);
+}
+.features::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--level-features-accent) 0, var(--level-features-accent) 20px, transparent 20px, transparent 40px);
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.feature-card {
+  background: rgba(255,255,255,0.05);
+  border: var(--pixel-border);
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.feature-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0,0,0,0.4); }
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border: var(--pixel-border);
+  background: var(--level-features-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+.feature-card h3 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.feature-card p {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  margin-top: 12px;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* ===== CATALOGS ===== */
+.catalogs {
+  background: var(--level-catalogs-bg);
+  border-top: var(--pixel-border);
+}
+.catalogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.catalog-card {
+  background: rgba(0,0,0,0.1);
+  border: var(--pixel-border);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+.catalog-card:hover { transform: translate(-2px, -2px); }
+.catalog-cover {
+  height: 160px;
+  background: var(--level-catalogs-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: var(--pixel-border);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 24px;
+  opacity: 0.5;
+}
+.catalog-info { padding: 16px; }
+.catalog-info .tag {
+  display: inline-block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 4px 8px;
+  background: var(--level-catalogs-accent);
+  border: 2px solid #000;
+  margin-bottom: 8px;
+}
+.catalog-info h4 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.catalog-info .meta {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+.catalog-info .desc {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  margin-top: 8px;
+  opacity: 0.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== SELLER ===== */
+.seller {
+  background: var(--level-seller-bg);
+  border-top: var(--pixel-border);
+}
+.seller-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.seller-content {}
+.seller-preview {
+  background: rgba(0,0,0,0.1);
+  border: var(--pixel-border);
+  padding: 24px;
+}
+.seller-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid rgba(0,0,0,0.2);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+.seller-preview-header span {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  opacity: 0.6;
+}
+.seller-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.seller-stat {
+  border: 2px solid rgba(0,0,0,0.2);
+  padding: 12px;
+  text-align: center;
+}
+.seller-stat strong {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 20px;
+  display: block;
+}
+.seller-stat span {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  opacity: 0.7;
+}
+.seller-benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 24px 0;
+  list-style: none;
+}
+.seller-benefits li {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: 2px solid rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.seller-benefits li::before { content: '+'; font-family: 'Press Start 2P', monospace; font-size: 10px; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--level-footer-bg);
+  border-top: var(--pixel-border);
+  padding: 48px 24px 24px;
+  text-align: center;
+}
+footer p { font-family: 'VT323', monospace; font-size: 18px; opacity: 0.5; }
+footer .brand { font-family: 'Press Start 2P', monospace; font-size: 10px; margin-bottom: 16px; }
+footer .brand span { color: #39FF14; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .seller-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .hero-stats { flex-direction: column; gap: 16px; align-items: center; }
+  .features-grid { grid-template-columns: 1fr; }
+  .catalogs-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand"><span>></span> CATALOGO_ONLINE</a>
+  <div class="nav-links">
+    <a href="#">INICIO</a>
+    <a href="#">EXPLORAR</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="btn-pixel" style="padding:8px 16px;font-size:8px">ACCEDER</a>
+    <a href="#" class="btn-pixel btn-pixel-outline" style="padding:8px 16px;font-size:8px">REGISTRO</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="pixel-clouds">
+    <div class="pixel-cloud"></div>
+    <div class="pixel-cloud"></div>
+    <div class="pixel-cloud"></div>
+  </div>
+  <div class="hero-content">
+    <span class="level-badge">NIVEL 1 — VITRINA DIGITAL</span>
+    <h1>
+      TU CATALOGO ONLINE
+      <span class="highlight">SIEMPRE ACCESIBLE</span>
+    </h1>
+    <p>Crea, gestiona y comparte tu catálogo de productos.<br>Los clientes te encuentran, tú vendes más.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-pixel">CREAR CUENTA GRATIS →</a>
+      <a href="#" class="btn-pixel btn-pixel-outline">INICIAR SESION</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>+1.2K</strong> CATALOGOS ACTIVOS</div>
+      <div><strong>+5K</strong> PRODUCTOS</div>
+      <div><strong>+3K</strong> VENDEDORES</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="level-badge">NIVEL 2 — PODERES</span>
+      <h2>Todo lo que necesitas</h2>
+      <p>Herramientas pensadas para que vendas más y administres mejor tu negocio.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏪</div>
+        <h3>CREA TU CATALOGO</h3>
+        <p>Organiza tus productos con imágenes, precios y descripciones. Todo listo para compartir.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>DESCUBRE PRODUCTOS</h3>
+        <p>Explora catálogos de vendedores cercanos, filtra por categoría o provincia.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>PLATAFORMA SEGURA</h3>
+        <p>Tus datos protegidos con autenticación robusta y roles de acceso controlados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOGS -->
+<section class="section catalogs">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="level-badge">NIVEL 3 — DESCUBRIMIENTO</span>
+      <h2>Negocios más recientes</h2>
+      <p>Explora los últimos catálogos agregados a la plataforma.</p>
+    </div>
+    <div class="catalogs-grid">
+      <div class="catalog-card">
+        <div class="catalog-cover">📦</div>
+        <div class="catalog-info">
+          <span class="tag">#01 NUEVO</span>
+          <h4>TIENDA EJEMPLO</h4>
+          <div class="meta">Buenos Aires · Ropa</div>
+          <div class="desc">Productos seleccionados con la mejor calidad para tu estilo.</div>
+        </div>
+      </div>
+      <div class="catalog-card">
+        <div class="catalog-cover">📦</div>
+        <div class="catalog-info">
+          <span class="tag">#02 NUEVO</span>
+          <h4>ARTESANIAS DEL SUR</h4>
+          <div class="meta">Córdoba · Artesanías</div>
+          <div class="desc">Artesanía local hecha a mano con materiales naturales.</div>
+        </div>
+      </div>
+      <div class="catalog-card">
+        <div class="catalog-cover">📦</div>
+        <div class="catalog-info">
+          <span class="tag">#03 NUEVO</span>
+          <h4>SABORES CASEROS</h4>
+          <div class="meta">Santa Fe · Alimentos</div>
+          <div class="desc">Comida casera, ingredientes frescos y recetas tradicionales.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELLER -->
+<section class="section seller">
+  <div class="section-inner">
+    <div class="seller-grid">
+      <div class="seller-content">
+        <span class="level-badge">NIVEL 4 — VENDEDOR</span>
+        <h2 style="font-family:'Press Start 2P',monospace;font-size:clamp(14px,2vw,20px);line-height:1.5;margin-top:16px">
+          Convierte tu negocio en un catálogo que sí se ve profesional
+        </h2>
+        <p style="font-family:'VT323',monospace;font-size:20px;margin-top:12px;opacity:0.85">
+          Publica tus productos, organiza tus negocios y deja que los clientes descubran todo desde una vitrina digital.
+        </p>
+        <ul class="seller-benefits">
+          <li>Gestiona tu inventario desde un solo lugar</li>
+          <li>Alcanza más clientes en tu zona</li>
+          <li>Panel exclusivo para vendedores</li>
+          <li>Control total sobre tus productos</li>
+        </ul>
+        <a href="#" class="btn-pixel" style="margin-top:16px">SOLICITAR ACCESO →</a>
+      </div>
+      <div class="seller-preview">
+        <div class="seller-preview-header">
+          <span>SELLER PREVIEW</span>
+          <span style="font-size:7px;padding:4px 8px;background:rgba(0,0,0,0.2)">ACTIVO</span>
+        </div>
+        <p style="font-family:'Press Start 2P',monospace;font-size:14px;margin-bottom:12px">Tu escaparate</p>
+        <div style="border:2px solid rgba(0,0,0,0.15);padding:12px;margin-bottom:12px">
+          <p style="font-family:'Press Start 2P',monospace;font-size:9px">Catálogo principal</p>
+          <p style="font-family:'VT323',monospace;font-size:16px;opacity:0.7;margin-top:4px">Muestra tu negocio con identidad propia.</p>
+        </div>
+        <div class="seller-stats">
+          <div class="seller-stat"><strong>24</strong><span>Productos</span></div>
+          <div class="seller-stat"><strong>03</strong><span>Negocios</span></div>
+        </div>
+        <div style="border:2px dashed rgba(0,0,0,0.2);padding:12px;text-align:center;margin-top:12px">
+          <p style="font-family:'VT323',monospace;font-size:16px">Empieza con una sola solicitud</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="brand"><span>></span> CATALOGO_ONLINE</div>
+  <p>Hecho para vendedores independientes</p>
+  <p style="margin-top:8px;font-size:14px">© 2026 Catalogo Online</p>
+</footer>
+
+<!-- PIXEL SCROLLBAR -->
+<style>
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--pixel-black); }
+::-webkit-scrollbar-thumb { background: var(--pixel-white); border: 2px solid var(--pixel-black); }
+</style>
+
+</body>
+</html>

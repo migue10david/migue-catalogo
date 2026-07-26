@@ -56,7 +56,7 @@ export function CartCatalogGroup({
   const initial = catalogName.charAt(0).toUpperCase();
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow duration-300 hover:shadow-md">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/50 bg-secondary/[0.03] px-5 py-4 sm:px-6">
         <div className="flex items-center gap-4">
           <div className="flex size-12 items-center justify-center rounded-xl bg-secondary/10 font-serif-display text-xl text-secondary">

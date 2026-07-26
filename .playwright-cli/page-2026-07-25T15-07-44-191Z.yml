@@ -1,0 +1,83 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Catálogo Online" [ref=e6]
+      - generic [ref=e7]:
+        - link "Inicio" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Explorar" [ref=e9] [cursor=pointer]:
+          - /url: /explore
+      - generic [ref=e10]:
+        - link "Carrito" [ref=e11] [cursor=pointer]:
+          - /url: /cart
+        - generic [ref=e13]:
+          - link "Iniciar sesión" [ref=e14] [cursor=pointer]:
+            - /url: /auth/login
+          - link "Registrarse" [ref=e15] [cursor=pointer]:
+            - /url: /auth/sign-up
+  - generic [ref=e19]:
+    - generic [ref=e20]:
+      - generic [ref=e21]: Iniciar sesión
+      - generic [ref=e22]: Ingresa con tu correo electrónico y contraseña para iniciar sesión
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: Email
+          - textbox "Email" [ref=e28]:
+            - /placeholder: m@example.com
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: Contraseña
+            - link "¿Olvidaste tu contraseña?" [ref=e32] [cursor=pointer]:
+              - /url: /auth/forgot-password
+          - textbox "Contraseña" [ref=e33]
+        - button "Iniciar sesión" [ref=e34] [cursor=pointer]
+      - generic [ref=e35]:
+        - text: ¿No tienes una cuenta?
+        - link "Regístrate" [ref=e36] [cursor=pointer]:
+          - /url: /auth/sign-up
+  - contentinfo [ref=e37]:
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - link "Catálogo Online" [ref=e41] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e49]: La plataforma donde vendedores y compradores se conectan a través de catálogos de productos digitales.
+        - generic [ref=e50]:
+          - heading "Plataforma" [level=3] [ref=e51]
+          - list [ref=e52]:
+            - listitem [ref=e53]:
+              - link "Explorar catálogos" [ref=e54] [cursor=pointer]:
+                - /url: /explore
+            - listitem [ref=e55]:
+              - link "Ser vendedor" [ref=e56] [cursor=pointer]:
+                - /url: /auth/sign-up
+            - listitem [ref=e57]:
+              - link "Crear cuenta" [ref=e58] [cursor=pointer]:
+                - /url: /auth/sign-up
+        - generic [ref=e59]:
+          - heading "Soporte" [level=3] [ref=e60]
+          - list [ref=e61]:
+            - listitem [ref=e62]:
+              - link "Centro de ayuda" [ref=e63] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e64]:
+              - link "Contacto" [ref=e65] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e66]:
+              - link "Sugerencias" [ref=e67] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e68]:
+          - heading "Legal" [level=3] [ref=e69]
+          - list [ref=e70]:
+            - listitem [ref=e71]:
+              - link "Términos de uso" [ref=e72] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e73]:
+              - link "Política de privacidad" [ref=e74] [cursor=pointer]:
+                - /url: "#"
+      - paragraph [ref=e76]: © 2026 Catálogo Online. Hecho con para vendedores independientes.
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e84] [cursor=pointer]

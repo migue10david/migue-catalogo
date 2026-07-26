@@ -4,8 +4,9 @@ import { Suspense } from "react";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
+import { ConditionalFooter } from "@/components/shared/conditional-footer";
 import { Toaster } from "sonner";
+import { SidebarConfigProvider } from "@/hooks/sidebar-contex";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -44,12 +45,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SidebarConfigProvider>
+
           <Suspense>
             <Navbar />
           </Suspense>
           {children}
-              <Footer />
-              <Toaster/>
+          <Suspense>
+            <ConditionalFooter />
+          </Suspense>
+          <Toaster />
+          </SidebarConfigProvider>
         </ThemeProvider>
       </body>
     </html>

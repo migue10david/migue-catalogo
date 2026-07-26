@@ -1,26 +1,30 @@
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
-import { AdminSidebar } from "@/components/admin/admin-sidebar";
-import { AdminTopNav } from "@/components/admin/admin-top-nav";
+import { Suspense } from "react";
+import { requireRole } from "@/lib/auth";
+import { AdminLayoutShell } from "@/components/admin/admin-layout-shell";
 
-export default function AdminLayout({
+async function AdminLayoutContent({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const user = await requireRole("admin");
+  return <AdminLayoutShell user={user}>{children}</AdminLayoutShell>;
+}
+
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider defaultOpen>
-      <AdminSidebar />
-      <SidebarInset className="min-h-svh bg-[radial-gradient(ellipse_at_top_left,hsl(var(--primary)/0.03),transparent_50%)]">
-        <div className="flex-1 px-3 py-4 sm:px-5 sm:py-6 md:px-6 md:py-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-5">
-            <AdminTopNav />
-            {children}
-          </div>
+    <Suspense
+      fallback={
+        <div className="flex min-h-svh items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      }
+    >
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </Suspense>
   );
 }

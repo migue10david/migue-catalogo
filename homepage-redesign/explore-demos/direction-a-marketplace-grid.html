@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dirección A — Marketplace Grid</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f9ff;
+    --fg: #0b1c30;
+    --primary: #091426;
+    --secondary: #006a61;
+    --surface: #e5eeff;
+    --outline: #75777d;
+    --muted: #6b7280;
+    --card-bg: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1c30;
+      --fg: #e2e8f0;
+      --primary: #bcc7de;
+      --secondary: #6bd8cb;
+      --surface: #213145;
+      --outline: #75777d;
+      --muted: #94a3b8;
+      --card-bg: #1e293b;
+    }
+  }
+
+  body {
+    font-family: system-ui, -apple-system, 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+  }
+
+  .explore-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .hero {
+    margin-bottom: 2rem;
+  }
+
+  .explore-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--secondary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .explore-label svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .search-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 16px;
+    border: 1px solid hsl(225 3% 47% / 0.35);
+    background: var(--card-bg);
+    transition: all 0.2s;
+    box-shadow: 0 1px 4px hsl(0 0% 0% / 0.04);
+  }
+
+  .search-bar:focus-within {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px hsl(175 100% 21% / 0.1);
+  }
+
+  .search-bar svg {
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .search-bar input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: var(--fg);
+    outline: none;
+  }
+
+  .search-bar input::placeholder {
+    color: var(--muted);
+    opacity: 0.4;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-select {
+    appearance: none;
+    padding: 0.5rem 2rem 0.5rem 0.875rem;
+    border-radius: 999px;
+    border: 1px solid hsl(225 3% 47% / 0.3);
+    background: var(--card-bg);
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2375777d' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+
+  .filter-select:hover {
+    border-color: var(--outline);
+  }
+
+  .filter-select:focus {
+    border-color: var(--secondary);
+    outline: none;
+  }
+
+  .category-chips {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0;
+  }
+
+  .category-chip {
+    padding: 0.375rem 1rem;
+    border-radius: 999px;
+    border: 1px solid hsl(225 3% 47% / 0.25);
+    background: var(--card-bg);
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .category-chip:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+  }
+
+  .category-chip.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: #fff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .category-chip.active {
+      color: #0b1c30;
+    }
+  }
+
+  .results-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid hsl(225 3% 47% / 0.15);
+  }
+
+  .results-header .count {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .results-header .count strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .results-header .spacer {
+    flex: 1;
+  }
+
+  .results-header .sort {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .catalog-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid hsl(225 3% 47% / 0.15);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .catalog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px hsl(0 0% 0% / 0.06);
+    border-color: hsl(225 3% 47% / 0.25);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .catalog-card:hover {
+      box-shadow: 0 12px 40px hsl(0 0% 0% / 0.25);
+    }
+  }
+
+  .card-cover {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+
+  .card-cover .placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s;
+  }
+
+  .catalog-card:hover .card-cover .placeholder {
+    transform: scale(1.04);
+  }
+
+  .card-cover .placeholder svg {
+    width: 36px;
+    height: 36px;
+    color: var(--muted);
+    opacity: 0.3;
+  }
+
+  .card-cover .placeholder-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .catalog-card:hover .card-cover .placeholder-img {
+    transform: scale(1.04);
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .card-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid hsl(225 3% 47% / 0.15);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-logo svg {
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    opacity: 0.4;
+  }
+
+  .card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-meta h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .card-meta .sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.125rem;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: hsl(175 100% 21% / 0.08);
+    color: var(--secondary);
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .card-tag svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .card-tag {
+      background: hsl(173 58% 63% / 0.1);
+    }
+  }
+
+  .card-tag.location {
+    background: hsl(213 62% 9% / 0.06);
+    color: var(--muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .card-tag.location {
+      background: hsl(221 34% 80% / 0.06);
+    }
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid hsl(225 3% 47% / 0.12);
+  }
+
+  .page-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid hsl(225 3% 47% / 0.2);
+    background: var(--card-bg);
+    font-size: 0.85rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .page-btn:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+  }
+
+  .page-btn.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: #fff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .page-btn.active {
+      color: #0b1c30;
+    }
+  }
+
+  .page-text {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0 0.5rem;
+  }
+
+  .label {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    background: var(--surface);
+    padding: 0.375rem 1rem;
+    border-radius: 999px;
+    border: 1px solid hsl(225 3% 47% / 0.3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .label {
+      background: #1e293b;
+      border-color: #334155;
+    }
+  }
+
+  /* Animations */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fade-up 0.6s ease-out both; }
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.1s; }
+  .d3 { animation-delay: 0.15s; }
+  .d4 { animation-delay: 0.2s; }
+  .d5 { animation-delay: 0.25s; }
+</style>
+</head>
+<body>
+<div class="label">Dirección A · Marketplace Grid</div>
+
+<main class="explore-page">
+  <div class="hero animate">
+    <div class="explore-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20Z"/><path d="M2 12h20"/></svg>
+      Explorar
+    </div>
+    <h1>Descubrí catálogos</h1>
+    <p>Encontrá negocios y productos cerca de tu zona.</p>
+  </div>
+
+  <div class="search-section animate d1">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Buscar catálogo o producto…">
+    </div>
+
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>Todas las provincias</option>
+        <option>Córdoba</option>
+        <option>Buenos Aires</option>
+        <option>Santa Fe</option>
+      </select>
+      <select class="filter-select">
+        <option>Todas las categorías</option>
+        <option>Moda</option>
+        <option>Alimentos</option>
+        <option>Decoración</option>
+      </select>
+    </div>
+
+    <div class="category-chips">
+      <span class="category-chip active">Todos</span>
+      <span class="category-chip">Moda</span>
+      <span class="category-chip">Alimentos</span>
+      <span class="category-chip">Decoración</span>
+      <span class="category-chip">Tecnología</span>
+      <span class="category-chip">Servicios</span>
+      <span class="category-chip">Arte</span>
+    </div>
+  </div>
+
+  <div class="results-header animate d2">
+    <span class="count"><strong>24</strong> catálogos</span>
+    <span class="spacer"></span>
+    <span class="sort">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+      Más relevantes
+    </span>
+  </div>
+
+  <div class="card-grid">
+    <div class="catalog-card animate d2">
+      <div class="card-cover">
+        <div class="placeholder" style="background: radial-gradient(ellipse at 30% 40%, hsl(175 100% 21% / 0.2), transparent 60%), var(--surface);"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg></div>
+          <div class="card-meta">
+            <h3>Elena Studio</h3>
+            <div class="sub">12 productos</div>
+          </div>
+        </div>
+        <p class="card-desc">Prendas esenciales para la mujer moderna. Calidad, confort y atemporalidad en cada diseño.</p>
+        <div class="card-tags">
+          <span class="card-tag">Moda</span>
+          <span class="card-tag location">📍 Córdoba</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-card animate d3">
+      <div class="card-cover">
+        <div class="placeholder" style="background: radial-gradient(ellipse at 70% 60%, hsl(213 62% 9% / 0.15), transparent 60%), var(--surface);"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="card-meta">
+            <h3>Sabores del Sur</h3>
+            <div class="sub">8 productos</div>
+          </div>
+        </div>
+        <p class="card-desc">Especias artesanales, conservas y productos gourmet de la Patagonia argentina.</p>
+        <div class="card-tags">
+          <span class="card-tag">Alimentos</span>
+          <span class="card-tag location">📍 Neuquén</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-card animate d3">
+      <div class="card-cover">
+        <div class="placeholder" style="background: radial-gradient(ellipse at 40% 30%, hsl(175 100% 21% / 0.25), transparent 60%), var(--surface);"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="card-meta">
+            <h3>Casa Mía Deco</h3>
+            <div class="sub">24 productos</div>
+          </div>
+        </div>
+        <p class="card-desc">Muebles, decoración y objetos únicos para hacer de tu casa un hogar con estilo.</p>
+        <div class="card-tags">
+          <span class="card-tag">Decoración</span>
+          <span class="card-tag location">📍 Buenos Aires</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-card animate d4">
+      <div class="card-cover">
+        <div class="placeholder" style="background: radial-gradient(ellipse at 60% 40%, hsl(213 62% 9% / 0.12), transparent 60%), var(--surface);"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="card-meta">
+            <h3>TecnoYA</h3>
+            <div class="sub">18 productos</div>
+          </div>
+        </div>
+        <p class="card-desc">Accesorios, gadgets y tecnología para el día a día con envío express.</p>
+        <div class="card-tags">
+          <span class="card-tag">Tecnología</span>
+          <span class="card-tag location">📍 Rosario</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-card animate d4">
+      <div class="card-cover">
+        <div class="placeholder" style="background: radial-gradient(ellipse at 50% 50%, hsl(175 100% 21% / 0.18), transparent 60%), var(--surface);"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="card-meta">
+            <h3>Lectora curiosa</h3>
+            <div class="sub">36 productos</div>
+          </div>
+        </div>
+        <p class="card-desc">Libros, cuadernos y papelería de autor. Ediciones limitadas y firmadas.</p>
+        <div class="card-tags">
+          <span class="card-tag">Arte</span>
+          <span class="card-tag location">📍 Córdoba</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-card animate d5">
+      <div class="card-cover">
+        <div class="placeholder" style="background: radial-gradient(ellipse at 30% 60%, hsl(213 62% 9% / 0.1), transparent 60%), var(--surface);"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="card-meta">
+            <h3>Ayuda Inmediata</h3>
+            <div class="sub">6 productos</div>
+          </div>
+        </div>
+        <p class="card-desc">Servicios profesionales de soporte técnico, reparaciones y consultoría.</p>
+        <div class="card-tags">
+          <span class="card-tag">Servicios</span>
+          <span class="card-tag location">📍 Santa Fe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination animate d5">
+    <button class="page-btn">‹</button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <span class="page-text">…</span>
+    <button class="page-btn">12</button>
+    <button class="page-btn">›</button>
+  </div>
+</main>
+</body>
+</html>

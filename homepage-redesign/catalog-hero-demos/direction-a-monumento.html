@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dirección A — Monumento Tipográfico</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f9ff;
+    --fg: #0b1c30;
+    --primary: #091426;
+    --secondary: #006a61;
+    --surface: #e5eeff;
+    --outline: #75777d;
+    --muted: #6b7280;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1c30;
+      --fg: #e2e8f0;
+      --primary: #bcc7de;
+      --secondary: #6bd8cb;
+      --surface: #213145;
+      --outline: #75777d;
+      --muted: #94a3b8;
+    }
+  }
+
+  body {
+    font-family: system-ui, -apple-system, 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  /* Duotone cover treatment */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) contrast(1.1);
+  }
+
+  .hero-bg .duotone {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      hsl(213 62% 9% / 0.65),
+      hsl(175 100% 21% / 0.45)
+    );
+    mix-blend-mode: multiply;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .hero-bg .duotone {
+      background: linear-gradient(
+        135deg,
+        hsl(221 34% 80% / 0.2),
+        hsl(173 58% 63% / 0.15)
+      );
+      mix-blend-mode: soft-light;
+    }
+  }
+
+  .hero-bg .fallback {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 20%, hsl(175 100% 21% / 0.2), transparent 60%),
+      radial-gradient(ellipse 60% 70% at 80% 80%, hsl(213 62% 9% / 0.15), transparent 60%),
+      var(--surface);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom, transparent 40%, var(--bg) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--fg); }
+  .back-link svg { transition: transform 0.2s; }
+  .back-link:hover svg { transform: translateX(-4px); }
+
+  .hero-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-layout {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  .hero-text {
+    flex: 1;
+    max-width: 800px;
+  }
+
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: hsl(var(--primary-h, 213) var(--primary-s, 62%) var(--primary-l, 9%) / 0.1);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.375rem 0.875rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-badge::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--secondary);
+    flex-shrink: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .category-badge {
+      background: hsl(221 34% 80% / 0.12);
+    }
+  }
+
+  .hero-name {
+    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--primary);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-desc {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 580px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-desc { font-size: 1.25rem; }
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .hero-meta svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .hero-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--outline);
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-links a:hover {
+    transform: translateY(-3px);
+    border-color: var(--secondary);
+    color: var(--secondary);
+    box-shadow: 0 8px 24px hsl(175 100% 21% / 0.15);
+  }
+
+  .hero-links a svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-aside {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .logo-frame {
+    width: 96px;
+    height: 96px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--outline);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .logo-frame {
+      box-shadow: 0 8px 32px hsl(0 0% 0% / 0.25);
+    }
+  }
+
+  .logo-frame svg {
+    width: 36px;
+    height: 36px;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  .logo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Animations */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate { animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  .label {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    background: var(--surface);
+    padding: 0.375rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--outline);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .label {
+      background: #1e293b;
+      border-color: #334155;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="label">Dirección A · Monumento Tipográfico</div>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="fallback" style="background:
+      radial-gradient(ellipse 90% 70% at 25% 30%, hsl(175 100% 21% / 0.25), transparent 60%),
+      radial-gradient(ellipse 70% 80% at 75% 70%, hsl(213 62% 9% / 0.12), transparent 60%),
+      var(--surface);"></div>
+    <div class="duotone"></div>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <a href="#" class="back-link animate">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Volver al inicio
+    </a>
+
+    <div class="hero-layout">
+      <div class="hero-text">
+        <div class="category-badge animate delay-1">Moda</div>
+        <h1 class="hero-name animate delay-1">Elena<br>Studio</h1>
+        <p class="hero-desc animate delay-2">
+          Descubrí una curada selección de prendas esenciales, diseñadas para la mujer que valora la calidad, el confort y la atemporalidad.
+        </p>
+
+        <div class="hero-meta animate delay-3">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            Córdoba, Argentina
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+            +54 351 555-0123
+          </span>
+        </div>
+
+        <div class="hero-links animate delay-4">
+          <a href="#" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2Z"/></svg>
+          </a>
+          <a href="#" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.88 7.22L3 21l2.28-5.14A8.5 8.5 0 1 1 21 11.5Z"/><circle cx="9" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="11.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-aside animate delay-3">
+        <div class="logo-frame">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

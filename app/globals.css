@@ -1,62 +1,61 @@
-@tailwind base;
-
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+@import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 32% 26%;
+    --background: 234 100% 98%;
+    --foreground: 211 64% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 222 32% 26%;
+    --card-foreground: 211 64% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 32% 26%;
-    --primary: 222 32% 26%;
+    --popover-foreground: 211 64% 12%;
+    --primary: 213 62% 9%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 173 80% 40%;
+    --secondary: 175 100% 21%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 215 16% 93%;
-    --muted-foreground: 240 1% 47%;
-    --accent: 215 16% 93%;
-    --accent-foreground: 222 32% 26%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 14% 87%;
-    --input: 215 14% 87%;
-    --ring: 222 32% 26%;
-    --chart-1: 222 32% 26%;
-    --chart-2: 173 80% 40%;
-    --chart-3: 215 16% 47%;
-    --chart-4: 240 1% 47%;
-    --chart-5: 0 84.2% 60.2%;
+    --muted: 219 100% 95%;
+    --muted-foreground: 231 5% 28%;
+    --accent: 219 100% 97%;
+    --accent-foreground: 211 64% 12%;
+    --destructive: 0 76% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 225 3% 47%;
+    --input: 225 3% 47%;
+    --ring: 175 100% 21%;
+    --chart-1: 213 62% 9%;
+    --chart-2: 175 100% 21%;
+    --chart-3: 231 5% 28%;
+    --chart-4: 225 3% 47%;
+    --chart-5: 0 76% 42%;
     --radius: 0.5rem;
   }
   .dark {
-    --background: 222 32% 12%;
-    --foreground: 0 0% 98%;
-    --card: 222 32% 14%;
-    --card-foreground: 0 0% 98%;
-    --popover: 222 32% 14%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 173 80% 40%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 222 32% 26%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 222 25% 18%;
-    --muted-foreground: 215 16% 60%;
-    --accent: 222 25% 18%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --background: 211 64% 12%;
+    --foreground: 220 100% 96%;
+    --card: 213 36% 20%;
+    --card-foreground: 220 100% 96%;
+    --popover: 213 36% 20%;
+    --popover-foreground: 220 100% 96%;
+    --primary: 221 34% 80%;
+    --primary-foreground: 211 64% 12%;
+    --secondary: 173 58% 63%;
+    --secondary-foreground: 211 64% 12%;
+    --muted: 217 32% 18%;
+    --muted-foreground: 221 34% 80%;
+    --accent: 213 36% 22%;
+    --accent-foreground: 220 100% 96%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
-    --border: 222 20% 20%;
-    --input: 222 20% 20%;
-    --ring: 173 80% 40%;
-    --chart-1: 173 80% 40%;
-    --chart-2: 222 32% 26%;
-    --chart-3: 215 16% 60%;
-    --chart-4: 0 0% 98%;
-    --chart-5: 0 62.8% 30.6%;
+    --border: 225 3% 47%;
+    --input: 225 3% 47%;
+    --ring: 173 58% 63%;
+    --chart-1: 221 34% 80%;
+    --chart-2: 173 58% 63%;
+    --chart-3: 213 36% 30%;
+    --chart-4: 225 3% 47%;
+    --chart-5: 0 63% 31%;
   }
 }
 
@@ -162,4 +161,22 @@
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+.sidebar-none-mode [data-slot="sidebar"] {
+  height: 100vh !important;
+  min-height: 100vh !important;
+}
+
+/* Fix for right-side inset variant support */
+@media (min-width: 768px) {
+  /* Right sidebar inset variant - margin adjustments */
+  [data-side="right"][data-variant="inset"] ~ [data-slot="sidebar-inset"] {
+    margin-right: 0 !important;
+  }
+
+  /* Right sidebar inset variant - collapsed state margin */
+  [data-side="right"][data-variant="inset"][data-state="collapsed"] ~ [data-slot="sidebar-inset"] {
+    margin-right: 0.5rem !important;
+  }
 }
