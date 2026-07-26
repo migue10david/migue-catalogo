@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AlertCircle, Loader2, Lock } from "lucide-react";
 
 export function UpdatePasswordForm({
   className,
@@ -24,7 +25,7 @@ export function UpdatePasswordForm({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleForgotPassword = async (e: React.FormEvent) => {
+  const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     const supabase = createClient();
     setIsLoading(true);
@@ -33,10 +34,9 @@ export function UpdatePasswordForm({
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
       router.push("/protected");
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Ha ocurrido un error");
     } finally {
       setIsLoading(false);
     }
@@ -44,30 +44,44 @@ export function UpdatePasswordForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Reset Your Password</CardTitle>
-          <CardDescription>
-            Please enter your new password below.
+      <div className="flex flex-col items-center gap-2">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo1.png" alt="Catalogly" className="h-10 w-auto object-contain" />
+      </div>
+      <Card className="shadow-lg border-0 ring-1 ring-black/5 dark:ring-white/10">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-bold tracking-tight">Nueva contraseña</CardTitle>
+          <CardDescription className="text-muted-foreground/80">
+            Ingresa tu nueva contraseña a continuación
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleForgotPassword}>
-            <div className="flex flex-col gap-6">
+          <form onSubmit={handleUpdatePassword}>
+            <div className="flex flex-col gap-5">
               <div className="grid gap-2">
-                <Label htmlFor="password">New password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="New password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <Label htmlFor="password" className="text-sm font-medium">Nueva contraseña</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground/60" />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Nueva contraseña"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-10 pl-9"
+                  />
+                </div>
               </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Saving..." : "Save new password"}
+              {error && (
+                <div className="flex items-center gap-2 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+                  <AlertCircle className="size-4 shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
+              <Button type="submit" className="w-full h-10 font-medium" disabled={isLoading}>
+                {isLoading && <Loader2 className="size-4 animate-spin mr-2" />}
+                {isLoading ? "Guardando..." : "Guardar nueva contraseña"}
               </Button>
             </div>
           </form>

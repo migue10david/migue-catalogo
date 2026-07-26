@@ -1,51 +1,54 @@
 import { Suspense } from "react";
 
 import { requireRole } from "@/lib/auth";
-import { getAllProfiles } from "@/lib/admin";
-import { UsersTable } from "@/components/admin/users-table";
+import { getAllProfiles, getAllCatalogsWithOwner } from "@/lib/admin";
+import { getPendingSellerRequests } from "@/lib/seller-requests";
+import { AdminOverview } from "@/components/admin/admin-overview";
 
-async function AdminUsersContent() {
+async function AdminOverviewContent() {
   await requireRole("admin");
-  const users = await getAllProfiles();
+
+  const [users, catalogs, pendingRequests] = await Promise.all([
+    getAllProfiles(),
+    getAllCatalogsWithOwner(),
+    getPendingSellerRequests(),
+  ]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-          Usuarios
-        </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">
-          Gestiona todos los usuarios de la plataforma.
-        </p>
-      </div>
-
-      <UsersTable users={users} />
+    <div className="px-4 lg:px-6">
+      <AdminOverview
+        users={users}
+        catalogs={catalogs}
+        pendingRequests={pendingRequests}
+      />
     </div>
   );
 }
 
-function AdminUsersSkeleton() {
+function AdminOverviewSkeleton() {
   return (
-    <div className="flex flex-col gap-8">
-      <div>
-        <div className="h-10 w-48 rounded-xl bg-muted/50" />
-        <div className="mt-2 h-4 w-64 rounded-lg bg-muted/30" />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-3">
-        {[1, 2, 3].map((i) => (
+    <div className="flex flex-col gap-6">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {[1, 2, 3, 4].map((i) => (
           <div key={i} className="h-36 rounded-xl border bg-card" />
         ))}
       </div>
-      <div className="h-10 w-full rounded-lg bg-muted/20" />
-      <div className="h-[28rem] rounded-xl border bg-card" />
+      <div className="grid gap-6 xl:grid-cols-[1.35fr_0.95fr]">
+        <div className="h-[28rem] rounded-xl border bg-card" />
+        <div className="h-[28rem] rounded-xl border bg-card" />
+      </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="h-64 rounded-xl border bg-card" />
+        <div className="h-64 rounded-xl border bg-card" />
+      </div>
     </div>
   );
 }
 
 export default function AdminPage() {
   return (
-    <Suspense fallback={<AdminUsersSkeleton />}>
-      <AdminUsersContent />
+    <Suspense fallback={<AdminOverviewSkeleton />}>
+      <AdminOverviewContent />
     </Suspense>
   );
 }

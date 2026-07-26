@@ -3,12 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutGrid,
-  Users,
-  ClipboardList,
-  ShieldCheck,
+  ArrowUpRight,
+  Sparkles,
 } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import {
   Sidebar,
@@ -23,27 +20,7 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-
-const adminItems = [
-  {
-    title: "Usuarios",
-    href: "/admin",
-    icon: Users,
-    hint: "Gestión de usuarios",
-  },
-  {
-    title: "Catálogos",
-    href: "/admin/catalogs",
-    icon: LayoutGrid,
-    hint: "Todos los catálogos",
-  },
-  {
-    title: "Solicitudes",
-    href: "/admin/requests",
-    icon: ClipboardList,
-    hint: "Pendientes",
-  },
-];
+import { adminNavItems } from "@/components/admin/admin-nav";
 
 export function AdminSidebar() {
   const pathname = usePathname();
@@ -53,26 +30,28 @@ export function AdminSidebar() {
       <SidebarHeader>
         <Link
           href="/admin"
-          className="group flex items-center gap-2.5 rounded-xl bg-primary/5 px-3 py-2.5 transition-all duration-200 hover:bg-primary/10"
+          className="group flex items-center gap-2.5 rounded-2xl border border-sidebar-border/60 bg-sidebar-accent/30 px-3 py-3 transition-all duration-200 hover:bg-sidebar-accent/60"
         >
-          <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow-md">
+          <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 bg-background shadow-sm">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo1.png" alt="Catalogly" className="size-9 object-contain" />
+            <img src="/logo1.png" alt="Catalogly" className="size-8 object-contain" />
           </div>
           <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-            <p className="text-sm font-semibold leading-tight tracking-tight">
-              Admin Panel
-            </p>
-            <p className="text-[11px] leading-tight text-muted-foreground">
-              Administración general
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-semibold leading-tight tracking-tight text-sidebar-foreground">
+                Admin Console
+              </p>
+              <Badge
+                variant="secondary"
+                className="border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-600 dark:text-emerald-300"
+              >
+                Live
+              </Badge>
+            </div>
+            <p className="mt-1 text-[11px] leading-tight text-sidebar-foreground/65">
+              Control central de Catalogly
             </p>
           </div>
-          <Badge
-            variant="secondary"
-            className="hidden border-primary/20 bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary group-data-[collapsible=icon]:hidden"
-          >
-            Admin
-          </Badge>
         </Link>
       </SidebarHeader>
 
@@ -82,7 +61,7 @@ export function AdminSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {adminItems.map((item) => {
+              {adminNavItems.map((item) => {
                 const isActive =
                   item.href === "/admin"
                     ? pathname === "/admin"
@@ -94,27 +73,25 @@ export function AdminSidebar() {
                       asChild
                       isActive={isActive}
                       tooltip={item.title}
-                      className={`rounded-lg px-3 py-6 transition-all duration-150 ${
+                      className={`rounded-xl px-3 py-6 transition-all duration-150 ${
                         isActive
-                          ? "bg-primary/10 text-primary font-medium shadow-sm"
-                          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                          ? "bg-sidebar-primary/10 font-medium text-sidebar-primary shadow-sm"
+                          : "text-sidebar-foreground/75 hover:bg-sidebar-accent/70 hover:text-sidebar-foreground"
                       }`}
                     >
                       <Link href={item.href}>
-                        <item.icon
-                          className={`size-5 ${isActive ? "text-primary" : ""}`}
-                        />
-                        <div className="flex min-w-0 flex-1 items-center justify-between group-data-[collapsible=icon]:hidden">
-                          <div className="flex min-w-0 flex-col">
-                            <span className="truncate text-[15px] leading-tight">
+                        <item.icon className={`size-5 ${isActive ? "text-sidebar-primary" : ""}`} />
+                        <div className="flex min-w-0 flex-1 items-center justify-between gap-3 group-data-[collapsible=icon]:hidden">
+                          <div className="min-w-0">
+                            <p className="truncate text-[14px] leading-tight">
                               {item.title}
-                            </span>
-                            <span className="truncate text-[13px] leading-tight text-muted-foreground/70">
+                            </p>
+                            <p className="truncate text-[12px] leading-tight text-sidebar-foreground/55">
                               {item.hint}
-                            </span>
+                            </p>
                           </div>
                           {isActive && (
-                            <div className="size-1.5 shrink-0 rounded-full bg-primary" />
+                            <div className="size-1.5 shrink-0 rounded-full bg-sidebar-primary" />
                           )}
                         </div>
                       </Link>
@@ -130,8 +107,21 @@ export function AdminSidebar() {
       <SidebarSeparator />
 
       <SidebarFooter className="group-data-[collapsible=icon]:hidden">
-        <div className="rounded-lg border border-border/40 bg-muted/15 px-3 py-2 text-[11px] leading-relaxed text-muted-foreground/70">
-          Gestiona usuarios y catálogos de la plataforma.
+        <div className="rounded-2xl border border-sidebar-border/60 bg-sidebar-accent/30 p-4">
+          <div className="flex items-center gap-2 text-sm font-medium text-sidebar-foreground">
+            <Sparkles className="size-4 text-sidebar-primary" />
+            Ritmo de operación
+          </div>
+          <p className="mt-2 text-[12px] leading-5 text-sidebar-foreground/65">
+            Supervisa altas, catálogos y capacidad sin salir del panel.
+          </p>
+          <Link
+            href="/admin/requests"
+            className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-sidebar-primary transition-opacity hover:opacity-80"
+          >
+            Ir a moderación
+            <ArrowUpRight className="size-3.5" />
+          </Link>
         </div>
       </SidebarFooter>
 

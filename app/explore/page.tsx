@@ -55,34 +55,37 @@ async function ExploreContent({ searchParams }: ExplorePageProps) {
 
   const { catalogs, totalCount } = catalogsResult;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-  const from = (page - 1) * PAGE_SIZE + 1;
-  const to = Math.min(page * PAGE_SIZE, totalCount);
 
   return (
     <main className="min-h-screen">
-      {/* Hero section with layered gradients */}
-      <section className="relative w-full overflow-hidden border-b">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--primary)/0.12),transparent_50%),radial-gradient(ellipse_at_bottom_right,hsl(var(--primary)/0.06),transparent_50%)]" />
-          <div className="absolute inset-0 bg-muted/20" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,hsl(var(--primary)/0.05),transparent_40%)]" />
-        </div>
+      {/* Hero */}
+      <section className="relative w-full overflow-hidden">
+        {/* Single intentional gradient + map-like dot pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--secondary)/0.06),transparent_60%),radial-gradient(ellipse_at_bottom_right,hsl(var(--primary)/0.04),transparent_50%)]" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, hsl(var(--foreground)) 0.5px, transparent 0.5px)",
+            backgroundSize: "24px 24px",
+          }}
+        />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-12 sm:py-16">
+        <div className="relative mx-auto max-w-6xl px-4 py-14 sm:py-20">
           <div className="max-w-2xl animate-fade-up">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary backdrop-blur-sm">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-secondary/15 bg-secondary/5 px-3 py-1.5 text-xs font-medium text-secondary">
               <Compass className="size-3.5" />
               Explorar
             </div>
-            <h1 className="font-serif-display text-3xl tracking-tight sm:text-4xl lg:text-5xl">
-              Explorar catálogos
+            <h1 className="font-serif-display text-4xl tracking-tight sm:text-5xl lg:text-6xl leading-none">
+              Explorar<span className="lg:hidden"><br /></span> catálogos
             </h1>
-            <p className="mt-4 text-base text-muted-foreground leading-relaxed sm:text-lg">
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-lg">
               Encuentra negocios y productos cerca de ti.
             </p>
           </div>
 
-          <div className="mt-8 animate-fade-up stagger-2">
+          <div className="mt-10 animate-fade-up stagger-2">
             <Suspense>
               <ExploreFilters
                 provinces={provinces}
@@ -170,15 +173,18 @@ function ExploreSkeleton() {
   return (
     <main className="min-h-screen">
       {/* Hero skeleton */}
-      <section className="relative w-full overflow-hidden border-b">
+      <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 bg-muted/10" />
-        <div className="relative mx-auto max-w-6xl px-4 py-12 sm:py-16">
+        <div className="relative mx-auto max-w-6xl px-4 py-14 sm:py-20">
           <div className="max-w-2xl">
-            <div className="mb-5 h-7 w-24 rounded-full bg-muted/60" />
-            <div className="h-10 w-72 rounded bg-muted/60 sm:h-12" />
-            <div className="mt-4 h-6 w-56 rounded bg-muted/40" />
+            <div className="mb-6 h-6 w-24 rounded-full bg-muted/60" />
+            <div className="flex flex-col gap-2">
+              <div className="h-11 w-64 rounded bg-muted/60 sm:h-14" />
+              <div className="h-11 w-48 rounded bg-muted/60 sm:h-14" />
+            </div>
+            <div className="mt-5 h-6 w-64 rounded bg-muted/40" />
           </div>
-          <div className="mt-8 space-y-4">
+          <div className="mt-10 space-y-4">
             <div className="h-14 w-full rounded-2xl bg-muted/40" />
             <div className="flex gap-3">
               <div className="h-11 flex-1 rounded-xl bg-muted/30" />

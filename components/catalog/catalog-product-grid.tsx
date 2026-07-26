@@ -49,7 +49,7 @@ function ProductCard({
   };
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/[0.04]">
+    <article className="group relative overflow-hidden rounded-3xl border border-border/20 bg-card transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/[0.04]">
       <div className="relative overflow-hidden border-b border-border/50 bg-muted/20 aspect-[4/3]">
         {product.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -179,7 +179,7 @@ export function CatalogProductGrid({
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="group relative flex-none shrink-0 rounded-full border border-border/50 bg-muted/30 px-4 py-2 text-[13px] font-medium tracking-wide text-muted-foreground transition-all duration-300 hover:border-border hover:bg-muted/60 hover:text-foreground data-[state=active]:border-foreground/20 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-lg data-[state=active]:shadow-foreground/10"
+                  className="group relative flex-none shrink-0 rounded-full border border-border/30 bg-muted/30 px-4 py-2 text-[13px] font-medium tracking-wide text-muted-foreground transition-all duration-300 hover:border-border hover:bg-muted/60 hover:text-foreground data-[state=active]:border-foreground/20 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-lg data-[state=active]:shadow-foreground/10"
                 >
                   <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
                     {category.name}

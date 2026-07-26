@@ -137,7 +137,7 @@ export function ExploreFilters({
       {/* Selects row */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
-          <SlidersHorizontal className="size-3.5" />
+          <SlidersHorizontal className="size-3.5 hidden md:block" />
           <span className="hidden sm:inline">Filtros</span>
         </div>
 

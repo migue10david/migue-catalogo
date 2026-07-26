@@ -1,0 +1,13 @@
+Light Mode
+Primary #091426 Secondary #006a61 Secondary Container #86f2e4 Tertiary #001622
+Background #f8f9ff Surface Lowest #ffffff Surface Low #eff4ff Surface Container #e5eeff
+Typography
+On Surface #0b1c30 On Surface Variant #45474c Outline #75777d
+Feedback and status
+Error #ba1a1a Error Container #ffdad6 Success #006f66
+Dark Mode
+Primary #bcc7de Secondary #6bd8cb Tertiary #7bd0ff
+Background 0b1c30 Surface Container #213145 Primary Container #1e293b
+Typography
+On Surface High #eaf1ff On Surface Medium #bcc7de Outline Muted #75777d
+La Feria

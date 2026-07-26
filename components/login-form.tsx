@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AlertCircle, Loader2, Mail, Lock } from "lucide-react";
 
 export function LoginForm({
   className,
@@ -38,7 +39,6 @@ export function LoginForm({
         password,
       });
       if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
       router.push("/");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Ha ocurrido un error");
@@ -49,57 +49,74 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Iniciar sesión</CardTitle>
-          <CardDescription>
-            Ingresa con tu correo electrónico y contraseña para iniciar sesión
+      <div className="flex flex-col items-center gap-2">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+      </div>
+      <Card className="shadow-lg border-0 ring-1 ring-black/5 dark:ring-white/10">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-bold tracking-tight">Iniciar sesión</CardTitle>
+          <CardDescription className="text-muted-foreground/80">
+            Ingresa con tu correo electrónico y contraseña
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground/60" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-10 pl-9"
+                  />
+                </div>
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Contraseña</Label>
+                  <Label htmlFor="password" className="text-sm font-medium">Contraseña</Label>
                   <Link
                     href="/auth/forgot-password"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto text-sm text-primary font-medium hover:underline underline-offset-4"
                   >
                     ¿Olvidaste tu contraseña?
                   </Link>
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground/60" />
+                  <Input
+                    id="password"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-10 pl-9"
+                  />
+                </div>
               </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              {error && (
+                <div className="flex items-center gap-2 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+                  <AlertCircle className="size-4 shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
+              <Button type="submit" className="w-full h-10 font-medium" disabled={isLoading}>
+                {isLoading && <Loader2 className="size-4 animate-spin mr-2" />}
                 {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
               </Button>
             </div>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-5 text-center text-sm text-muted-foreground">
               ¿No tienes una cuenta?{" "}
               <Link
                 href="/auth/sign-up"
-                className="underline underline-offset-4"
+                className="text-primary font-medium hover:underline underline-offset-4"
               >
-                 Regístrate
+                Regístrate
               </Link>
             </div>
           </form>

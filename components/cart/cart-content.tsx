@@ -52,7 +52,7 @@ export function CartContent() {
             Volver al inicio
           </Link>
 
-          <div className="animate-fade-up stagger-2 flex flex-col items-center justify-center rounded-3xl border border-border bg-white px-6 py-28 text-center shadow-sm">
+          <div className="animate-fade-up stagger-2 flex flex-col items-center justify-center rounded-3xl border border-border bg-card px-6 py-28 text-center shadow-sm">
             <div className="mb-6 flex size-20 items-center justify-center rounded-2xl bg-secondary/10">
               <ShoppingBag className="size-10 text-secondary/60" strokeWidth={1.5} />
             </div>
@@ -131,7 +131,7 @@ export function CartContent() {
             className="animate-fade-up lg:sticky lg:top-8"
             style={{ animationDelay: `${(groups.length + 4) * 120}ms` }}
           >
-            <div className="rounded-3xl border border-border bg-white p-6 shadow-sm sm:p-8">
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
               <h2 className="text-lg font-semibold text-foreground">
                 Resumen del pedido
               </h2>

@@ -1,0 +1,1016 @@
+[     332ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/auth/login:0
+[     500ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[     680ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  136146ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  137196ms] [LOG] [Fast Refresh] done in 1070ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  146441ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=kz4OD9PlB5u60IVXCMADj' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13462
+[  147442ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=kz4OD9PlB5u60IVXCMADj' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13462
+[  149420ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  152520ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/auth/login:0
+[  152635ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  152712ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  242589ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  246118ms] [LOG] [Fast Refresh] done in 3249ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  248268ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  248451ms] [LOG] [Fast Refresh] done in 284ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  440044ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  440228ms] [LOG] [Fast Refresh] done in 200ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  440463ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  440486ms] [LOG] [Fast Refresh] done in 123ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  752507ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  760190ms] [LOG] [Fast Refresh] done in 7784ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  761587ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  762445ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1055:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[  762757ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1055:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[  762806ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  766045ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  766418ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1055:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[  772253ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  772366ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1055:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[  809405ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[  812184ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js:573:11)]
+    [at Module._compile (node:internal/modules/cjs/loader:1723:14)]
+    [at Object..js (node:internal/modules/cjs/loader:1888:10)]
+    [at Module.load (node:internal/modules/cjs/loader:1458:32)]
+    [at Function._load (node:internal/modules/cjs/loader:1275:12)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js:1:1406)]
+Caused by: Error: Cannot find module '@tailwindcss/oxide-linux-x64-gnu'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+Caused by: Error: Cannot find module './tailwindcss-oxide.linux-x64-gnu.node'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[  905053ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js:573:11)]
+    [at Module._compile (node:internal/modules/cjs/loader:1723:14)]
+    [at Object..js (node:internal/modules/cjs/loader:1888:10)]
+    [at Module.load (node:internal/modules/cjs/loader:1458:32)]
+    [at Function._load (node:internal/modules/cjs/loader:1275:12)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js:1:1406)]
+Caused by: Error: Cannot find module '@tailwindcss/oxide-linux-x64-gnu'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+Caused by: Error: Cannot find module './tailwindcss-oxide.linux-x64-gnu.node'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[  905097ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1331959ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1332014ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js:573:11)]
+    [at Module._compile (node:internal/modules/cjs/loader:1723:14)]
+    [at Object..js (node:internal/modules/cjs/loader:1888:10)]
+    [at Module.load (node:internal/modules/cjs/loader:1458:32)]
+    [at Function._load (node:internal/modules/cjs/loader:1275:12)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js:1:1406)]
+Caused by: Error: Cannot find module '@tailwindcss/oxide-linux-x64-gnu'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+Caused by: Error: Cannot find module './tailwindcss-oxide.linux-x64-gnu.node'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[ 1342187ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1342224ms] [ERROR] ./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js:573:11)]
+    [at Module._compile (node:internal/modules/cjs/loader:1723:14)]
+    [at Object..js (node:internal/modules/cjs/loader:1888:10)]
+    [at Module.load (node:internal/modules/cjs/loader:1458:32)]
+    [at Function._load (node:internal/modules/cjs/loader:1275:12)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1480:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js:1:1406)]
+Caused by: Error: Cannot find module '@tailwindcss/oxide-linux-x64-gnu'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+Caused by: Error: Cannot find module './tailwindcss-oxide.linux-x64-gnu.node'
+Require stack:
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/oxide/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/postcss/dist/index.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[root-of-the-server]__0oj80bi._.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/chunks/[turbopack]_runtime.js
+- /home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/.next/dev/build/56416d4ae4ce586f.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)]
+    [at defaultResolve (node:internal/modules/cjs/loader:1072:31)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at He (/home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/@tailwindcss/node/dist/index.js:1:1283)]
+    [at wrappedHook (node:internal/modules/customization_hooks:172:26)]
+    [at resolveWithHooks (node:internal/modules/customization_hooks:378:10)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1081:25)]
+    [at Function._load (node:internal/modules/cjs/loader:1204:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[ 1428960ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1433339ms] [LOG] [Fast Refresh] done in 4460ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1433517ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1433520ms] [LOG] [Fast Refresh] done in 107ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1435635ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 1439819ms] [LOG] [Fast Refresh] done in 4357ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 2525299ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 2527150ms] [LOG] [Fast Refresh] done in 1906ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3277736ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3278056ms] [LOG] [Fast Refresh] done in 419ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3278640ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3279031ms] [LOG] [Fast Refresh] done in 492ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3281052ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3281069ms] [LOG] [Fast Refresh] done in 118ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3281731ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3281785ms] [LOG] [Fast Refresh] done in 155ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3299820ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3299976ms] [LOG] [Fast Refresh] done in 255ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3302261ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3302311ms] [LOG] [Fast Refresh] done in 150ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3303143ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3303160ms] [LOG] [Fast Refresh] done in 120ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3303819ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3303917ms] [LOG] [Fast Refresh] done in 200ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3304389ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3304411ms] [LOG] [Fast Refresh] done in 123ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3305103ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3305186ms] [LOG] [Fast Refresh] done in 184ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3305835ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3305889ms] [LOG] [Fast Refresh] done in 154ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3306162ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3306202ms] [LOG] [Fast Refresh] done in 140ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3306441ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3306471ms] [LOG] [Fast Refresh] done in 130ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3344997ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3345328ms] [LOG] [Fast Refresh] done in 430ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3347223ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3347304ms] [LOG] [Fast Refresh] done in 181ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3347608ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3347646ms] [LOG] [Fast Refresh] done in 139ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3349426ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3349490ms] [LOG] [Fast Refresh] done in 164ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3349755ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3349800ms] [LOG] [Fast Refresh] done in 146ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3350051ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3350122ms] [LOG] [Fast Refresh] done in 172ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3350535ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3350582ms] [LOG] [Fast Refresh] done in 147ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3350815ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3350870ms] [LOG] [Fast Refresh] done in 155ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3367256ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3367618ms] [LOG] [Fast Refresh] done in 458ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3368011ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3368083ms] [LOG] [Fast Refresh] done in 172ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3369027ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3369113ms] [LOG] [Fast Refresh] done in 187ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3371234ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3371375ms] [LOG] [Fast Refresh] done in 241ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3372056ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3372072ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3372860ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3373059ms] [LOG] [Fast Refresh] done in 298ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3374614ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3374705ms] [LOG] [Fast Refresh] done in 191ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3392880ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3392966ms] [LOG] [Fast Refresh] done in 166ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3494731ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3495005ms] [LOG] [Fast Refresh] done in 371ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3497259ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3497332ms] [LOG] [Fast Refresh] done in 172ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3497595ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3497636ms] [LOG] [Fast Refresh] done in 142ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3499236ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3499398ms] [LOG] [Fast Refresh] done in 263ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3500980ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 3500998ms] [LOG] [Fast Refresh] done in 117ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4422596ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4422877ms] [LOG] [Fast Refresh] done in 366ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4424899ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4424940ms] [LOG] [Fast Refresh] done in 140ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4425244ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4425273ms] [LOG] [Fast Refresh] done in 128ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4425974ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4426024ms] [LOG] [Fast Refresh] done in 151ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4429803ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4429816ms] [LOG] [Fast Refresh] done in 113ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4430075ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4430108ms] [LOG] [Fast Refresh] done in 133ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4430383ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4430419ms] [LOG] [Fast Refresh] done in 136ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4435685ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4435918ms] [LOG] [Fast Refresh] done in 287ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4437270ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4437310ms] [LOG] [Fast Refresh] done in 139ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4806679ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4806724ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4806903ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4806911ms] [LOG] [Fast Refresh] done in 109ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4821102ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4821167ms] [LOG] [Fast Refresh] done in 165ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4839041ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4840158ms] [LOG] [Fast Refresh] done in 1217ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4843948ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4843952ms] [LOG] [Fast Refresh] done in 105ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4993969ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4994370ms] [LOG] [Fast Refresh] done in 364ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4994475ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 4994512ms] [LOG] [Fast Refresh] done in 135ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5030889ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5030946ms] [LOG] [Fast Refresh] done in 126ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5031076ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5031145ms] [LOG] [Fast Refresh] done in 169ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5040851ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5040851ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5048508ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[ 5048547ms] [LOG] [Fast Refresh] done in 112ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35682826ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35779313ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35779592ms] [LOG] [Fast Refresh] done in 378ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35782282ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35782339ms] [LOG] [Fast Refresh] done in 158ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35782647ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35782699ms] [LOG] [Fast Refresh] done in 152ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35783014ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35783045ms] [LOG] [Fast Refresh] done in 131ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35792333ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35792359ms] [LOG] [Fast Refresh] done in 126ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35908864ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35908997ms] [LOG] [Fast Refresh] done in 233ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35944079ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35944198ms] [LOG] [Fast Refresh] done in 220ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35957910ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35958011ms] [LOG] [Fast Refresh] done in 201ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35976389ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35976517ms] [LOG] [Fast Refresh] done in 229ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35990691ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[35990855ms] [LOG] [Fast Refresh] done in 268ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36002350ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36002440ms] [LOG] [Fast Refresh] done in 191ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36012807ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36012936ms] [LOG] [Fast Refresh] done in 232ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36030275ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36030336ms] [LOG] [Fast Refresh] done in 161ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36046862ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36048884ms] [LOG] [Fast Refresh] done in 1712ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36051393ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36051449ms] [LOG] [Fast Refresh] done in 160ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36051760ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36051849ms] [LOG] [Fast Refresh] done in 191ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36053978ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36054088ms] [LOG] [Fast Refresh] done in 210ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36067108ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36068064ms] [LOG] [Fast Refresh] done in 676ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36069782ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36069843ms] [LOG] [Fast Refresh] done in 162ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36070177ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36070233ms] [LOG] [Fast Refresh] done in 155ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36070545ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36070599ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36070914ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36071068ms] [LOG] [Fast Refresh] done in 253ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36072144ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36072278ms] [LOG] [Fast Refresh] done in 235ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36072980ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36073128ms] [LOG] [Fast Refresh] done in 248ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36073319ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36073455ms] [LOG] [Fast Refresh] done in 236ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36073676ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36073802ms] [LOG] [Fast Refresh] done in 226ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36074060ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36074342ms] [LOG] [Fast Refresh] done in 383ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36125983ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36125998ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36259794ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36260066ms] [LOG] [Fast Refresh] done in 313ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36282821ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36282888ms] [LOG] [Fast Refresh] done in 160ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36299171ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36299917ms] [LOG] [Fast Refresh] done in 340ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36301819ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36301973ms] [LOG] [Fast Refresh] done in 255ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36333113ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36333769ms] [LOG] [Fast Refresh] done in 425ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36333903ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36334297ms] [LOG] [Fast Refresh] done in 494ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36335333ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36335365ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36435022ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36435120ms] [LOG] [Fast Refresh] done in 198ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36447904ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36447907ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36483139ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36483146ms] [LOG] [Fast Refresh] done in 107ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36488200ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36488206ms] [LOG] [Fast Refresh] done in 107ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36488500ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36488515ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36488759ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36488779ms] [LOG] [Fast Refresh] done in 120ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36546204ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36546242ms] [LOG] [Fast Refresh] done in 139ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36554404ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[36554447ms] [LOG] [Fast Refresh] done in 149ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37220686ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37220790ms] [LOG] [Fast Refresh] done in 205ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37234473ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37235358ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[37235947ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37236030ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[37236359ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/auth/login?_rsc=ZCIIzcosg-81XmU5:0
+[37236410ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/auth/login?_rsc=ZCIIzcosg-81XmU5:0
+[37236421ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[37236505ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/auth/login:0
+[37236699ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[37236826ms] Error: ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./components/seller/seller-layout-shell.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at Object.getCompilationErrors (file:///home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///home/migue/Workspace/Proyectos/Catalogo Online/catalogo-online/node_modules/next/dist/server/base-server.js:1753:26)
+[37236814ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37236820ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37236820ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37236821ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37236821ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37236833ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/favicon.ico:0
+[37236944ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37236945ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237316ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237370ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237472ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237563ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237583ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37237654ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237688ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37237750ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237863ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37237893ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37237991ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37238011ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37238118ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37238148ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37238837ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37238904ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37239065ms] [ERROR] ./components/seller/seller-layout-shell.tsx:6:1
+Module not found: Can't resolve '@/components/seller/seller-site-header'
+  4 | import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+  5 | import { SellerSidebar } from "@/components/seller/seller-sidebar";
+> 6 | import { SellerSiteHeader } from "@/components/seller/seller-site-header";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AuthProfile } from "@/lib/auth";
+  8 |
+  9 | type SellerLayoutShellProps = {
+
+Import map: aliased to relative './components/seller/seller-site-header' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/seller/seller-layout-shell.tsx
+    ./app/seller/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[37239134ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37268047ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37268625ms] [LOG] [Fast Refresh] done in 675ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37269474ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37270032ms] [LOG] [Fast Refresh] done in 658ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[37271894ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/auth/login:0
+[37272155ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37272667ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37275480ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37275513ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37277097ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37277582ms] [LOG] [Fast Refresh] done in 589ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37304780ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37305276ms] [LOG] [Fast Refresh] done in 590ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37305924ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37306520ms] [LOG] [Fast Refresh] done in 697ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37311110ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37311199ms] [LOG] [Fast Refresh] done in 189ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37316227ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37316511ms] [LOG] [Fast Refresh] done in 406ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37392444ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37392503ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37500081ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37500158ms] [LOG] [Fast Refresh] done in 178ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37524324ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37524346ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37654335ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37654372ms] [LOG] [Fast Refresh] done in 137ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37932177ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[37932454ms] [LOG] [Fast Refresh] done in 291ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38096248ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38096334ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38150892ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38150905ms] [LOG] [Fast Refresh] done in 113ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38225306ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38225391ms] [LOG] [Fast Refresh] done in 185ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38346561ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38346589ms] [LOG] [Fast Refresh] done in 128ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38392159ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38392161ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38576574ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38577491ms] [LOG] [Fast Refresh] done in 860ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38577550ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/auth/login:0
+[38578066ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38578578ms] [LOG] [Fast Refresh] done in 612ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38580111ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38580340ms] [LOG] [Fast Refresh] done in 330ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38581817ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38581942ms] [LOG] [Fast Refresh] done in 226ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38583484ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38583518ms] [LOG] [Fast Refresh] done in 136ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38615203ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38615593ms] [LOG] [Fast Refresh] done in 218ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38618630ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38618776ms] [LOG] [Fast Refresh] done in 249ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38662485ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38662516ms] [LOG] [Fast Refresh] done in 134ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38676683ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38676775ms] [LOG] [Fast Refresh] done in 194ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38696384ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38696464ms] [LOG] [Fast Refresh] done in 180ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38731423ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38731465ms] [LOG] [Fast Refresh] done in 146ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38758907ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38758953ms] [LOG] [Fast Refresh] done in 147ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38823276ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38823441ms] [LOG] [Fast Refresh] done in 245ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38830669ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[38830829ms] [LOG] [Fast Refresh] done in 258ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39077473ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39077534ms] [ERROR] ./app/admin/layout.tsx:4:14
+Route segment config "dynamic" is not compatible with `nextConfig.cacheComponents`. Please remove it.
+  2 | import { AdminLayoutShell } from "@/components/admin/admin-layout-shell";
+  3 |
+> 4 | export const dynamic = 'force-dynamic';
+    |              ^^^^^^^
+  5 |
+  6 | export default async function DashboardLayout({
+  7 |   children,
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:3812
+[39225127ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39225484ms] [LOG] [Fast Refresh] done in 396ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39225639ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39225942ms] [LOG] [Fast Refresh] done in 406ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39226095ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39226138ms] [LOG] [Fast Refresh] done in 144ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39227306ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39227461ms] [LOG] [Fast Refresh] done in 255ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39227728ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39227734ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39228299ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39228324ms] [LOG] [Fast Refresh] done in 127ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39228674ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39228747ms] [LOG] [Fast Refresh] done in 173ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39243239ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39243281ms] [LOG] [Fast Refresh] done in 142ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39247375ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39247411ms] [LOG] [Fast Refresh] done in 113ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39252870ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971
+[39252909ms] [LOG] [Fast Refresh] done in 139ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0wczimo._.js:2971

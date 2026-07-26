@@ -23,7 +23,7 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t bg-background">
+    <footer className="w-full bg-background">
       <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2 lg:col-span-1">
@@ -96,12 +96,6 @@ export default function Footer() {
             <Heart className="size-3 fill-primary text-primary" /> para
             vendedores independientes.
           </p>
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-muted-foreground">
-              Powered by Supabase
-            </span>
-            <ThemeSwitcher />
-          </div>
         </div>
       </div>
     </footer>

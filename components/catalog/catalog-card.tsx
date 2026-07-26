@@ -16,7 +16,7 @@ export function CatalogCard({
     <Link
       href={`/catalog/${catalog.slug}`}
       className={cn(
-        "group relative overflow-hidden rounded-3xl border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5",
+        "group relative overflow-hidden rounded-3xl  bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5",
         className,
       )}
     >

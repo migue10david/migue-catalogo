@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Suspense } from "react";
+import { AlertTriangle } from "lucide-react";
 
 async function ErrorContent({
   searchParams,
@@ -9,17 +10,11 @@ async function ErrorContent({
   const params = await searchParams;
 
   return (
-    <>
-      {params?.error ? (
-        <p className="text-sm text-muted-foreground">
-          Code error: {params.error}
-        </p>
-      ) : (
-        <p className="text-sm text-muted-foreground">
-          An unspecified error occurred.
-        </p>
-      )}
-    </>
+    <p className="text-sm text-center text-muted-foreground">
+      {params?.error
+        ? `Error: ${params.error}`
+        : "Ha ocurrido un error inesperado."}
+    </p>
   );
 }
 
@@ -32,10 +27,17 @@ export default function Page({
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">
-                Sorry, something went wrong.
+          <div className="flex flex-col items-center gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo1.png" alt="Catalogly" className="h-10 w-auto object-contain" />
+          </div>
+          <Card className="shadow-lg border-0 ring-1 ring-black/5 dark:ring-white/10">
+            <CardHeader className="text-center">
+              <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-full bg-destructive/10">
+                <AlertTriangle className="size-6 text-destructive" />
+              </div>
+              <CardTitle className="text-2xl font-bold tracking-tight">
+                Algo salió mal
               </CardTitle>
             </CardHeader>
             <CardContent>

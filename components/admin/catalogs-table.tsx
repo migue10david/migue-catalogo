@@ -1,12 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useMemo, useState, useTransition } from "react";
+import { toast } from "sonner";
 import { toggleBusinessCatalogStatus } from "@/app/actions/admin";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Table,
   TableBody,
@@ -32,6 +43,33 @@ type CatalogsTableProps = {
   catalogs: AdminBusinessCatalog[];
 };
 
+function MetricCard({
+  label,
+  value,
+  description,
+  icon: Icon,
+}: {
+  label: string;
+  value: number;
+  description: string;
+  icon: typeof LayoutGrid;
+}) {
+  return (
+    <Card className="shadow-xs">
+      <CardHeader className="p-5">
+        <div className="flex items-center justify-between gap-4">
+          <CardDescription className="font-medium text-foreground">
+            {label}
+          </CardDescription>
+          <Icon className="size-4 text-muted-foreground" />
+        </div>
+        <CardTitle className="pt-2 text-3xl tabular-nums">{value}</CardTitle>
+        <p className="text-xs text-muted-foreground">{description}</p>
+      </CardHeader>
+    </Card>
+  );
+}
+
 function formatDate(dateString: string) {
   const date = new Date(dateString);
   return date.toLocaleDateString("es-ES", {
@@ -41,13 +79,58 @@ function formatDate(dateString: string) {
   });
 }
 
-function StatusToggleButton({ isActive }: { isActive: boolean }) {
-  const { pending } = useFormStatus();
+function StatusToggleButton({ catalogId, isActive }: { catalogId: string; isActive: boolean }) {
+  const [isPending, startTransition] = useTransition();
+
+  const handleSubmit = (formData: FormData) => {
+    startTransition(async () => {
+      try {
+        await toggleBusinessCatalogStatus(formData);
+        toast.success(isActive ? "Catálogo desactivado" : "Catálogo activado");
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Error al cambiar estado");
+      }
+    });
+  };
+
+  if (isActive) {
+    return (
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button size="sm" variant="outline">Desactivar</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Desactivar catálogo</AlertDialogTitle>
+            <AlertDialogDescription>
+              Este catálogo dejará de ser visible para los compradores. ¿Estás seguro?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <form action={handleSubmit}>
+              <input type="hidden" name="catalogId" value={catalogId} />
+              <input type="hidden" name="nextState" value="false" />
+              <AlertDialogAction asChild>
+                <Button type="submit" variant="destructive" disabled={isPending}>
+                  {isPending ? "Desactivando..." : "Desactivar"}
+                </Button>
+              </AlertDialogAction>
+            </form>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  }
 
   return (
-    <Button type="submit" size="sm" variant="outline" disabled={pending}>
-      {pending ? "Guardando..." : isActive ? "Desactivar" : "Activar"}
-    </Button>
+    <form action={handleSubmit}>
+      <input type="hidden" name="catalogId" value={catalogId} />
+      <input type="hidden" name="nextState" value="true" />
+      <Button type="submit" size="sm" variant="outline" disabled={isPending}>
+        {isPending ? "Activando..." : "Activar"}
+      </Button>
+    </form>
   );
 }
 
@@ -87,14 +170,14 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
 
   if (catalogs.length === 0) {
     return (
-      <div className="rounded-2xl border-2 border-dashed border-border/50 bg-muted/5 px-8 py-16 text-center">
-        <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-2xl bg-muted/40">
-          <LayoutGrid className="size-8 text-muted-foreground/25" />
+      <div className="rounded-xl border border-dashed bg-card px-8 py-16 text-center">
+        <div className="mx-auto mb-4 flex size-10 items-center justify-center rounded-lg border bg-muted/40">
+          <LayoutGrid className="size-5 text-muted-foreground" />
         </div>
-        <p className="font-serif-display text-xl text-muted-foreground/70">
+        <p className="font-medium text-foreground">
           Sin catálogos aún
         </p>
-        <p className="mt-2 text-sm text-muted-foreground/50">
+        <p className="mt-1 text-sm text-muted-foreground">
           Aún no hay catálogos creados en la plataforma.
         </p>
       </div>
@@ -102,115 +185,68 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Stats */}
+    <div className="flex min-w-0 flex-col gap-6">
       <section className="grid gap-4 sm:grid-cols-3">
-        <Card className="group relative overflow-hidden border-border/50 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <CardHeader className="relative pb-2 p-5 sm:p-6">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-xs uppercase tracking-widest">
-                Total catálogos
-              </CardDescription>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
-                <LayoutGrid className="size-4 text-primary" />
-              </div>
-            </div>
-            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-              {catalogs.length}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <p className="text-xs text-muted-foreground">
-              Catálogos creados en la plataforma.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="group relative overflow-hidden border-border/50 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <CardHeader className="relative pb-2 p-5 sm:p-6">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-xs uppercase tracking-widest">
-                Activos
-              </CardDescription>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-500/10">
-                <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
-              </div>
-            </div>
-            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-              {activeCatalogs}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <p className="text-xs text-muted-foreground">
-              Visibles públicamente.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="group relative overflow-hidden border-border/50 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <CardHeader className="relative pb-2 p-5 sm:p-6">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-xs uppercase tracking-widest">
-                Inactivos
-              </CardDescription>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-amber-500/10">
-                <XCircle className="size-4 text-amber-600 dark:text-amber-400" />
-              </div>
-            </div>
-            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-              {inactiveCatalogs}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <p className="text-xs text-muted-foreground">
-              No visibles para compradores.
-            </p>
-          </CardContent>
-        </Card>
+        <MetricCard
+          label="Total catálogos"
+          value={catalogs.length}
+          description="Creados en la plataforma"
+          icon={LayoutGrid}
+        />
+        <MetricCard
+          label="Activos"
+          value={activeCatalogs}
+          description="Visibles públicamente"
+          icon={CheckCircle2}
+        />
+        <MetricCard
+          label="Inactivos"
+          value={inactiveCatalogs}
+          description="Ocultos para compradores"
+          icon={XCircle}
+        />
       </section>
 
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground/50" />
-        <Input
-          placeholder="Buscar por nombre o dueño..."
-          value={search}
-          onChange={(event) => handleSearchChange(event.target.value)}
-          className="pl-9"
-        />
-      </div>
+      <section className="min-w-0 overflow-hidden rounded-xl border bg-card shadow-xs">
+        <div className="flex flex-col gap-4 border-b p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-semibold">Directorio de catálogos</h3>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {filteredCatalogs.length} de {catalogs.length} catálogos
+            </p>
+          </div>
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por nombre o dueño..."
+              value={search}
+              onChange={(event) => handleSearchChange(event.target.value)}
+              className="h-9 bg-background pl-9 shadow-none"
+            />
+          </div>
+        </div>
 
-      {/* Desktop table */}
-      <div className="hidden rounded-2xl border border-border/50 bg-card shadow-sm sm:block">
+      <div className="hidden md:block">
         <Table>
           <TableHeader>
-            <TableRow className="border-border/40 hover:bg-transparent">
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Nombre
+            <TableRow className="bg-muted/35 hover:bg-muted/35">
+              <TableHead className="w-[25%] px-4 text-xs text-muted-foreground">
+                Catálogo
               </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="w-[24%] text-xs text-muted-foreground">
                 Dueño
               </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Categoría
+              <TableHead className="text-xs text-muted-foreground">
+                Clasificación
               </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Provincia
-              </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="text-xs text-muted-foreground">
                 Estado
               </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="text-center text-xs text-muted-foreground">
                 Productos
               </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="text-right text-xs text-muted-foreground">
                 Acción
-              </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Creado
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -218,19 +254,22 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
             {paginatedCatalogs.map((catalog) => (
               <TableRow
                 key={catalog.id}
-                className="border-border/30 transition-colors hover:bg-muted/20"
+                className="hover:bg-muted/25"
               >
-                <TableCell className="font-medium">
-                  {catalog.name}
+                <TableCell className="px-4 py-4">
+                  <p className="font-medium">{catalog.name}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Creado {formatDate(catalog.created_at)}
+                  </p>
                 </TableCell>
                 <TableCell className="text-sm text-muted-foreground">
                   {catalog.owner_email ?? "—"}
                 </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
-                  {catalog.business_category ?? "—"}
-                </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
-                  {catalog.province ?? "—"}
+                <TableCell>
+                  <p className="text-sm">{catalog.business_category ?? "Sin categoría"}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {catalog.province ?? "Sin provincia"}
+                  </p>
                 </TableCell>
                 <TableCell>
                   <Badge
@@ -247,19 +286,8 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
                 <TableCell className="text-center">
                   <span className="tabular-nums">{catalog.product_count}</span>
                 </TableCell>
-                <TableCell>
-                  <form action={toggleBusinessCatalogStatus}>
-                    <input type="hidden" name="catalogId" value={catalog.id} />
-                    <input
-                      type="hidden"
-                      name="nextState"
-                      value={String(!catalog.is_active)}
-                    />
-                    <StatusToggleButton isActive={catalog.is_active} />
-                  </form>
-                </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
-                  {formatDate(catalog.created_at)}
+                <TableCell className="text-right">
+                  <StatusToggleButton catalogId={catalog.id} isActive={catalog.is_active} />
                 </TableCell>
               </TableRow>
             ))}
@@ -267,11 +295,10 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
         </Table>
       </div>
 
-      {/* Mobile cards */}
-      <div className="flex flex-col gap-3 sm:hidden">
+      <div className="flex flex-col gap-3 p-4 md:hidden">
         {paginatedCatalogs.length === 0 ? (
-          <div className="rounded-2xl border-2 border-dashed border-border/50 bg-muted/5 px-6 py-12 text-center">
-            <p className="text-sm text-muted-foreground/60">
+          <div className="rounded-lg border border-dashed px-6 py-12 text-center">
+            <p className="text-sm text-muted-foreground">
               No se encontraron catálogos.
             </p>
           </div>
@@ -279,7 +306,7 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
           paginatedCatalogs.map((catalog) => (
             <div
               key={catalog.id}
-              className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm"
+              className="rounded-lg border bg-background p-4"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
@@ -313,15 +340,7 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
                 </span>
               </div>
               <div className="mt-3">
-                <form action={toggleBusinessCatalogStatus}>
-                  <input type="hidden" name="catalogId" value={catalog.id} />
-                  <input
-                    type="hidden"
-                    name="nextState"
-                    value={String(!catalog.is_active)}
-                  />
-                  <StatusToggleButton isActive={catalog.is_active} />
-                </form>
+                <StatusToggleButton catalogId={catalog.id} isActive={catalog.is_active} />
               </div>
               <p className="mt-2 text-xs text-muted-foreground/60">
                 {formatDate(catalog.created_at)}
@@ -331,9 +350,8 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex flex-col gap-3 border-t px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
             Página {safeCurrentPage} de {totalPages}
           </p>
@@ -407,6 +425,7 @@ export function CatalogsTable({ catalogs }: CatalogsTableProps) {
           </Pagination>
         </div>
       )}
+      </section>
     </div>
   );
 }

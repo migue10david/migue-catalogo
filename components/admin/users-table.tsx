@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useMemo, useState, useTransition } from "react";
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import {
   increaseUserCatalogLimit,
   increaseUserProductLimit,
 } from "@/app/actions/admin";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -35,6 +35,33 @@ type UsersTableProps = {
   users: AdminUserProfile[];
 };
 
+function MetricCard({
+  label,
+  value,
+  description,
+  icon: Icon,
+}: {
+  label: string;
+  value: number;
+  description: string;
+  icon: typeof Users;
+}) {
+  return (
+    <Card className="shadow-xs">
+      <CardHeader className="p-5">
+        <div className="flex items-center justify-between gap-4">
+          <CardDescription className="font-medium text-foreground">
+            {label}
+          </CardDescription>
+          <Icon className="size-4 text-muted-foreground" />
+        </div>
+        <CardTitle className="pt-2 text-3xl tabular-nums">{value}</CardTitle>
+        <p className="text-xs text-muted-foreground">{description}</p>
+      </CardHeader>
+    </Card>
+  );
+}
+
 function formatDate(dateString: string) {
   const date = new Date(dateString);
   return date.toLocaleDateString("es-ES", {
@@ -59,23 +86,26 @@ const roleConfig: Record<string, { label: string; className: string }> = {
   },
 };
 
-function ProductLimitSubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" size="sm" variant="outline" disabled={pending}>
-      {pending ? "Sumando..." : "Sumar"}
-    </Button>
-  );
-}
-
 function ProductLimitControls({ user }: { user: AdminUserProfile }) {
+  const [isPending, startTransition] = useTransition();
+
   if (user.role !== "seller") {
     return <span className="text-xs text-muted-foreground">—</span>;
   }
 
+  const handleSubmit = (formData: FormData) => {
+    startTransition(async () => {
+      try {
+        await increaseUserProductLimit(formData);
+        toast.success("Límite de productos actualizado");
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Error al actualizar límite");
+      }
+    });
+  };
+
   return (
-    <form action={increaseUserProductLimit} className="flex items-center gap-2">
+    <form action={handleSubmit} className="flex items-center gap-2">
       <input type="hidden" name="userId" value={user.id} />
       <Input
         name="incrementBy"
@@ -85,28 +115,33 @@ function ProductLimitControls({ user }: { user: AdminUserProfile }) {
         defaultValue="1"
         className="h-8 w-16 text-center"
       />
-      <ProductLimitSubmitButton />
+      <Button type="submit" size="sm" variant="outline" disabled={isPending}>
+        {isPending ? "Sumando..." : "Sumar"}
+      </Button>
     </form>
   );
 }
 
-function CatalogLimitSubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" size="sm" variant="outline" disabled={pending}>
-      {pending ? "Sumando..." : "Sumar"}
-    </Button>
-  );
-}
-
 function CatalogLimitControls({ user }: { user: AdminUserProfile }) {
+  const [isPending, startTransition] = useTransition();
+
   if (user.role !== "seller") {
     return <span className="text-xs text-muted-foreground">—</span>;
   }
 
+  const handleSubmit = (formData: FormData) => {
+    startTransition(async () => {
+      try {
+        await increaseUserCatalogLimit(formData);
+        toast.success("Límite de catálogos actualizado");
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Error al actualizar límite");
+      }
+    });
+  };
+
   return (
-    <form action={increaseUserCatalogLimit} className="flex items-center gap-2">
+    <form action={handleSubmit} className="flex items-center gap-2">
       <input type="hidden" name="userId" value={user.id} />
       <Input
         name="incrementBy"
@@ -116,7 +151,9 @@ function CatalogLimitControls({ user }: { user: AdminUserProfile }) {
         defaultValue="1"
         className="h-8 w-16 text-center"
       />
-      <CatalogLimitSubmitButton />
+      <Button type="submit" size="sm" variant="outline" disabled={isPending}>
+        {isPending ? "Sumando..." : "Sumar"}
+      </Button>
     </form>
   );
 }
@@ -155,14 +192,14 @@ export function UsersTable({ users }: UsersTableProps) {
 
   if (users.length === 0) {
     return (
-      <div className="rounded-2xl border-2 border-dashed border-border/50 bg-muted/5 px-8 py-16 text-center">
-        <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-2xl bg-muted/40">
-          <Users className="size-8 text-muted-foreground/25" />
+      <div className="rounded-xl border border-dashed bg-card px-8 py-16 text-center">
+        <div className="mx-auto mb-4 flex size-10 items-center justify-center rounded-lg border bg-muted/40">
+          <Users className="size-5 text-muted-foreground" />
         </div>
-        <p className="font-serif-display text-xl text-muted-foreground/70">
+        <p className="font-medium text-foreground">
           Sin usuarios registrados
         </p>
-        <p className="mt-2 text-sm text-muted-foreground/50">
+        <p className="mt-1 text-sm text-muted-foreground">
           Aún no hay usuarios en la plataforma.
         </p>
       </div>
@@ -170,124 +207,62 @@ export function UsersTable({ users }: UsersTableProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Stats */}
+    <div className="flex min-w-0 flex-col gap-6">
       <section className="grid gap-4 sm:grid-cols-3">
-        <Card className="group relative overflow-hidden border-border/50 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <CardHeader className="relative pb-2 p-5 sm:p-6">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-xs uppercase tracking-widest">
-                Total usuarios
-              </CardDescription>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
-                <Users className="size-4 text-primary" />
-              </div>
-            </div>
-            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-              {users.length}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <p className="text-xs text-muted-foreground">
-              Usuarios registrados en la plataforma.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="group relative overflow-hidden border-border/50 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <CardHeader className="relative pb-2 p-5 sm:p-6">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-xs uppercase tracking-widest">
-                Sellers
-              </CardDescription>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-500/10">
-                <Store className="size-4 text-emerald-600 dark:text-emerald-400" />
-              </div>
-            </div>
-            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-              {totalSellers}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <p className="text-xs text-muted-foreground">
-              Vendedores con cupos administrables.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="group relative overflow-hidden border-border/50 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <CardHeader className="relative pb-2 p-5 sm:p-6">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-xs uppercase tracking-widest">
-                Administradores
-              </CardDescription>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-amber-500/10">
-                <ShieldCheck className="size-4 text-amber-600 dark:text-amber-400" />
-              </div>
-            </div>
-            <CardTitle className="font-serif-display text-3xl tracking-tight sm:text-4xl">
-              {totalAdmins}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <p className="text-xs text-muted-foreground">
-              Acceso total a la plataforma.
-            </p>
-          </CardContent>
-        </Card>
+        <MetricCard
+          label="Total usuarios"
+          value={users.length}
+          description="Registrados en la plataforma"
+          icon={Users}
+        />
+        <MetricCard
+          label="Vendedores"
+          value={totalSellers}
+          description="Con límites administrables"
+          icon={Store}
+        />
+        <MetricCard
+          label="Administradores"
+          value={totalAdmins}
+          description="Con acceso completo"
+          icon={ShieldCheck}
+        />
       </section>
 
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground/50" />
-        <Input
-          placeholder="Buscar por email..."
-          value={search}
-          onChange={(event) => handleSearchChange(event.target.value)}
-          className="pl-9"
-        />
-      </div>
+      <section className="min-w-0 overflow-hidden rounded-xl border bg-card shadow-xs">
+        <div className="flex flex-col gap-4 border-b p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-semibold">Directorio de usuarios</h3>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {filteredUsers.length} de {users.length} usuarios
+            </p>
+          </div>
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por email..."
+              value={search}
+              onChange={(event) => handleSearchChange(event.target.value)}
+              className="h-9 bg-background pl-9 shadow-none"
+            />
+          </div>
+        </div>
 
-      {/* Desktop table */}
-      <div className="hidden rounded-2xl border border-border/50 bg-card shadow-sm sm:block">
+      <div className="hidden md:block">
         <Table>
           <TableHeader>
-            <TableRow className="border-border/40 hover:bg-transparent">
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Email
+            <TableRow className="bg-muted/35 hover:bg-muted/35">
+              <TableHead className="w-[32%] px-4 text-xs text-muted-foreground">
+                Usuario
               </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="text-xs text-muted-foreground">
                 Rol
               </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="min-w-[240px] text-xs text-muted-foreground">
                 Catálogos
               </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
-                Cupo catálogos
-              </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
-                Libres catálogos
-              </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Ajustar catálogos
-              </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
+              <TableHead className="min-w-[240px] text-xs text-muted-foreground">
                 Productos
-              </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
-                Cupo
-              </TableHead>
-              <TableHead className="text-center text-xs uppercase tracking-widest text-muted-foreground">
-                Disponibles
-              </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Ajustar cupo
-              </TableHead>
-              <TableHead className="text-xs uppercase tracking-widest text-muted-foreground">
-                Registrado
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -298,10 +273,15 @@ export function UsersTable({ users }: UsersTableProps) {
               return (
                 <TableRow
                   key={user.id}
-                  className="border-border/30 transition-colors hover:bg-muted/20"
+                  className="hover:bg-muted/25"
                 >
-                  <TableCell className="font-medium">
-                    {user.email ?? "—"}
+                  <TableCell className="px-4 py-4">
+                    <p className="max-w-[260px] truncate font-medium">
+                      {user.email ?? "—"}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Registrado {formatDate(user.created_at)}
+                    </p>
                   </TableCell>
                   <TableCell>
                     <Badge
@@ -311,32 +291,33 @@ export function UsersTable({ users }: UsersTableProps) {
                       {roleStyle.label}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-center">
-                    <span className="tabular-nums">{user.catalog_count}</span>
+                  <TableCell className="py-3">
+                    {user.role === "seller" ? (
+                      <div className="space-y-2">
+                        <div className="flex gap-4 text-xs">
+                          <span><b className="font-semibold">{user.catalog_count}</b> usados</span>
+                          <span><b className="font-semibold">{user.catalog_limit}</b> límite</span>
+                          <span className="text-muted-foreground">{user.remaining_catalog_slots} libres</span>
+                        </div>
+                        <CatalogLimitControls user={user} />
+                      </div>
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
                   </TableCell>
-                  <TableCell className="text-center">
-                    <span className="tabular-nums">{user.role === "seller" ? user.catalog_limit : "—"}</span>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span className="tabular-nums">{user.role === "seller" ? user.remaining_catalog_slots : "—"}</span>
-                  </TableCell>
-                  <TableCell>
-                    <CatalogLimitControls user={user} />
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span className="tabular-nums">{user.role === "seller" ? user.product_count : "—"}</span>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span className="tabular-nums">{user.role === "seller" ? user.product_limit : "—"}</span>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span className="tabular-nums">{user.role === "seller" ? user.remaining_product_slots : "—"}</span>
-                  </TableCell>
-                  <TableCell>
-                    <ProductLimitControls user={user} />
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {formatDate(user.created_at)}
+                  <TableCell className="py-3">
+                    {user.role === "seller" ? (
+                      <div className="space-y-2">
+                        <div className="flex gap-4 text-xs">
+                          <span><b className="font-semibold">{user.product_count}</b> usados</span>
+                          <span><b className="font-semibold">{user.product_limit}</b> límite</span>
+                          <span className="text-muted-foreground">{user.remaining_product_slots} libres</span>
+                        </div>
+                        <ProductLimitControls user={user} />
+                      </div>
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
                   </TableCell>
                 </TableRow>
               );
@@ -345,11 +326,10 @@ export function UsersTable({ users }: UsersTableProps) {
         </Table>
       </div>
 
-      {/* Mobile cards */}
-      <div className="flex flex-col gap-3 sm:hidden">
+      <div className="flex flex-col gap-3 p-4 md:hidden">
         {paginatedUsers.length === 0 ? (
-          <div className="rounded-2xl border-2 border-dashed border-border/50 bg-muted/5 px-6 py-12 text-center">
-            <p className="text-sm text-muted-foreground/60">
+          <div className="rounded-lg border border-dashed px-6 py-12 text-center">
+            <p className="text-sm text-muted-foreground">
               No se encontraron usuarios.
             </p>
           </div>
@@ -360,7 +340,7 @@ export function UsersTable({ users }: UsersTableProps) {
             return (
               <div
                 key={user.id}
-                className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm"
+                className="rounded-lg border bg-background p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
@@ -380,7 +360,7 @@ export function UsersTable({ users }: UsersTableProps) {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 grid grid-cols-3 gap-2 rounded-xl border border-border/40 bg-muted/10 p-3">
+                <div className="mt-3 grid grid-cols-3 gap-2 rounded-md bg-muted/40 p-3">
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
                       Catálogos
@@ -406,7 +386,7 @@ export function UsersTable({ users }: UsersTableProps) {
                     </p>
                   </div>
                 </div>
-                <div className="mt-2 grid grid-cols-3 gap-2 rounded-xl border border-border/40 bg-muted/10 p-3">
+                <div className="mt-2 grid grid-cols-3 gap-2 rounded-md bg-muted/40 p-3">
                   <div>
                     <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
                       Productos
@@ -447,9 +427,8 @@ export function UsersTable({ users }: UsersTableProps) {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex flex-col gap-3 border-t px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
             Página {safeCurrentPage} de {totalPages}
           </p>
@@ -523,6 +502,7 @@ export function UsersTable({ users }: UsersTableProps) {
           </Pagination>
         </div>
       )}
+      </section>
     </div>
   );
 }
